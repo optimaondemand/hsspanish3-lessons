@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.04 &middot; Day 4 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Combinar oraciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Combinar oraciones — de seis frases cortas a dos buenas</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Yesterday you learned the tool. Today you find out that using it well means deciding what your point is.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Combining sentences looks like a tidying-up exercise. It is not. When you push one fact inside a <em>que</em> clause, you are saying that fact is the <strong>background</strong> — and the fact you leave in the main clause becomes the <strong>point</strong>. Two writers with identical facts can produce sentences that mean different things.<br><br>Today: a three-step procedure, the four places it usually breaks, and a full reading on Velázquez's working life built almost entirely out of relative clauses.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply a three-step procedure to combine two sentences into one.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how commas change what a relative clause means.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> rewrite a choppy six-sentence paragraph as two or three connected sentences.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Six correct sentences that read badly</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.8;margin:0 0 10px 0;"><em>Velázquez nació en Sevilla. Sevilla era una ciudad muy rica. Velázquez llegó a Madrid en 1623. En Madrid conoció al rey. El rey se llamaba Felipe IV. El rey le dio un puesto en la corte.</em></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Every one of those sentences is grammatically perfect. There is not a single mistake to correct. And the paragraph is still bad — it reads like six index cards, because the reader has to work out the relationships that the writer never expressed.<br><br>By the end of Part 2 you will have turned it into two sentences. Nothing will be added and nothing will be cut.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Reading those six sentences, what bothers you most?</div>
+            <div class="widget-options">
+                <button data-response="The repetition is the visible symptom: «Velázquez» twice, «el rey» twice, «Madrid» twice. Those repeated nouns are also the raw material - each one marks a place where a relative clause can go.">The same words keep coming back</button>
+                <button data-response="Exactly the real problem. The facts are all there and the connections are not, so the reader has to guess which fact matters. A relative clause states the connection explicitly.">I cannot tell which fact is the important one</button>
+                <button data-response="Rhythm is a legitimate answer and professional editors would give it too. Six sentences of the same length is monotonous; varying length is most of what «flow» actually means.">Everything is the same length</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; EL PROCEDIMIENTO <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three steps, in this order</h3>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; LOS TRES PASOS</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.9;">
+            <strong>1. Busca el sustantivo repetido.</strong> Which noun appears in both sentences? That noun is the hinge.<br>
+            <strong>2. Decide cuál es la oración principal.</strong> The fact you most want the reader to take away stays outside; the other goes inside the clause.<br>
+            <strong>3. Sustituye la segunda mención por el relativo</strong> — <em>que</em>, or preposition + <em>quien</em> for a person.<br><br>
+            Then read it aloud. If you cannot say it in one breath, it is too long; split it and start again.</div>
+        </div>
+        <table class="gtable">
+            <thead><tr><th>Dos oraciones</th><th>El sustantivo repetido</th><th>Una sola</th></tr></thead>
+            <tbody>
+                <tr><td>Vi un cuadro. El cuadro es de Velázquez.</td><td>el cuadro</td><td>El cuadro <span class="pron">que</span> vi es de Velázquez.</td></tr>
+                <tr><td>La luz entra por la ventana. La luz ilumina a la niña.</td><td>la luz</td><td>La luz <span class="pron">que</span> entra por la ventana ilumina a la niña.</td></tr>
+                <tr><td>Velázquez trabajó para un rey. El rey se llamaba Felipe IV.</td><td>el rey</td><td>El rey <span class="pron">para quien</span> Velázquez trabajó se llamaba Felipe IV.</td></tr>
+                <tr><td>Estudió con un maestro. El maestro era Francisco Pacheco.</td><td>el maestro</td><td>El maestro <span class="pron">con quien</span> estudió era Francisco Pacheco.</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; EL PASO 2 ES UNA DECISIÓN, NO UNA REGLA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">Two facts: <em>Velázquez nació en Sevilla</em> and <em>Velázquez trabajó para Felipe IV</em>. You can combine them in either direction, and the two results say different things.<br><br>
+            <em>Velázquez, <strong>que trabajó para Felipe IV</strong>, nació en Sevilla.</em> &mdash; the point is <strong>Seville</strong><br>
+            <em>Velázquez, <strong>que nació en Sevilla</strong>, trabajó para Felipe IV.</em> &mdash; the point is <strong>the king</strong><br><br>
+            Same two facts, same length, different sentence. Whichever fact you put in the main clause is the one the reader will remember — so the choice belongs to you and should be deliberate. This is the Honors part of today's lesson.</div>
+        </div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 6px;">Now the six sentences from Part 1, run through the procedure:</p>
+        <p style="font-size:17px;color:#0e1c42;line-height:1.8;margin:0;"><strong>Velázquez nació en Sevilla, que era entonces una ciudad muy rica. En 1623 llegó a Madrid, donde conoció a Felipe IV, el rey que le dio un puesto en la corte.</strong></p>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Six became two. Nothing was added, nothing was removed, and the reader no longer has to guess. Note the two extra joiners doing quiet work alongside <em>que</em>: <em>donde</em> for the place, and a bare comma for the apposition <em>«a Felipe IV, el rey que&hellip;»</em>.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 3 &middot; DÓNDE SE ROMPE <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four failure modes, and one of them changes the meaning</h3>
+        <table class="gtable">
+            <thead><tr><th>El error</th><th>Mal</th><th>Bien</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1.</strong> <em>Que</em> desaparece</td><td><s>el cuadro vi ayer</s></td><td>el cuadro <span class="pron">que</span> vi ayer</td></tr>
+                <tr><td><strong>2.</strong> La preposición se queda al final</td><td><s>el rey que trabajó para</s></td><td>el rey <span class="pron">para quien</span> trabajó</td></tr>
+                <tr><td><strong>3.</strong> <em>Quien</em> con una cosa</td><td><s>la exposición quien termina</s></td><td>la exposición <span class="pron">que</span> termina</td></tr>
+                <tr><td><strong>4.</strong> Dos relativos encadenados</td><td><s>el cuadro que vi en el museo que visitamos el jueves que&hellip;</s></td><td>Divide la oración en dos.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">Errors 1 and 2 are both English word order leaking through, and they are the two the graded quiz will look for. Error 4 is not ungrammatical — it is simply unreadable. One relative clause per sentence is comfortable; two is the maximum; three means you have stopped writing for a reader.</p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; LA COMA CAMBIA EL SIGNIFICADO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.85;">
+            <strong>Sin comas</strong> &mdash; the clause tells you <em>which ones</em>:<br>
+            <em>Los cuadros <strong>que están en la sala 12</strong> son de Velázquez.</em><br>
+            &rarr; Only the ones in room 12. The others are by somebody else.<br><br>
+            <strong>Con comas</strong> &mdash; the clause is extra information about all of them:<br>
+            <em>Los cuadros, <strong>que están en la sala 12</strong>, son de Velázquez.</em><br>
+            &rarr; They are all by Velázquez, and by the way they are in room 12.<br><br>
+            English makes the same distinction with <em>that</em> against <em>, which</em> — and most English speakers use it without noticing. In Spanish it is the commas that carry it. Two little marks, and the sentence tells the reader a different thing.<br><br>
+            <strong>Practical rule:</strong> if removing the clause would leave the reader unable to tell <em>which</em> thing you mean, use no commas. If the sentence still identifies its subject perfectly well without the clause, use commas.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">7 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the commas do</div>
+            <div class="widget-question">«Los estudiantes, que llegaron temprano, entraron primero.» How many students arrived early?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Some of them» is what the version WITHOUT commas would mean. The commas here rule that reading out.">Only some of them</button>
+                <button data-correct="true" data-fb="All of them. With commas, the clause is extra information about the whole group - they all arrived early, and they all went in first.">All of them</button>
+                <button data-correct="false" data-fb="The sentence is not ambiguous in Spanish - the commas settle it. That is precisely why they are worth getting right.">The sentence does not say</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which fact is the point?</div>
+            <div class="widget-question">You want your reader to remember above all that <strong>Velázquez was born in Seville</strong>. Which sentence does that?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Velázquez, que trabajó para Felipe IV, nació en Sevilla.» Seville is in the main clause, so it lands last and hardest. The king is background.">Velázquez, que trabajó para Felipe IV, nació en Sevilla.</button>
+                <button data-correct="false" data-fb="This one is grammatical and says the same two facts - but it buries Seville inside the clause and leaves the king as the point. Correct Spanish, wrong emphasis.">Velázquez, que nació en Sevilla, trabajó para Felipe IV.</button>
+                <button data-correct="false" data-fb="Two separate sentences give the reader no signal at all about which fact matters. That is the problem the whole lesson is about.">Velázquez nació en Sevilla. Trabajó para Felipe IV.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; find the fault</div>
+            <div class="widget-question">«Es el museo que hablamos de ayer.» What has gone wrong?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Que» is not the problem in itself - the relative pronoun is fine for a museum. The problem is where the preposition ended up.">It should be <em>quien</em>, not <em>que</em></button>
+                <button data-correct="true" data-fb="The preposition is stranded at the end, copying English. Spanish puts it in front: «Es el museo del que hablamos ayer», or more simply «Es el museo del que hablamos».">The preposition <em>de</em> is at the end</button>
+                <button data-correct="false" data-fb="«Ayer» is perfectly placed. Moving it would not repair the sentence, because the fault is the stranded «de».">The word <em>ayer</em> is in the wrong place</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú &mdash; the Honors version. Rewrite this six-sentence paragraph as <strong>two or three</strong> connected sentences. Use at least two relative clauses and at least one <strong>preposition + <em>quien</em></strong>. Write it out before revealing.</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.8;margin:0 0 10px 0;"><em>El Prado abrió en 1819. El Prado está en Madrid. Ayer vi un cuadro allí. El cuadro representa a una niña. La niña era hija de Felipe IV. Velázquez pintó para Felipe IV durante casi cuarenta años.</em></p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>El Prado, que abrió sus puertas en 1819, está en Madrid, y ayer vi allí un cuadro que representa a una niña. Esa niña era hija de Felipe IV, el rey para quien Velázquez pintó durante casi cuarenta años.</strong><br><br>Check yours: at least two <em>que</em>, neither of them droppable · <em>para quien</em> with the preposition in front · commas around <em>«que abrió sus puertas en 1819»</em>, because the Prado is already fully identified without it · and no sentence with three stacked clauses.<br><br>Your version will differ from mine, and that is expected — the model is a check on the moving parts, not a target to match.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">10 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.8;">
+        <strong>Un pintor en la corte</strong><br><br>
+        Velázquez nació en Sevilla en 1599, en una ciudad <strong>que</strong> era entonces la puerta del comercio con América. Se formó en el taller de Francisco Pacheco, un pintor y teórico <strong>con quien</strong> estudió varios años; después se casó con su hija Juana.<br><br>
+        En 1623 llegó a Madrid y entró al servicio de Felipe IV, el rey <strong>para quien</strong> iba a trabajar el resto de su vida. Tenía veinticuatro años. Los retratos <strong>que</strong> pintó del monarca a lo largo de casi cuarenta años permiten ver envejecer a un hombre: la cara de los primeros cuadros y la de los últimos apenas parecen la misma persona.<br><br>
+        Hizo dos viajes largos a Italia, el primero entre 1629 y 1631 y el segundo entre 1649 y 1651. En Roma pintó el retrato del papa Inocencio X, una obra <strong>que</strong> se quedó allí y <strong>que</strong> hoy sigue en Roma.<br><br>
+        En 1652 el rey le dio el puesto de <em>aposentador mayor de palacio</em>, un cargo <strong>que</strong> tenía poco que ver con la pintura: se ocupaba de los alojamientos, los muebles y los viajes de la corte. Es uno de los datos <strong>que</strong> más sorprenden a los estudiantes. El pintor <strong>a quien</strong> hoy consideramos el mayor de su siglo pasaba buena parte del día organizando habitaciones.<br><br>
+        Murió en Madrid el 6 de agosto de 1660, pocas semanas después de volver de la frontera francesa, donde <strong>había organizado</strong> los alojamientos para la boda de la infanta María Teresa con Luis XIV. Terminó su vida haciendo el trabajo administrativo, no el otro.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional &middot; three things to find</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;"><strong>1.</strong> Find the <strong>three</strong> places where <em>quien</em> appears — <em>con quien</em>, <em>para quien</em>, <em>a quien</em> — and check that all three refer to people and all three follow a preposition. That is <em>quien</em>'s whole job, three times over.<br><br><strong>2.</strong> Find the relative clause where <strong>English would drop the word</strong>: <em>«los retratos que pintó del monarca»</em> — &ldquo;the portraits he painted of the king&rdquo;. English deletes it; Spanish cannot.<br><br><strong>3.</strong> Find <em>«había organizado»</em> and say why it is not <em>«organizó»</em>. It is the Módulo 2 past perfect: he died in August, and the organising was already finished <em>before</em> that. A past behind a past — and the ordinary reason writers reach for it.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El cuadro que salió de un incendio</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><em>Las meninas</em> was not painted for a museum. There was no museum: it was painted for the <strong>Real Alcázar de Madrid</strong>, the royal palace where the court lived, and it hung in the king's private rooms.<br><br>On the night of <strong>24 December 1734</strong> the Alcázar burned. The fire ran for four days and hundreds of paintings from the royal collection were destroyed. <em>Las meninas</em> was one of the works pulled out — and it came out damaged.<br><br>The repairs were made by a court painter, <strong>Juan García de Miranda</strong>, who repainted the harmed areas, including part of the infanta's face. So the surface you look at in Sala 12 is <strong>not entirely Velázquez's hand</strong>, and specialists still differ over exactly how much of it is later restoration.<br><br>That is worth carrying with you into any museum. A painting is an object with a history, not a fixed image: this one has been hung, moved, burned, rescued, repainted and cleaned repeatedly across more than three hundred and fifty years. Part of <em>la atención</em> is remembering that what you are looking at is the current state of a thing, not the moment it was made.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Today's attention is aimed somewhere unglamorous: at your own sentences, after you have written them.<br><br>Nobody combines well on the first pass. You write six short sentences because that is how thinking arrives, and then you look again and find the repeated noun. The rewriting is where the thinking gets finished — which is why the Lengua en acción in this course asks you to <em>revise</em> a paragraph rather than produce a new one. <em>Escribir es volver a leer lo que ya escribiste.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.05 &mdash; Lo que y cuyo</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's second grammar point, and the two most useful additions to it: <strong><em>lo que</em></strong>, which refers to a whole idea rather than a noun — <em>«lo que más me impresiona es la luz»</em> — and <strong><em>cuyo</em></strong>, the formal way to say &ldquo;whose&rdquo;, which agrees with the thing owned rather than the owner.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then do one small thing that pays off on Day 7: take the six-sentence paragraph from Part 4 and combine it a <em>second</em> time, choosing a different fact for the main clause. Compare the two versions and decide which point you would rather make.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A three-step procedure, four failure modes, two commas that change a meaning, and a life of Velázquez read in Spanish. Six sentences became two, and the two say more. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.04 &middot; Combinar oraciones</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

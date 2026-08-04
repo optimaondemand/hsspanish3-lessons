@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 2.10</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 2</div>
+        <div style="font-size: 12px; color: #666;">Logros</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.10 &middot; Day 10 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Repaso y Grammar Quiz</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Experiencias y logros</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.10</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Repaso del módulo — y el Grammar Quiz</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Four past forms, eleven irregular participles, and one test that settles all the agreement questions.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last day of Módulo 2. Work the review, take the <strong>Grammar Quiz</strong> (20 pts, <strong>two attempts</strong>, includes listening), and read the closing note — because Module 3 turns the course in a new direction and it is worth knowing why.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form all eleven irregular participles and predict any compound.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply the <em>haber</em> test to any participle without hesitating.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why Module 3's commands are the last piece before the subjunctive.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; REPASO COMPLETO <span class="pill-time">8 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Area</th><th>What to have solid</th><th>Reopen if shaky</th></tr></thead>
+            <tbody>
+                <tr><td>Los cuatro verbos</td><td>Obstacle → <em>superar</em> · target → <em>alcanzar</em> · thing → <em>conseguir</em> · managed → <em>lograr</em></td><td>2.01 Part 3</td></tr>
+                <tr><td>Falsos amigos</td><td><em>el éxito</em> = success · <em>el suceso</em> = an event</td><td>2.01 Part 2</td></tr>
+                <tr><td>Frases con concordancia</td><td><em>han valido la pena</em> · <em>me he dado por vencid<u>a</u></em></td><td>2.02 Part 2</td></tr>
+                <tr><td>Los once participios</td><td><em>hecho, dicho, visto, escrito, puesto, abierto, vuelto, muerto, roto, cubierto, resuelto</em></td><td>2.03 Part 2</td></tr>
+                <tr><td>Los compuestos</td><td>They inherit: <em>proponer → propuesto</em>, <em>devolver → devuelto</em></td><td>2.03 Part 3</td></tr>
+                <tr><td>La prueba de <em>haber</em></td><td>With <em>haber</em>: frozen <em>-o</em>. Without: agrees.</td><td>2.04 Part 2</td></tr>
+                <tr><td><em>Estar</em> + participio</td><td><em>está cerrada</em> (state) ≠ <em>ha cerrado</em> (action)</td><td>2.04 Part 3</td></tr>
+                <tr><td>El pluscuamperfecto</td><td><em>había</em> + participio · accent on the <strong>í</strong> · always anchored</td><td>2.05 Parts 2&ndash;3</td></tr>
+                <tr><td>Cuatro pasados juntos</td><td>Sentence 4 is the past perfect</td><td>2.06 Part 2</td></tr>
+                <tr><td>Vocabulario</td><td>All twenty words, <strong>by ear</strong></td><td>2.01 &amp; 2.02 Part 2</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 2 &middot; EL GRAMMAR QUIZ <span class="pill-time">6 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Points</th><th>Attempts</th><th>Format</th><th>Includes</th></tr></thead>
+            <tbody>
+                <tr><td>20</td><td><strong>Two</strong> — highest counts</td><td>Auto-graded</td><td>Participles, agreement, both perfects, accents, <strong>listening</strong></td></tr>
+            </tbody>
+        </table>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; CÓMO USAR DOS INTENTOS</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Take attempt 1 seriously — its value is telling you which of the ten areas above is weak — then <strong>reopen that lesson</strong> before attempt 2. Students who take both attempts back to back usually score about the same twice, having learned nothing in between.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PRÁCTICA FINAL <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Five mixed items in quiz format. Ungraded — if you miss one, reopen the lesson named in the feedback before the real thing.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 1 &middot; compound participle</div>
+            <div class="widget-question">«El comité ha ___ tres cambios al reglamento.» (proponer)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«propuesto» - inherited from «poner → puesto». See 2.03 Part 3.">propuesto</button>
+                <button data-correct="false" data-fb="«proponido» regularises it. Compounds keep the base's irregular participle.">proponido</button>
+                <button data-correct="false" data-fb="«propuestos» agrees, but haber forbids agreement. See 2.04 Part 2.">propuestos</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 2 &middot; the haber test</div>
+            <div class="widget-question">«Las cartas ya están ___ .» (escribir)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«escrito» does not agree, but «están» means no haber - so it must match «las cartas». See 2.04 Part 2.">escrito</button>
+                <button data-correct="true" data-fb="«escritas» - no haber, feminine plural noun, so the participle agrees.">escritas</button>
+                <button data-correct="false" data-fb="«han escrito» reports an action, but «están» is already there and needs a state.">han escrito</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 3 &middot; ordering</div>
+            <div class="widget-question">«Cuando me llamaron, yo ya ___ la solicitud.» (entregar, yo)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«había entregado» - before «me llamaron». Note the accent on the í.">había entregado</button>
+                <button data-correct="false" data-fb="«he entregado» measures up to now, but «cuando me llamaron» anchors this in the past. See 2.05 Part 3.">he entregado</button>
+                <button data-correct="false" data-fb="«entregué» loses the ordering - it would sound like you submitted it at the moment they called.">entregué</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 4 &middot; ser + participio</div>
+            <div class="widget-question">«La reforma fue ___ a cabo en diciembre.» (llevar)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«llevada» - «ser» is not «haber», so the participle agrees with «la reforma». Exactly what the Day 8 text does.">llevada</button>
+                <button data-correct="false" data-fb="«llevado» would agree with a masculine noun. «La reforma» is feminine, and only haber freezes the participle.">llevado</button>
+                <button data-correct="false" data-fb="«llevó» is a preterite, but «fue» is already the verb here - it needs a participle.">llevó</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 5 &middot; vocabulario</div>
+            <div class="widget-question">«Después de mucho esfuerzo, ha ___ la meta del semestre.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«alcanzado» - a «meta» is a target, and «alcanzar» is the reaching verb. See 2.01 Part 3.">alcanzado</button>
+                <button data-correct="false" data-fb="«superado» is for overcoming an obstacle. A goal is a target, not an obstacle.">superado</button>
+                <button data-correct="false" data-fb="«intentado» only says they tried. The sentence says the goal was reached.">intentado</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; ÚLTIMO REPASO AUDITIVO <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The quiz includes listening. Play each, say the meaning aloud <strong>before</strong> reading the English.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-exito.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el éxito</span><span class="v-en">success</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-reto.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el reto</span><span class="v-en">challenge</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-beca.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la beca</span><span class="v-en">scholarship</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/valer-la-pena.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">valer la pena</span><span class="v-en">to be worth it</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/darse-por-vencido.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">darse por vencido</span><span class="v-en">to give up</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/habia-participio.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">había, habías, habíamos</span><span class="v-en">three syllables — <em>ha-BÍ-a</em></span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Then reopen 2.01 and 2.02 and play the remaining fifteen.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#10145;&#65039; PART 5 &middot; LO QUE VIENE <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The course changes direction now</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Modules 0 to 2 were all about <strong>the past</strong> — narrating it, ordering it, reporting what has happened. That work is finished. You now have four past forms and can put any two events in order.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">From <strong>Module 3</strong> the course turns toward <strong>influencing other people</strong>: telling them what to do, advising them, and eventually expressing what you want, doubt and hope. That is the second half of the semester's title — <em>Opiniones y consejos</em>.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Module 3 starts with <strong>formal commands</strong> — <em>tome, visite, no lleve</em> — the forms a doctor used on you back in 1.02, and the ones a travel guide uses on a reader. Theme: <strong>la ciudad y las direcciones</strong>. Culture: <strong>Colombia</strong> — Bogotá and Cartagena. Virtue: <em>la cortesía</em>.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; ALGO QUE VALE LA PENA SABER AHORA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">The command forms you learn in Module 3 are <strong>the same forms</strong> you will use for the subjunctive in Module 7. Identical spellings, different job.<br><br>So Module 3 is not a detour before the hard part — it <em>is</em> the hard part, arriving early and disguised as something practical. Learn <em>tome</em>, <em>visite</em> and <em>no lleve</em> properly now and Module 7 will ask you only to learn <em>when</em> to use forms you already produce automatically.<br><br>Students who treat Module 3 as easy vocabulary about street directions find Module 7 very hard. You have been told.</div>
+        </div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; CIERRE DEL MÓDULO &middot; no wrong answer</div>
+            <div class="widget-question">Looking back at these ten days — what changed most?</div>
+            <div class="widget-options">
+                <button data-response="A fair summary of the module. Four past forms, and the ability to say which of two things came first, is a real jump in what you can narrate.">I can put two past events in order now</button>
+                <button data-response="That is the quiet win. «¿Hay haber?» replaces a vague feeling with a decision procedure - and it will keep paying off for the rest of the course.">The haber test finally made agreement clear</button>
+                <button data-response="Good - eight forms covering dozens of verbs is the best return on memorisation in the whole semester. «Proponer → propuesto» without a dictionary is the proof.">Compounds inherit — that saved me a lot</button>
+                <button data-response="Then say which day in the module survey. Module 3 builds on the participle system, and Module 7 builds on Module 3 - so a gap here is worth closing now rather than in eight weeks.">Something still feels shaky</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COSTA RICA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que te llevas de este módulo</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Three things about Costa Rica worth keeping. The <strong>1948 abolition</strong>, done in the barracks that is now the national museum — and the honest footnote that it followed a civil war and does not mean the country has no armed police. The <strong>investment that replaced it</strong>: free public education and a health system reaching small rural towns, which is why a student from a farming village can plausibly end up on a sea-turtle project. And <strong><em>con mucho gusto</em></strong> where other countries say <em>de nada</em> — a small, distinctively tico courtesy.<br><br>And one register warning to carry forward: <em>«pura vida»</em> is genuinely everywhere, and genuinely informal. It is not what you say in an interview.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PERSEVERANCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module gave you the grammar of perseverance without saying so: the past perfect is how you report what you had already tried before something finally worked. Mariela's three applications, the interviewee's forgotten notes, a country holding a decision for seventy-five years — all of them need <em>había</em> to be told properly. Next module the virtue becomes <em>la cortesía</em>, which is perseverance pointed outward: doing the considerate thing repeatedly, including when nobody notices. <em>Sin pluscuamperfecto, todo logro parece suerte.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Módulo 3 &mdash; La ciudad y las direcciones</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;"><strong>Formal commands</strong> (Ud. / Uds.), affirmative and negative, with <strong>Colombia</strong> — Bogotá and Cartagena — as the featured culture and <em>la cortesía</em> as the virtue. Your reading day text will be a real travel guide, which is written almost entirely in commands.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then take the <strong>Grammar Quiz</strong>. Review between your two attempts. Then check that all five items for this module show as submitted.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡TERMINASTE EL MÓDULO 2&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety points, twenty words, eleven participles, a fourth past tense, and one test that settled every agreement question in the system. The past is finished business. <em>Ahora empezamos a decirle a la gente qué hacer.</em> &mdash; <em>¡Nos vemos en el Módulo 3!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.10 &middot; Repaso y Grammar Quiz</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

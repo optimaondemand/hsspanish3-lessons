@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 2.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 2</div>
+        <div style="font-size: 12px; color: #666;">Logros</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El pluscuamperfecto</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Experiencias y logros</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El pluscuamperfecto — un pasado detrás del pasado</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two things happened in the past. This tense says which came first.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The module's central grammar point, and the good news is that you have already built the machine. <strong>El pluscuamperfecto</strong> is <em>haber</em> + participio — exactly like the present perfect — with <em>haber</em> in the <strong>imperfect</strong> instead of the present: <em>había hablado</em>, &ldquo;I <em>had</em> spoken.&rdquo;<br><br>Everything transfers: the pair cannot be split, pronouns go first, the participle never agrees, and yesterday's eleven irregulars work unchanged. The only new thing is <em>when</em> to use it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the past perfect with <em>había</em> and any participle, regular or irregular.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use it to mark which of two past events came first.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>ya</em>, <em>nunca antes</em> and <em>todavía no</em> with it, and explain why they fit.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why one past tense is not enough</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.8;margin:0 0 10px 0;">
+        «Cuando <strong>llegué</strong>, la reunión <strong>empezó</strong>.»<br>
+        «Cuando <strong>llegué</strong>, la reunión <strong>ya había empezado</strong>.»</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The first says the meeting started <em>when</em> you arrived — you were on time, possibly they waited for you. The second says it had <em>already</em> started before you got there — you were late.<br><br>The preterite alone cannot make that distinction. This is what the past perfect is for: putting two past events in order.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Does English make this distinction?</div>
+            <div class="widget-options">
+                <button data-response="It does - «the meeting started» vs «the meeting had already started». Which means you already own the concept and only need the Spanish forms. That is the whole lesson.">Yes — &ldquo;had started&rdquo; vs &ldquo;started&rdquo;</button>
+                <button data-response="Worth noticing then: English «had + past participle» is the exact equivalent, and it works the same way. If you can say «I had already eaten», you can say «ya había comido».">I had not thought about it</button>
+                <button data-response="Careful - English does have it, and it is used constantly. «By the time I arrived, they had left.» Recognising it in English makes the Spanish almost free.">No, I do not think so</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LAS FORMAS <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The same machine, one part swapped</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click the <strong>&#128266;</strong>, then read the table aloud. Every form of <em>haber</em> here carries an accent on the <strong>í</strong> — this is the imperfect of an <em>-er</em> verb, so Module 0's rule applies without exception.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/habia-participio.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">había hablado, habías comido&hellip;</span><span class="v-en">the past perfect</span></li>
+        </ul>
+        <table class="gtable">
+            <thead><tr><th>Subject</th><th>haber (imperfecto)</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td>yo</td><td><span class="pron">había</span></td><td>Nunca antes <span class="pron">había</span> visto el mar.</td></tr>
+                <tr><td>tú</td><td><span class="pron">habías</span></td><td>¿Ya <span class="pron">habías</span> entregado la solicitud?</td></tr>
+                <tr><td>usted / él / ella</td><td><span class="pron">había</span></td><td>Nadie de su familia <span class="pron">había</span> ido a la universidad.</td></tr>
+                <tr><td>nosotros/as</td><td><span class="pron">habíamos</span></td><td>No <span class="pron">habíamos</span> resuelto el problema.</td></tr>
+                <tr><td>ustedes / ellos / ellas</td><td><span class="pron">habían</span></td><td>Ya <span class="pron">habían</span> cerrado las inscripciones.</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#EAF6EE;border:1px solid #2A9D5C;border-left:5px solid #2A9D5C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#1A6B3D;letter-spacing:.4px;margin-bottom:6px;">&#9989; TODO LO DEMÁS ES IGUAL</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">
+            &bull; Nothing splits the pair: <em>no <strong>había</strong> visto</em> ✔ &middot; «había no visto» ✘<br>
+            &bull; Pronouns go before <em>haber</em>: <em>me <strong>había</strong> dado por vencido</em> ✔<br>
+            &bull; The participle never agrees: <em>las cartas <strong>habían</strong> llegado</em>, not «llegadas»<br>
+            &bull; Irregular participles unchanged: <em>había hecho, habías dicho, habíamos puesto</em><br><br>
+            You are not learning a new system. You are conjugating <em>haber</em> in a tense you have had since Module 0.
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; CUÁNDO SE USA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Always anchored to another past moment</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The past perfect never works alone. There is always a <strong>reference point</strong> in the past — stated or implied — and this tense says &ldquo;before that.&rdquo;</p>
+        <table class="gtable">
+            <thead><tr><th>Use</th><th>Example</th><th>The reference point</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Before a stated past event</strong></td><td>Cuando llegué, ya <span class="pron">habían</span> empezado.</td><td><em>llegué</em></td></tr>
+                <tr><td><strong>First time ever</strong> (up to that point)</td><td>Nunca antes <span class="pron">había</span> hecho una entrevista.</td><td>the interview, implied</td></tr>
+                <tr><td><strong>Reported speech in the past</strong></td><td>Me dijo que <span class="pron">había</span> conseguido la beca.</td><td><em>me dijo</em></td></tr>
+                <tr><td><strong>Explaining a past situation</strong></td><td>Estaba nerviosa porque no <span class="pron">había</span> dormido.</td><td><em>estaba</em></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">The markers from Module 1 come with it, and for the same logic — they measure up to a point, except now that point is in the past rather than now: <strong>ya</strong> <em>había&hellip;</em> · <strong>todavía no</strong> <em>había&hellip;</em> · <strong>nunca antes</strong> <em>había&hellip;</em></p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LOS TRES PERFECTOS, EN ORDEN</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Compare the same event measured from three different points:<br><br>
+            <em>Nunca <strong>he</strong> visto el mar.</em> &mdash; up to <strong>now</strong> (and it is still true)<br>
+            <em>Nunca <strong>había</strong> visto el mar antes de ese viaje.</em> &mdash; up to <strong>a past moment</strong><br><br>
+            Same participle, same machine. Only <em>haber</em> moves, and moving it relocates the vantage point.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which came first?</div>
+            <div class="widget-question">You arrived late and the film was already running. «Cuando entré, la película ___ .»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«empezó» would mean it started at the moment you walked in - which says you were on time.">empezó</button>
+                <button data-correct="true" data-fb="«ya había empezado» - the start came BEFORE your arrival. That is exactly what this tense marks.">ya había empezado</button>
+                <button data-correct="false" data-fb="«ha empezado» measures up to now, but the reference point here is «cuando entré» - a past moment.">ya ha empezado</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; irregular participle</div>
+            <div class="widget-question">«Antes de ese día, nunca ___ una entrevista de trabajo.» (hacer, yo)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«había hecho» - «antes de ese día» sets a past reference point, and hacer keeps its irregular participle.">había hecho</button>
+                <button data-correct="false" data-fb="«he hecho» measures up to now, but «antes de ese día» anchors this in the past.">he hecho</button>
+                <button data-correct="false" data-fb="«había hacido» regularises hacer. The participle is «hecho» in every perfect tense.">había hacido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the accent on haber</div>
+            <div class="widget-question">Which is spelled correctly for &ldquo;we had already finished&rdquo;?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Missing the tilde. This is the imperfect of an -er verb, so the í always carries an accent: habíamos.">Ya habiamos terminado</button>
+                <button data-correct="true" data-fb="«Ya habíamos terminado» - accent on the í, as in every -er/-ir imperfect form.">Ya habíamos terminado</button>
+                <button data-correct="false" data-fb="«Ya habíamos terminados» makes the participle agree, which never happens with haber.">Ya habíamos terminados</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; reported speech</div>
+            <div class="widget-question">«Me dijo que ___ la beca.» (conseguir, ella — she had got it before telling me)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«ha conseguido» measures up to now, but «me dijo» has anchored the sentence in the past.">ha conseguido</button>
+                <button data-correct="true" data-fb="«había conseguido» - she got it before she told me, so it sits behind «me dijo».">había conseguido</button>
+                <button data-correct="false" data-fb="«consiguió» is possible in casual speech but loses the ordering. The past perfect makes clear it happened first.">consiguió</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: say <strong>three</strong> things you had never done before a particular moment, using <em>nunca antes había&hellip;</em> — and make at least one use an irregular participle.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Antes de este año nunca antes había escrito un ensayo en español. Antes de ese viaje nunca había visto el océano. Y antes de la competencia nunca antes me había puesto tan nervioso.</strong><br><br>Check three things: the accent on <em>había</em> · irregular participles kept (<em>escrito, visto, puesto</em>) · and the pronoun in front of <em>haber</em> in <em>me había puesto</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El día de la entrevista</strong><br><br>
+        Cuando <em>llegué</em> a la oficina, ya <strong>habían llamado</strong> a tres candidatos. Me <em>senté</em> y <em>esperé</em>. <em>Estaba</em> muy nervioso porque no <strong>había dormido</strong> bien y porque nunca antes <strong>había hecho</strong> una entrevista formal.<br><br>La semana anterior mi profesora me <em>había</em> ayudado a preparar respuestas, y yo <strong>había escrito</strong> tres páginas de notas. Pero cuando <em>entré</em>, <em>me di</em> cuenta de que <strong>había dejado</strong> las notas en casa.<br><br>Al final <em>salió</em> bien. Me <em>dijeron</em> que <strong>habían leído</strong> mi carta con atención y que les <strong>había gustado</strong> el proyecto. Todavía no <strong>habían decidido</strong> nada, pero dos semanas después <em>recibí</em> la respuesta.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Every bolded verb is past perfect, and every one of them happened <strong>before</strong> a preterite in the same sentence. Pick any bolded verb and name its reference point: <em>habían llamado</em> → before <em>llegué</em>; <em>había dejado</em> → before <em>entré</em>; <em>habían leído</em> → before <em>me dijeron</em>.<br><br>Then read the paragraph using only preterites and notice what is lost: the order collapses, and you can no longer tell that he prepared <em>before</em> he forgot the notes.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COSTA RICA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>«Pura vida» y la entrevista</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A caution about registers. <em>«Pura vida»</em> is genuinely everywhere in Costa Rica — greeting, thanks, farewell, and a general statement that things are fine. But it is <strong>informal</strong>, and it belongs with friends and in shops rather than in the interview the reading describes.<br><br>In a formal Costa Rican setting you would expect <em>usted</em>, <em>mucho gusto</em>, and <em>con mucho gusto</em> in place of <em>de nada</em> — which is a distinctively Costa Rican courtesy worth knowing. Ticos have a reputation for formal politeness that sits alongside the relaxed national phrase, and mistaking the second for the whole picture is a common visitor error.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PERSEVERANCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Notice what the past perfect makes visible in that reading: the preparation nobody saw. He <em>había escrito</em> three pages of notes and then left them at home — so the interview succeeded on preparation that never appeared in the room. That is nearly always how it works, and it is why this tense suits a module about achievement. <em>Lo que ya habías hecho antes es lo que te sostiene el día que falla todo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 2.06 &mdash; Narrar con tres pasados</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you hold all four past forms across a paragraph — the Honors standard — and read about Costa Rica's 1948 decision. Last full practice day: graded work opens on Day 7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say three <em>nunca antes había&hellip;</em> sentences out loud, and listen for the accent landing on the <strong>í</strong> of <em>había</em>.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A fourth past form, learned in one lesson because you had already built the machine — you only moved one part. You can now put two past events in order, which is what separates narration from a list of things that happened. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.05 &middot; El pluscuamperfecto</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

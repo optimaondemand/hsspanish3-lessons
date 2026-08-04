@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lo que y cuyo en el Prado</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lo que y cuyo en uso — un paseo por el Prado</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Nothing new is being taught today. Today the four tools go to work at once.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You now own the whole set: <em>que</em>, <em>quien / quienes</em>, <em>lo que</em>, <em>cuyo / cuya / cuyos / cuyas</em>. Days 3 and 5 built them one at a time. Today you read a paragraph in which all four are working in the same six sentences, because that is how descriptive Spanish actually behaves — writing about art is writing that constantly qualifies what it names.<br><br>Then you draft the paragraph that <em>Lengua en acción</em> asks for tomorrow. <strong>Draft it properly today.</strong> Tomorrow you revise it; you do not start it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pick out every relative pronoun in a real paragraph and say what each one is holding together.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a connected paragraph about a work of art using <em>cuyo</em> and <em>lo que</em> deliberately.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why the Museo del Prado is shaped the way it is, and who Velázquez worked for.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Cuatro herramientas, un solo trabajo</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The whole module rests on one idea, so read it once more before you use it: <strong>a relative pronoun lets you say two things about one noun in a single sentence instead of two.</strong> It is a combining tool. That is the entire Honors payoff — connected paragraphs are built out of sentences that carry more than one fact each.</p>
+        <table class="gtable">
+            <thead><tr><th>Tool</th><th>Refers to</th><th>The thing people get wrong</th><th>Built in</th></tr></thead>
+            <tbody>
+                <tr><td><span class="pron">que</span></td><td>People or things, in any position</td><td>Spanish <strong>never</strong> drops it where English drops &ldquo;that&rdquo;</td><td>6.03 Part 2</td></tr>
+                <tr><td><span class="pron">quien &middot; quienes</span></td><td>People only</td><td>Mainly after a preposition, or inside a clause set off by commas</td><td>6.03 Part 3</td></tr>
+                <tr><td><span class="pron">lo que</span></td><td>A whole idea &mdash; <strong>not</strong> a noun</td><td>If you can point at the noun it refers to, you wanted <em>que</em></td><td>6.05 Part 2</td></tr>
+                <tr><td><span class="pron">cuyo &middot; cuya &middot; cuyos &middot; cuyas</span></td><td>Possession</td><td>Agrees with the thing <strong>possessed</strong>, never with the possessor</td><td>6.05 Part 3</td></tr>
+            </tbody>
+        </table>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Of the four, which one is still not automatic?</div>
+            <div class="widget-options">
+                <button data-response="The commonest answer, and it is a spelling problem more than a grammar one: you understand «cuyo» and then let it agree with the person. Reopen 6.05 Part 3 and read only the agreement column - «el pintor cuyas obras», not «cuyo obras».">cuyo and its agreement</button>
+                <button data-response="Fair. «Lo que» has no noun behind it, and that feels like something missing. The test is a pointing test: if you cannot point at the noun, «lo que» is right.">lo que</button>
+                <button data-response="Worth one deliberate check today: «quien» is not a general-purpose «who». Its home is after a preposition - «a quien», «para quien», «con quien» - and inside comma-set-off clauses. Elsewhere «que» does the work.">quien vs. que</button>
+                <button data-response="Then today is the right kind of hard: not new forms, just four of them working in the same paragraph and choosing between them at speed.">All four separately, but not together</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 2 &middot; A LEER <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Un museo hecho de gustos</h3>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:0 0 12px;">Read it twice before looking at anything else on this page. First pass: what is the paragraph telling you about the museum? Second pass: mark every bold word and ask what it is attaching to what.<br><br>You already met most of these facts in English, in 6.01 and 6.02 &mdash; and that is deliberate. <strong>Today the facts are not the point.</strong> Knowing the content already frees you to watch the eight relative clauses that are holding it together, which is what you could not do in an unfamiliar text.</p>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA CULTURAL &middot; EL MUSEO DEL PRADO</div>
+            <div style="font-size:18px;color:#0e1c42;line-height:1.85;">
+            El Museo del Prado abrió sus puertas en 1819, pero no nació como los museos <strong>que</strong> conocemos hoy. Nació de la colección privada de los reyes de España, <strong>quienes</strong> durante tres siglos compraron y encargaron cuadros con un gusto muy personal. Eso explica <strong>lo que</strong> más sorprende al visitante actual: el Prado no cuenta la historia completa del arte europeo. Cuenta <strong>lo que</strong> le gustaba a una familia.<br><br>
+            Felipe IV, <strong>cuyo</strong> reinado duró de 1621 a 1665, fue el rey <strong>que</strong> más pintura compró. Y el pintor <strong>cuyas</strong> obras llenan hoy la sala más visitada del museo trabajaba a su lado casi todos los días: Diego Velázquez (1599&ndash;1660), <strong>a quien</strong> el rey nombró pintor de cámara en 1623, cuando Velázquez tenía veinticuatro años.<br><br>
+            Velázquez no era solo pintor. En la corte también colgaba los cuadros del palacio, organizaba habitaciones y viajaba a Italia para comprar obras. <strong>Lo que</strong> hoy nos parece una carrera doble era entonces lo normal: el pintor del rey vivía dentro del palacio y servía al rey en muchas cosas a la vez.<br><br>
+            El Prado guarda además a los otros dos pintores <strong>cuyos</strong> nombres el mundo asocia con España. El Greco, <strong>cuya</strong> carrera empezó en Creta y pasó por Venecia antes de terminar en Toledo. Y Goya, <strong>cuyos</strong> cuadros del 2 y del 3 de mayo de 1808 son la memoria visual de la guerra contra Napoleón.<br><br>
+            Y <strong>lo que</strong> casi nadie olvida al salir es la sala 12. Allí está <em>Las meninas</em>: más de tres metros de alto, colocado al fondo, de modo <strong>que</strong> el visitante entra y se encuentra de frente con la mirada de la infanta Margarita.
+            </div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Ayuda de vocabulario</strong> &mdash; only after your second reading: <em>encargar</em> = to commission &middot; <em>el gusto</em> = taste &middot; <em>el reinado</em> = a reign &middot; <em>pintor de cámara</em> = court painter, painter to the king's own household &middot; <em>colgar</em> = to hang &middot; <em>guardar</em> = here, to hold or to keep &middot; <em>de modo que</em> = with the result that.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Three things the paragraph says, in case you want to check yourself. (1) The Prado was a <strong>private royal collection first</strong> and a public museum second, which is why it is uneven: overwhelming in some directions, thin in others. (2) Velázquez was not a visiting artist but a <strong>household official</strong> who happened to paint. (3) The three painters everyone associates with Spain &mdash; El Greco, Velázquez, Goya &mdash; are in one building, and two of them were never in fashion outside Spain until long after they died.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LA GRAMÁTICA EN EL TEXTO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Ocho relativas, ocho decisiones</h3>
+        <table class="gtable">
+            <thead><tr><th>En el texto</th><th>Une&hellip;</th><th>Por qué esa palabra y no otra</th></tr></thead>
+            <tbody>
+                <tr><td>los museos <strong>que</strong> conocemos hoy</td><td>museos + los conocemos</td><td>Cosa, sin comas. English would say &ldquo;the museums we know&rdquo; and drop the word; Spanish cannot</td></tr>
+                <tr><td>los reyes de España, <strong>quienes</strong> compraron&hellip;</td><td>los reyes + compraron cuadros</td><td>Personas, y la información va <strong>entre comas</strong> &mdash; el terreno propio de <em>quienes</em></td></tr>
+                <tr><td><strong>lo que</strong> más sorprende al visitante</td><td>nada &mdash; no hay sustantivo detrás</td><td>Se refiere a una <strong>idea entera</strong>, no a una cosa. Intenta señalar el sustantivo: no existe</td></tr>
+                <tr><td>Felipe IV, <strong>cuyo</strong> reinado duró&hellip;</td><td>Felipe IV + su reinado</td><td>Concuerda con <em>reinado</em> (masc. sing.). Felipe no manda en la concordancia</td></tr>
+                <tr><td>el pintor <strong>cuyas</strong> obras llenan la sala</td><td>el pintor + sus obras</td><td>Concuerda con <em>obras</em> (fem. pl.), aunque el poseedor es <em>el pintor</em></td></tr>
+                <tr><td><strong>a quien</strong> el rey nombró&hellip;</td><td>Velázquez + el rey lo nombró</td><td>Detrás de preposición y con persona: <em>a quien</em></td></tr>
+                <tr><td>el rey <strong>que</strong> más pintura compró</td><td>el rey + compró más pintura</td><td>Sin comas: <strong>selecciona</strong> a un rey entre varios</td></tr>
+                <tr><td>El Greco, <strong>cuya</strong> carrera empezó&hellip;</td><td>El Greco + su carrera</td><td>Concuerda con <em>carrera</em> (fem. sing.)</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>And now the commas, which 6.04 Part 3 showed you in isolation.</strong> Here they are doing it inside a real paragraph, in two rows of that table. <em>Los reyes de España, quienes compraron&hellip;</em> adds a fact about <strong>all</strong> of them. <em>El rey que más pintura compró</em>, with no commas, <strong>sorts</strong> one king out of several &mdash; and the sentence would be false with commas, because there was more than one king. Same tool, same grammar; the commas carry the truth of the sentence. The names for the two kinds are <em>explicativa</em> (between commas) and <em>especificativa</em> (no commas), and you will use both in tomorrow's paragraph whether you name them or not.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; UN TRUCO DE LECTURA</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">When a long Spanish sentence stops making sense, find the relative pronoun and put your finger on the noun immediately in front of it. That noun is what the whole clause is about. Ninety per cent of long-sentence confusion is attaching the clause to the wrong noun &mdash; and it is the one problem a dictionary cannot help you with.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; ¿hay un sustantivo detrás?</div>
+            <div class="widget-question">«___ más me llamó la atención del Prado fue el silencio de la sala 12.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Que» necesita un sustantivo delante al que agarrarse, y aquí no hay ninguno: la oración empieza con la relativa.">Que</button>
+                <button data-correct="true" data-fb="«Lo que» - se refiere a una idea entera, no a una cosa concreta, y por eso puede abrir la oración sin sustantivo delante.">Lo que</button>
+                <button data-correct="false" data-fb="«Cuyo» siempre va entre dos sustantivos: el poseedor delante, lo poseído detrás. Aquí falta el poseedor.">Cuyo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; concordancia de cuyo</div>
+            <div class="widget-question">«Goya es el pintor ___ cuadros del 3 de mayo están en el Prado.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Cuyo» es masculino singular. Lo poseído es «cuadros», que es plural, y la concordancia se mide ahí.">cuyo</button>
+                <button data-correct="false" data-fb="«Cuyas» es femenino. «Cuadros» es masculino - y «cuadros» es lo poseído, que es lo único que decide.">cuyas</button>
+                <button data-correct="true" data-fb="«Cuyos» concuerda con «cuadros» (masculino plural). Goya no interviene: el poseedor nunca decide la forma.">cuyos</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; lo que hacen las comas</div>
+            <div class="widget-question">Las dos oraciones son correctas: «Las obras que Velázquez pintó en Italia son pocas» y «Las obras, que Velázquez pintó en Italia, son pocas». ¿Cuál dice que <strong>todas</strong> las obras de las que hablamos se pintaron en Italia?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="La segunda. Entre comas, la relativa añade un dato sobre todas las obras mencionadas - no separa unas de otras.">La segunda, con comas</button>
+                <button data-correct="false" data-fb="Sin comas la relativa restringe: separa las obras pintadas en Italia del resto, y solo de esas dice que son pocas.">La primera, sin comas</button>
+                <button data-correct="false" data-fb="No dicen lo mismo, y eso es lo interesante: mismo pronombre, misma gramática, dos significados. Aquí no hay palabra pista - solo la puntuación.">Las dos dicen lo mismo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 5 &middot; TU PÁRRAFO <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">El borrador de <em>Lengua en acción</em></h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Tomorrow's prompt, so you can write it today: <strong><em>Describe una obra del Museo del Prado y explica qué te hace mirarla dos veces.</em></strong> Six to eight connected sentences. Here is a shape that forces the module's grammar rather than allowing you to avoid it.</p>
+        <table class="gtable">
+            <thead><tr><th>Frase</th><th>Su trabajo</th><th>La herramienta</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Nombra la obra y sitúala</td><td>Una relativa sin comas: <em>El cuadro que&hellip;</em></td></tr>
+                <tr><td>2</td><td>Di qué representa</td><td><em>representar</em>, <em>el retrato</em>, <em>el paisaje</em></td></tr>
+                <tr><td>3</td><td>El pintor y algo suyo</td><td><strong><em>cuyo / cuya / cuyos / cuyas</em></strong> + sustantivo</td></tr>
+                <tr><td>4</td><td>El detalle que te detiene</td><td>Otra relativa, especificativa</td></tr>
+                <tr><td>5</td><td>Qué te hace pensar ese detalle</td><td><strong><em>lo que&hellip;</em></strong></td></tr>
+                <tr><td>6&ndash;7</td><td>Por qué vale la pena mirarla dos veces</td><td>Conectores, ninguno repetido</td></tr>
+                <tr><td>8</td><td>Tu juicio</td><td>Presente</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Sentences 3 and 5 are the assessed ones.</strong> A paragraph with no <em>cuyo</em> and no <em>lo que</em> can still be good Spanish and will still lose the criterion that this module exists to teach. Write those two first, then build around them.</p>
+        <div>
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Write it now, in Spanish, and keep it. Tomorrow you revise this &mdash; you do not start again.</p>
+            <button class="reveal-btn">Reveal a checklist</button>
+            <div class="reveal-body"><strong>Before you call it finished:</strong><br>&bull; At least <strong>three</strong> relative clauses, and at least <strong>one of each</strong>: a <em>que</em>, a <em>cuyo</em>-form, a <em>lo que</em>.<br>&bull; Every <em>cuyo</em> checked against <strong>the thing possessed</strong>, not the person. Read the noun that follows it and nothing else.<br>&bull; No <em>que</em> deleted anywhere. Reread any sentence that sounds like English with &ldquo;that&rdquo; left out.<br>&bull; Every <em>que</em> followed by an ordinary present or past verb &mdash; <em>que tiene</em>, <em>que representa</em>, <em>que pintó</em>.<br>&bull; Commas used on purpose: added information between commas, sorting information without them.<br>&bull; Four or more different connectors, none repeated.<br>&bull; At least five words from this module's twenty.<br>&bull; Accents read one at a time: <em>Velázquez</em>, <em>la exposición</em>, <em>la época</em>, <em>el significado</em>.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que el Prado no tiene</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">You know from 6.01 that the Prado grew out of the royal collection. Here is the consequence nobody mentions on the way in: <strong>a museum built from what one family liked has holes in it, and the holes are as informative as the walls.</strong><br><br>Most great national galleries were assembled later, by committees deliberately buying to fill gaps in a survey of European art. The Prado was not. So its strengths are ferocious and narrow &mdash; Titian and the Venetians, because Carlos V and Felipe II collected them personally; Rubens and Flemish painting, because the Spanish crown ruled Flanders; Velázquez and Goya, because both were employed on the premises. And its absences are just as systematic. Dutch seventeenth-century painting, the great rival tradition of exactly the same decades, is thinly represented, because Spanish kings were at war with the Dutch Republic and were not buying its Protestant merchants' pictures. Nineteenth-century French painting and Impressionism barely register, because by then the royal collection had stopped being the engine.<br><br>That is worth knowing before you write about a Spanish painting, because it changes what &ldquo;the Prado&rdquo; means. It is not a survey of art. It is <strong>the visible taste of one dynasty</strong>, and every gap in it is a war, a marriage or a preference.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A relative clause makes a specific demand on a reader: hold this noun in mind while a second fact about it arrives. Two sentences do not ask that. One sentence with a relative clause does &mdash; and that is why the long-sentence trouble in Part 3 is an attention problem rather than a vocabulary problem. You already noticed today that when a sentence collapsed, the fix was to look again at which noun the clause belonged to. <em>La atención</em> begins there, not in the museum: in the willingness to reread rather than to guess. <em>Mirar dos veces no es mirar más: es mirar de otra manera.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.07 &mdash; Integración &middot; graded work opens</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the <strong>Vocabulary Check</strong> (15 pts, listening, one attempt) and <strong>Lengua en acción</strong> (20 pts) open. The paragraph you just drafted is what <em>Lengua</em> asks for &mdash; bring it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Keep your paragraph &mdash; and check specifically that <strong>sentence 3 has a <em>cuyo</em>-form and sentence 5 has a <em>lo que</em></strong>. Those are the two most people leave out.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Eight relative clauses read and accounted for in a paragraph nobody simplified for you, and a draft of tomorrow's graded writing already on paper. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.06 &middot; Lo que y cuyo en el Prado</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

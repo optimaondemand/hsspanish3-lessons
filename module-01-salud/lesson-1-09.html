@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 1.09</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 1</div>
+        <div style="font-size: 12px; color: #666;">La salud</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.09 &middot; Day 9 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Tarea oral</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La salud y el cuerpo</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.09</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Tarea oral — lo que he aprendido en mi familia</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The tense you have been building all week is, in speech, mostly two syllables of helper verb. Do not swallow them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you record the <strong>Tarea oral</strong> (20 pts) — <strong>20% of your semester grade</strong>, the most heavily weighted component in this course. You already have the content: yesterday's reading asked you to choose something you have learned about health in your own family.<br><br>What today adds is the part only speaking teaches: holding the present perfect across a minute and a half of unscripted talk, with the endings audible.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> speak for 60&ndash;90 seconds sustaining the present perfect.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pronounce <em>he / has / ha / hemos / han</em> clearly — the <em>h</em> silent, the vowel audible.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say <em>leído</em>, <em>oído</em> and <em>caído</em> as three syllables, not two.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Speak from six words, not from a script</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same method as Module 0, and the same reason: a read script always sounds read, and it makes the task harder rather than easier — you end up trying to recall <em>wording</em> instead of a story, so one forgotten phrase derails the whole take.<br><br>You will build a six-word outline in Part 3 and speak from that.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which is your bigger worry on this recording?</div>
+            <div class="widget-options">
+                <button data-response="Then Part 3 is your fix. Six words on paper means you always know where you are, without a script to lose your place in.">Running out of things to say</button>
+                <button data-response="Fair, and here is the rubric's position: sustaining the present perfect correctly matters far more than sounding native. Part 4 drills the two sounds that actually affect comprehension.">Getting the verb forms wrong out loud</button>
+                <button data-response="Almost universal, and worth knowing: you are the only person who finds your recorded voice strange. Your teacher hears Spanish. Record a throwaway take first to get past it.">Hearing myself back</button>
+                <button data-response="Then use the time well - record twice and submit the better take. The task allows it, and second takes are almost always noticeably stronger.">Nothing much, I want to do it well</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 2 &middot; LA TAREA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The prompt and how it is scored</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 12px 0;"><strong>El tema:</strong> <em>¿Qué has aprendido sobre la salud en tu propia familia?</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 12px 0;">What have you learned about health in your own family — a remedy someone taught you, a rule your household keeps, something a grandparent always said. Yesterday's text argued that this knowledge travels through families and places; this is your version of that.</p>
+        <table class="gtable">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Length</strong></td><td>60&ndash;90 seconds of connected speech</td></tr>
+                <tr><td><strong>Frame</strong></td><td>Present perfect carries it — <em>he aprendido, hemos usado, me han enseñado</em></td></tr>
+                <tr><td><strong>Switches</strong></td><td>At least one imperfect for background (<em>de niño&hellip;</em>, <em>siempre usábamos&hellip;</em>)</td></tr>
+                <tr><td><strong>Language</strong></td><td>Spanish only — no English words filled in</td></tr>
+                <tr><td><strong>Delivery</strong></td><td>From an outline. <strong>Do not read a script.</strong></td></tr>
+                <tr><td><strong>Attempts</strong></td><td>Record as often as you like; submit your best take</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Scored on &middot; 20 pts</th><th>What earns full marks</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Present perfect accuracy</strong></td><td><em>haber</em> + participle correct and unsplit; pronouns before <em>haber</em></td></tr>
+                <tr><td><strong>Discourse shape</strong></td><td>An opening, two or three developed points, a closing thought</td></tr>
+                <tr><td><strong>Fluency</strong></td><td>Continuous speech. Pauses fine; long silences and restarts not</td></tr>
+                <tr><td><strong>Comprehensibility</strong></td><td>A patient listener follows without needing a repeat</td></tr>
+                <tr><td><strong>Range</strong></td><td>Module vocabulary and varied connectors</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Not on that list, deliberately: a native-like accent. Comprehensibility is scored; sounding Mexican is not.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TU GUION DE SEIS PALABRAS <span class="pill-time">9 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Beat</th><th>Your word</th><th>Example</th><th>Tense</th></tr></thead>
+            <tbody>
+                <tr><td>1. Who taught you</td><td>&nbsp;</td><td><em>abuela</em></td><td>perfecto (<em>he aprendido</em>)</td></tr>
+                <tr><td>2. The remedy or rule</td><td>&nbsp;</td><td><em>manzanilla</em></td><td>perfecto</td></tr>
+                <tr><td>3. When you were small</td><td>&nbsp;</td><td><em>niño</em></td><td><strong>imperfecto</strong></td></tr>
+                <tr><td>4. A time it mattered</td><td>&nbsp;</td><td><em>fiebre</em></td><td>pretérito or perfecto</td></tr>
+                <tr><td>5. What you do now</td><td>&nbsp;</td><td><em>siempre</em></td><td>perfecto or present</td></tr>
+                <tr><td>6. What you think of it</td><td>&nbsp;</td><td><em>creo</em></td><td>present</td></tr>
+            </tbody>
+        </table>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ENSAYA TRES VECES &middot; before you record</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Say the whole thing aloud three times from your six words. It will come out differently each time — that is the proof you are speaking rather than reciting. If run three is not noticeably smoother than run one, do a fourth. Nobody's first take is their best.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; PRONUNCIACIÓN DEL PERFECTO <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two sounds that decide whether you are understood</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click each, then repeat aloud.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/haber-presente.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">he, has, ha, hemos, han</span><span class="v-en">the helper — <em>h</em> is silent</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/leido-oido-caido.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">leído, oído, caído</span><span class="v-en">three syllables each</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/no-me-he-sentido.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">no me he sentido bien</span><span class="v-en">four words, one breath</span></li>
+        </ul>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>1. The <em>h</em> is silent — but the vowel is not.</strong> <em>He</em> is pronounced &ldquo;e&rdquo;, <em>ha</em> is &ldquo;a&rdquo;. English speakers often either aspirate the <em>h</em> (which sounds foreign) or drop the whole word (which loses the tense). Say <em>«e-a-pren-DI-do»</em> and let the <em>e</em> be heard.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>2. <em>Leído</em> is <em>le-Í-do</em>.</strong> Three syllables, stress on the middle. Collapsing it to &ldquo;LAY-do&rdquo; is the single commonest pronunciation error with these participles — and it is the audible version of the accent you learned to write on Day 3. The tilde and the syllable are the same fact.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; how many syllables?</div>
+            <div class="widget-question">«He oído esa historia antes.» How many syllables is <em>oído</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Two would be «OY-do», which merges the vowels. The written accent exists precisely to stop that.">Two — OY-do</button>
+                <button data-correct="true" data-fb="Three: o-Í-do. The accent forces the vowels apart, and that is how it is said.">Three — o-Í-do</button>
+                <button data-correct="false" data-fb="«Oído» has three syllables, not four. o-í-do.">Four</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the rubric rewards</div>
+            <div class="widget-question">Two takes: one has a strong American accent but holds the present perfect throughout; the other sounds smoother but keeps saying «he me sentido». Which scores higher?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="The first. Present perfect accuracy is the top rubric line; accent is not on the rubric at all.">The one with correct verb forms</button>
+                <button data-correct="false" data-fb="Smoothness helps comprehensibility, but «he me sentido» is a word-order error repeated - and that is the criterion carrying the most weight.">The smoother one</button>
+                <button data-correct="false" data-fb="They do not score the same. Look again at Part 2: accuracy sits at the top and accent is absent.">They would score the same</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9210; PART 5 &middot; GRABA Y ENTREGA <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Record in Canvas using the media recorder on the assignment. Before submitting, listen once and check three things:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.75;margin:0 0 10px 1.4rem;">
+            <li>Can you <strong>hear</strong> the <em>he / has / ha</em> in each verb, or did they vanish?</li>
+            <li>Did any pronoun land <strong>after</strong> <em>haber</em>? Listen for «he me» and fix it.</li>
+            <li>Did you reach <strong>60 seconds</strong>? Most short takes are missing beat 6 — what you think of it.</li>
+        </ol>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">If all three pass, submit. If one fails, you know exactly what to fix and the re-record takes ninety seconds.</p>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; MÉXICO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que se hereda en la cocina</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Yesterday's text made an argument; today's task tests whether it applies to you too. In Mexico this transmission is often explicitly credited — people say <em>«mi abuela me enseñó»</em> and name her, because the knowledge is understood to belong to a person and a place rather than to a book.<br><br>US families do this as well and usually without noticing: chicken soup, honey for a sore throat, a rule about going outside with wet hair. If you think you have nothing to say for today's task, you almost certainly have not looked. Ask someone at home what <em>their</em> mother did — you will get an answer, and it will be the most interesting ninety seconds of Spanish you record this module.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA TEMPLANZA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Rehearsing three times when one would probably pass is the whole of today's virtue. Nobody hears the rehearsals; they hear the take. <em>La templanza</em> is precisely the work that leaves no trace except in the quality of the result. <em>Nadie oye los ensayos, pero se oyen en la grabación.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">10</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 1.10 &mdash; Repaso y Grammar Quiz</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Last day of the module: a full review, then the <strong>Grammar Quiz</strong> (20 pts, two attempts, includes listening). Then Module 2 — which finally gives you the irregular participles you have been carefully avoiding all week.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, and confirm your recording actually uploaded — check that the submission shows a playable file, not just a completed page.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A minute and a half of unscripted Spanish, sustaining a tense you met six days ago, about something that actually belongs to you. <em>Una última lección.</em> <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.09 &middot; Tarea oral</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

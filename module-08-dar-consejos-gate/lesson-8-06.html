@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El consejo por escrito</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El consejo por escrito — un párrafo entero, construido y luego criticado</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Five correct subjunctives in a row can still be bad advice. Today is about the paragraph, not the verb.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You can now build the sentences. Días 3, 4 and 5 gave you the trigger, the register choice, and real dilemmas to use them on.<br><br>What is left is the thing the graded work actually measures: <strong>a whole paragraph of advice that a real person could use.</strong> You will read one — a letter about a trip to Chile, dense with this module's grammar — take it apart to see how it is built, then take apart a bad one, which is the faster teacher of the two.<br><br>At the end you draft the paragraph you will submit tomorrow. <strong>Tomorrow you revise it. You do not start again.</strong></div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the seven jobs the sentences of a good advice paragraph do.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why a paragraph of grammatically perfect advice can still fail.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> draft six to eight connected sentences of advice to a specific person about a specific decision.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Think of the last time somebody advised you</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Not a teacher, not a form — a person, about something that mattered. Bring it to mind, and notice what they actually did with the two minutes they had.<br><br>Almost certainly they did not open with the advice. They said something first that proved they had understood the situation. Then they gave you <strong>one</strong> thing, with a reason attached. Then they left the decision with you, because it was yours.<br><br>That shape is not a courtesy added to advice. In Spanish it is largely <em>grammatical</em>, and this module has given you every piece of it: the <em>que</em> + subjunctive for the push, the infinitive and the impersonal for the softer register, the plain command when directness is what a moment calls for.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">When somebody gives <em>you</em> advice, what makes you stop listening?</div>
+            <div class="widget-options">
+                <button data-response="The commonest one, and it is diagnosable in the grammar: advice with no reason is a bare «te recomiendo que...» with nothing after it. The fix is one clause - «porque», «ya que» - and it is what Part 3 calls «el dato».">When they clearly have not understood my situation</button>
+                <button data-response="Worth naming, because this is a length problem rather than a tone problem. Five pieces of advice compete with each other and the listener remembers none. Good advice is usually one thing, developed.">When there are too many pieces of it at once</button>
+                <button data-response="Then you have found the register question that Día 4 was about. A command is not rude in Spanish - but a stream of commands about a decision that is not yours to make will read as taking it over. That is exactly what «que» + subjuntivo is for.">When it stops sounding like advice and starts sounding like an order</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 2 &middot; A LEER &middot; UNA CARTA CON CONSEJOS <span class="pill-time">11 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>El contexto.</strong> Someone who has lived in Santiago for three years writes back to a friend who has just announced a two-week itinerary. Read it once for the advice and once for the grammar. Two things to watch for: <strong>where the central piece of advice sits</strong>, and how many <em>different</em> structures carry the influence.</p>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#9999;&#65039; TEXTO DEL CURSO &middot; escrito para esta lección</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            Recibí tu mensaje anoche y me pongo a escribir de inmediato, porque tu plan tiene un problema de mapa. Chile mide más de cuatro mil trescientos kilómetros de norte a sur y su ancho medio no llega a ciento ochenta: es un país largo y estrecho, y todo aquí se mide en horas de vuelo. Tú quieres ver el desierto de Atacama y también las Torres del Paine en la misma semana, y hay más de tres mil kilómetros en línea recta entre los dos. <strong>Te aconsejo que elijas uno.</strong> Si eliges el norte, <strong>es importante que reserves</strong> el vuelo a Calama con tiempo y <strong>que subas</strong> despacio, porque San Pedro de Atacama está a dos mil cuatrocientos metros y los geiseres del Tatio, mucho más arriba. Si eliges el sur, <strong>te pido que no confíes</strong> en el pronóstico: en la Patagonia hace sol, llueve y vuelve a hacer sol en la misma tarde, y el viento no descansa nunca. Una advertencia para los dos casos: <em>conviene llevar</em> bloqueador incluso en invierno, porque el aire seco del norte engaña y en el sur el viento esconde el sol. <strong>No te recomiendo que hagas los dos viajes; te recomiendo que vuelvas.</strong>
+            </div>
+            <div class="src">Texto del curso, escrito para esta lección. Datos geográficos verificados: longitud de Chile, altitud de San Pedro de Atacama y del campo geotérmico del Tatio.</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Ayuda de vocabulario</strong> — after your second reading: <em>el ancho medio</em> = the average width &middot; <em>estrecho</em> = narrow &middot; <em>en línea recta</em> = as the crow flies &middot; <em>elegir</em> = to choose &middot; <em>con tiempo</em> = well in advance &middot; <em>el pronóstico</em> = the forecast &middot; <em>el bloqueador</em> = sunscreen &middot; <em>engañar</em> = to deceive, to be misleading.</p>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:10px 0 0;">Count the influence structures before you turn to Part 3. There are <strong>five</strong> pieces of advice in that letter and they arrive in <strong>four different shapes</strong>. That ratio is the whole lesson.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; CÓMO ESTÁ CONSTRUIDO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Seven jobs, in this order</h3>
+        <table class="gtable">
+            <thead><tr><th>#</th><th>The job</th><th>In the letter</th><th>Structure</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td><strong>Reconocer</strong> — prove you read it</td><td><em>Recibí tu mensaje&hellip; tu plan tiene un problema de mapa</em></td><td>indicativo</td></tr>
+                <tr><td>2</td><td><strong>El dato</strong> — the fact the advice rests on</td><td><em>Chile mide más de cuatro mil trescientos kilómetros&hellip;</em></td><td>indicativo</td></tr>
+                <tr><td>3</td><td><strong>El consejo central</strong> — one thing, short</td><td><em>Te aconsejo que <strong>elijas</strong> uno.</em></td><td><em>que</em> + subjuntivo</td></tr>
+                <tr><td>4</td><td><strong>El detalle práctico</strong></td><td><em>Es importante que <strong>reserves</strong>&hellip; y que <strong>subas</strong> despacio</em></td><td>impersonal + <em>que</em></td></tr>
+                <tr><td>5</td><td><strong>La advertencia</strong></td><td><em>Te pido que <strong>no confíes</strong> en el pronóstico</em></td><td><em>que</em> + subjuntivo, negativo</td></tr>
+                <tr><td>6</td><td><strong>El registro alterno</strong> — no second person at all</td><td><em>Conviene <strong>llevar</strong> bloqueador</em></td><td>impersonal + infinitivo</td></tr>
+                <tr><td>7</td><td><strong>El cierre</strong> — hand the decision back</td><td><em>No te recomiendo que hagas los dos viajes; te recomiendo que <strong>vuelvas</strong>.</em></td><td>contraste</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">Notice job 3. The central advice is <strong>four words long</strong>, it arrives third rather than first, and everything before it exists to make it land. A reader who was told <em>«elige uno»</em> in sentence one would argue. A reader who has just read the distance agrees before the advice is given.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Notice job 6 too, because it is the one students skip. <em>Conviene llevar bloqueador</em> names nobody. There is no <em>tú</em>, no <em>que</em>, no subjunctive — and it is still advice. Día 4's register table is what makes that available to you, and a paragraph that never uses it sounds like it has one gear.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; where the advice sits</div>
+            <div class="widget-question">Why does <em>«Te aconsejo que elijas uno»</em> come after the sentence about distances rather than first?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Length is not the reason - the sentence is short precisely because it is the important one. Spanish has no rule about where advice must sit in a paragraph; this is a decision the writer made.">Because a short sentence cannot open a paragraph in Spanish</button>
+                <button data-correct="false" data-fb="It is not a politeness formula either. The letter is warm, but «te aconsejo que» is no more polite in third position than in first - what changes is whether the reader already agrees.">Because Spanish requires a polite preamble before any subjunctive</button>
+                <button data-correct="true" data-fb="Exactly. By the time the advice arrives, the reader has already accepted the fact that makes it obvious. Advice placed before its reason has to argue; advice placed after it only has to be stated.">Because the reader has to accept the fact before the advice can seem obvious</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128269; PART 4 &middot; LA CRÍTICA <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A paragraph with nothing wrong in it</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Here is advice to a student who is thinking of dropping a hard class. Read it and find the error.</p>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; UN PÁRRAFO DÉBIL</div>
+            <div style="font-size:17px;color:#1a2340;line-height:1.75;"><em>Te recomiendo que estudies más. Te recomiendo que hables con tu profesora. Te recomiendo que no dejes la clase. Te recomiendo que pienses en tu futuro. Te recomiendo que tomes una decisión pronto.</em></div>
+        </div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 10px 0;">There is no error. Five triggers, five subjunctives, five correct forms — <em>estudies, hables, dejes, pienses, tomes</em> — and the last two even carry a stem change and a diphthong correctly. On a grammar quiz this scores full marks.<br><br>As advice it is useless, and it is worth being precise about why: it acknowledges nothing, it gives no reason for anything, it offers five pieces of advice that compete with one another, and it uses one structure five times so that nothing in it sounds more important than anything else. <strong>The rubric for tomorrow's task scores four separate criteria that this paragraph fails, and grammar accuracy is not one of them.</strong></p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; diagnose it</div>
+            <div class="widget-question">Which is the most useful single description of what is wrong?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Yes - and both halves matter. Five reasons would fix half of it; one piece of advice given three different ways would fix the other. The paragraph needs fewer recommendations and more sentences that are not recommendations.">It repeats one structure and never says <em>why</em></button>
+                <button data-correct="false" data-fb="The subjunctive forms are all correct - «estudies, hables, dejes, pienses, tomes» are exactly right, including the stem change in «pienses». That is the point of the example: correct grammar is not sufficient.">The subjunctive forms are wrong in places</button>
+                <button data-correct="false" data-fb="It is not too short. It is five sentences, which is close to the required length - the problem is that all five do the same job, so the paragraph says one thing five times rather than five things once.">It is too short for the task</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the best repair</div>
+            <div class="widget-question">Which rewrite of the middle of that paragraph actually fixes something?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Turning the recommendations into commands changes the register but not the defect: it is still five instructions in a row with no reason attached, and now it is blunter. Día 4's point was choosing between registers, not swapping one monotony for another.">«Estudia más. Habla con tu profesora. No dejes la clase.»</button>
+                <button data-correct="true" data-fb="This is the repair. It gives ONE piece of advice, in the infinitive register so it does not push, attaches a reason, and hands the decision back with a plain command. Three jobs from Part 3 in one sentence.">«Lo más importante es hablar con tu profesora, porque ella conoce la clase mejor que nadie; después decide tú.»</button>
+                <button data-correct="false" data-fb="This joins two identical structures with «y también» and adds nothing - same trigger, same shape, still no reason. A connector is not a repair; it just makes the repetition harder to see.">«Te recomiendo que estudies más y también te recomiendo que hables con tu profesora.»</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 5 &middot; TU BORRADOR <span class="pill-time">6 min</span></div>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 12px 0;"><strong>El tema de <em>Lengua en acción</em>:</strong> <em>Una persona concreta que conoces tiene que tomar una decisión difícil. Escríbele un párrafo de consejos.</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Draft it now, in six to eight connected sentences. Tomorrow you revise this draft and submit it — 20 points. A real person and a real decision produce a far better paragraph than an invented one, so use Día 5's dilemma if you have one, or your own.</p>
+        <table class="gtable">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Length</strong></td><td>6&ndash;8 connected sentences — a paragraph, not a list</td></tr>
+                <tr><td><strong>Sentence 1</strong></td><td>Name the person and the decision. No advice yet.</td></tr>
+                <tr><td><strong>Structures</strong></td><td>≥3 influence structures in <strong>at least two different registers</strong> (<em>que</em> + subjuntivo · infinitivo · impersonal · mandato)</td></tr>
+                <tr><td><strong>Reasons</strong></td><td>At least two pieces of advice carry a <em>porque</em> or <em>ya que</em></td></tr>
+                <tr><td><strong>The negative</strong></td><td>One thing you deliberately do <strong>not</strong> advise</td></tr>
+                <tr><td><strong>El cierre</strong></td><td>The last sentence leaves the decision with them</td></tr>
+                <tr><td><strong>Accents</strong></td><td>Graded. <em>elijas</em>, <em>reserves</em>, <em>confíes</em> — read your <em>-íes</em> endings twice</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:16px;color:#1a2340;line-height:1.65;margin:8px 0 8px 0;">Write it before you open the checklist.</p>
+        <button class="reveal-btn">Reveal the checklist</button>
+        <div class="reveal-body">Read your draft against these seven, in order, and mark the ones you cannot find:<br><br><strong>1.</strong> Does sentence 1 name the person and the decision, with no advice in it?<br><strong>2.</strong> Is there a <em>dato</em> — something true about the situation that your advice rests on?<br><strong>3.</strong> Can you point to <strong>one</strong> sentence as the central advice? If two compete, cut one.<br><strong>4.</strong> Count your structures. Three or more, in two or more registers?<br><strong>5.</strong> Do at least two pieces of advice have a reason attached?<br><strong>6.</strong> Is there something you say <em>not</em> to do?<br><strong>7.</strong> Does the last sentence hand the decision back — or does it repeat the advice?<br><br>Most drafts fail 2, 5 and 7 together, which is one habit rather than three: giving advice without saying why, and then repeating it because it did not sound convincing the first time.</div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El país más largo del mundo — y el cielo más limpio</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module's country is <strong>Chile</strong>, and its shape is not a curiosity — it explains almost everything else. Just over <strong>4,300 kilometres</strong> from the Peruvian border to Cape Horn, with an average width under <strong>180</strong>, Chile runs through the driest desert on Earth, a Mediterranean centre, temperate rainforest, and Patagonian ice. In the far north there are weather stations that have gone decades without recording measurable rain.<br><br>That dryness turned out to be worth money. Dry air, high altitude and almost no cloud make northern Chile the best place on the planet to point a telescope, and the world's observatories moved in: <strong>ALMA</strong>, sixty-six antennas on the Chajnantor plateau at about <strong>5,000 metres</strong>, and the <strong>Very Large Telescope</strong> at Paranal, among many others. Chile negotiated a permanent share in the deal — astronomers based in Chile are guaranteed <strong>10% of observing time</strong> on telescopes built on Chilean soil, which is why a small country now trains a disproportionate number of the world's astronomers.<br><br>And <strong>Torres del Paine</strong>, three granite towers at the other end of the country, is roughly as far from the Atacama as Madrid is from Moscow. That is why the letter in Part 2 says what it says.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD (MÓDULO 5)</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Módulo 5's virtue was <em>la responsabilidad</em> — stewardship, learned in the Galápagos, where it meant owning the consequences of what you do to something that cannot answer back. Advising somebody is the same virtue pointed at a person.<br><br>Look at what the letter in Part 2 actually does. It tells a friend to cancel half a trip they have been planning for months. If the writer is wrong — if the two weeks would in fact have worked — that friend loses something real, and the writer is the reason. Which is why the letter gives its facts before its advice: <strong>advice you are willing to be held to looks different from advice you are only offering.</strong><br><br>That is also the deepest reason the weak paragraph in Part 4 fails. Five recommendations with no reasons attached commit the writer to nothing; if any of them turns out badly, there is nothing to point at. Naming your reason is how you take responsibility for the advice in advance. <em>Quien aconseja se queda con una parte de lo que pase después.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 8.07 &mdash; Integración</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Graded work opens: the <strong>Vocabulary Check</strong> (15 pts, listening, one attempt) and <strong>Lengua en acción</strong> (20 pts) — which is the draft you just wrote, revised. Keep it somewhere you can find it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, and <strong>save your draft where you can open it tomorrow</strong> — a Word file in OneDrive, or the Canvas assignment saved without submitting. Tomorrow's lesson assumes it exists.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A letter that talks a friend out of four thousand kilometres of driving, a paragraph with five correct subjunctives and no value at all, and your own draft. Seven jobs, four registers, one piece of central advice. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.06 &middot; El consejo por escrito</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

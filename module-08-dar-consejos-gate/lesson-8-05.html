@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Aconsejar en un dilema</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Aconsejar en un dilema — cuando las dos opciones son buenas</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Easy advice is about a good option and a bad one. Real advice is about two goods — and it is the only kind anybody actually needs.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Every practice item so far this fortnight had an answer waiting behind it. Talk to her. Sleep during the day. Go and see the head of programme. You were choosing how to say the advice, not what it was.<br><br>Today the situation has <strong>no right answer</strong>, and the person asking has already thought about it longer than you have. Both of his options are genuinely good. He is not being weak, or indecisive, or slow — he is standing between two things that both matter, and everything you know about giving advice now has to work without the safety of knowing the answer.<br><br>This is the last full practice day of the semester. Everything after it is assessed.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a paragraph of advice about a dilemma in which both options are good.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> advise about the <em>process</em> — <em>te pido que&hellip;</em>, <em>es importante que&hellip;</em> — when I cannot advise about the outcome.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> argue the side I would not choose, in Spanish, as strongly as the side I would.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The reason he has not answered</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">When somebody has been sitting on a decision for weeks, the ordinary assumption is that they lack nerve. Occasionally that is true. Far more often the delay is <strong>information</strong>: they are stuck because both options are worth having, and no amount of thinking will turn one of them bad.<br><br>That changes the adviser's job completely. You cannot supply the answer, because there is not one to supply. What you can supply is everything else — the thing they have not looked at, the question nobody has asked them, the deadline they are pretending is not there, and the permission to choose either one.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">If both options are genuinely good, what is the adviser actually for?</div>
+            <div class="widget-options">
+                <button data-response="Consequences are real work and often the missing piece - people weigh what they want and forget what follows. Careful with one thing, though: listing consequences can be a way of pushing your preferred option while pretending to be neutral. Choose the two you would name even if you wanted the other outcome.">To lay out the consequences properly</button>
+                <button data-response="This is the strongest answer. When two goods are in play, the real question is not «which is better» but «which matters more to you» - and that is a question the person can only answer for themselves, and usually only when somebody asks it out loud. Part 3 calls this advising about the process.">To help them work out what matters most to them</button>
+                <button data-response="Honest, and sometimes right - a friend who asks «what would you do?» often means it. But notice what it costs: your answer comes from your life, not theirs. If you say it, label it («yo en tu lugar…») so they can weigh it as one person's view rather than as the answer.">To say what I would do in their place</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL CASO DE MATÍAS <span class="pill-time">10 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        Matías tiene diecisiete años y vive en <strong>Puerto Natales</strong>, en la Patagonia chilena, a unos cien kilómetros de las Torres del Paine. Su familia tiene una empresa pequeña de excursiones: seis camionetas, cuatro guías y una oficina en la calle principal.<br><br>
+        En marzo le llegaron dos ofertas la misma semana.<br><br>
+        <strong>La primera es de su propia familia:</strong> un puesto pagado de dos años como guía y aprendiz de administración. Se queda en casa, gana dinero desde el primer mes y aprende el negocio que su papá levantó en veinte años. Su papá lleva un año enfermo. No lo dice, pero necesita a alguien.<br><br>
+        <strong>La segunda es un programa técnico en Antofagasta</strong>, en el norte: dos años de formación en instrumentación y mantenimiento de telescopios, con práctica en un observatorio del desierto. Es una carrera con futuro real en Chile. Antofagasta queda a más de tres mil kilómetros de Puerto Natales.<br><br>
+        Matías no ha contestado ninguna de las dos. El plazo del programa técnico vence el viernes.</p>
+        <table class="gtable">
+            <thead><tr><th>Opción</th><th>Ventajas</th><th>Desventajas</th><th>El riesgo de verdad</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>Quedarse en Natales</strong></td>
+                    <td>Dinero desde el primer mes; aprende el negocio; está con su papá</td>
+                    <td>No estudia lo que le interesa; queda atado a un pueblo pequeño</td>
+                    <td>Quedarse por obligación y no perdonárselo después</td>
+                </tr>
+                <tr>
+                    <td><strong>Irse a Antofagasta</strong></td>
+                    <td>Formación real; una carrera con futuro; sale de su pueblo</td>
+                    <td>Tres mil kilómetros; su papá enfermo; la empresa necesita otro guía</td>
+                    <td>Volver en dos años y encontrar la empresa cerrada</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Read the fourth column again. Those are not the same as the disadvantages: a disadvantage is a cost you can see and price, and <strong>a risk is a cost you only find out about later.</strong> Neither option is safe, and no list will make one of them safe. That is what a dilemma is — and it is why <em>«haz una lista de pros y contras»</em> is such thin advice.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TRES HERRAMIENTAS <span class="pill-time">10 min</span></div>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/recomiendo-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Recomiendo que lo intentes.</span><span class="v-en">recomendar &mdash; the outcome</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/subjuntivo-presente.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">hable, hables, hable, hablemos, hablen</span><span class="v-en">las formas, una última vez antes del Día 10</span></li>
+        </ul>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">1&#65039;&#8419; NOMBRA LOS DOS BIENES ANTES DE RECOMENDAR NADA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">This is move 1 from Día 3, but with something specific to say. Do not open by sympathising in general. Open by naming <strong>why the choice is hard</strong>, which tells the person you have understood the actual shape of it:<br><br>
+            <em>«Sé que las dos opciones son buenas, y que por eso llevas dos meses sin contestar. Eso no es indecisión; es que las dos cosas valen.»</em><br><br>
+            Two indicative sentences. They cost nothing and they buy you everything, because the commonest thing Matías has heard for two months is some version of &ldquo;just decide.&rdquo;</div>
+        </div>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">2&#65039;&#8419; ACONSEJA SOBRE EL PROCESO, NO SOBRE EL RESULTADO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">Here is the most useful thing in this lesson. When you cannot recommend an <strong>outcome</strong>, recommend a <strong>process</strong> — and Spanish makes this easy, because the subjunctive of influence does not care whether you are pushing at a decision or at the steps before it:<br><br>
+            <em>«Te pido que no <strong>contestes</strong> hoy.»</em><br>
+            <em>«Es importante que <strong>hables</strong> con tu papá antes de contestar.»</em><br>
+            <em>«Sugiero que <strong>escribas</strong> las dos listas en papel, no en la cabeza.»</em><br>
+            <em>«Te recomiendo que <strong>llames</strong> al programa y que <strong>pidas</strong> una semana más.»</em><br><br>
+            Not one of those four tells Matías which option to take. Every one of them makes the decision better, and the last one may simply dissolve the deadline that is doing half the damage. Process advice is <strong>always available</strong>, it is almost never wrong, and it is what people who are good at this actually give.</div>
+        </div>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">3&#65039;&#8419; DI DÓNDE SE ACABA TU CONSEJO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">In a dilemma the limit is not politeness; it is accuracy. You genuinely do not know, and saying so is information rather than weakness:<br><br>
+            <em>«No sé cuál es mejor. Lo que sí sé es que el plazo del viernes no es el criterio.»</em><br>
+            <em>«Es tu decisión, y yo no tengo que vivir con ella.»</em><br>
+            <em>«Yo en tu lugar me quedaría — pero mi vida no es la tuya, y esto es solo mi punto de vista.»</em> &mdash; the honest way to offer your own preference is to <strong>label it</strong> as yours.<br><br>
+            Note <em>lo que sí sé es que&hellip;</em>: Módulo 6's <em>lo que</em>, and it takes the <strong>indicative</strong>, because you are reporting what you know rather than pushing.</div>
+        </div>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; DOS MANERAS DE FALLAR &middot; y un aviso de gramática</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">
+            <strong>La certeza falsa.</strong> <em>«Es obvio que tienes que quedarte.»</em> If it were obvious he would have answered in March. False certainty ends the conversation and teaches the person not to bring you the next one.<br><br>
+            <strong>El abandono.</strong> <em>«Tú decides.»</em> &mdash; and nothing else. This looks like respect and is usually avoidance. The limit belongs at the <strong>end</strong> of a paragraph that did some work first, not instead of it.<br><br>
+            <strong>Y la gramática:</strong> notice that <em>«es obvio que»</em> above is followed by <em>tienes</em>, the <strong>indicative</strong>. Not every impersonal expression takes the subjunctive. <em>Es necesario que, es importante que, es mejor que</em> all <strong>push</strong> at the world, so they take it. <em>Es obvio que, es verdad que, está claro que</em> all <strong>assert</strong> that the world is a certain way, so they take the indicative, exactly like any other report. The frame looks identical; what decides is whether the expression is claiming or pushing. Expect that distinction on Día 10.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; proceso o resultado</div>
+            <div class="widget-question">Which of these advises Matías about the <strong>process</strong> rather than the outcome?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Es mejor que aceptes el programa técnico» picks the outcome for him. It might even be the right call - but you do not have his information, and he did not ask you to choose.">Es mejor que aceptes el programa técnico.</button>
+                <button data-correct="true" data-fb="«Te pido que hables con tu papá antes de contestar» - it changes nothing about which option he takes, and it may change everything about the decision. That is process advice, and it is almost never wrong.">Te pido que hables con tu papá antes de contestar.</button>
+                <button data-correct="false" data-fb="«Yo en tu lugar me quedaría» is your own preference, honestly labelled - which is legitimate and sometimes wanted. But it is still about the outcome, and it answers his question with your life.">Yo en tu lugar me quedaría en Natales.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; ¿infinitivo o que?</div>
+            <div class="widget-question">You are writing to Matías himself. «Es importante ___ con tu papá antes de contestar.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Es importante hablar con tu papá» is correct Spanish and states a general truth. What it does not do is say that MATÍAS is the one who has to do it - and in a letter to him, that is the whole point.">hablar</button>
+                <button data-correct="false" data-fb="«Es importante que hablas» puts the indicative after a push. The impersonal frame «es importante que» always takes the subjunctive - that has not changed since Módulo 7.">que hablas</button>
+                <button data-correct="true" data-fb="«Es importante que hables con tu papá» - two subjects, so «que» + subjunctive, and now the sentence can only be about him.">que hables</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; las tres son gramaticales</div>
+            <div class="widget-question">All three of these are correct Spanish. Which opening leaves Matías somewhere to stand?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Sé que las dos opciones son buenas, y que por eso no has contestado» - it names the real difficulty. He is not stuck because he is weak; he is stuck because both options are worth having, and this is the first sentence that has said so.">Sé que las dos opciones son buenas, y que por eso no has contestado.</button>
+                <button data-correct="false" data-fb="«No entiendo por qué no has contestado todavía» is grammatical and it is indicative - but it treats a hard choice as a failure of nerve. He has not answered precisely BECAUSE both options are good.">No entiendo por qué no has contestado todavía.</button>
+                <button data-correct="false" data-fb="«Es obvio que tienes que decidir ya» - correct grammar, indicative after «es obvio que», and false certainty. Nothing about a two-month silence is obvious, and saying it ends the conversation.">Es obvio que tienes que decidir ya.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;"><strong>Ahora tú &mdash; el trabajo largo del día, y hazlo en dos partes.</strong></p>
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;"><strong>Parte A.</strong> Write Matías a paragraph of advice: <strong>six to eight sentences</strong>, the four moves from Día 3, at most three subjunctives, and at least one piece of <em>process</em> advice. Decide which option you are steering him towards, and let the paragraph steer honestly.</p>
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;"><strong>Parte B — this is the Honors part.</strong> Now write the strongest paragraph you can for <strong>the other option.</strong> Not a weaker version for balance: the strongest one. Find the argument you left out of Parte A, and make it.</p>
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Do both before revealing. Parte B is the one that teaches you something, and it will also tell you whether you actually believe Parte A.</p>
+            <button class="reveal-btn">Reveal both models</button>
+            <div class="reveal-body"><strong>PARTE A &mdash; hacia Antofagasta</strong><br><em>Sé que las dos opciones son buenas, y sé que por eso llevas dos meses sin contestar. Eso no es indecisión; es que las dos cosas valen. Pero hay una diferencia real entre ellas: el programa técnico tiene plazo y la empresa de tu familia no. Te aconsejo que llames el lunes y que pidas una semana más. Sobre todo, es importante que hables con tu papá antes de decidir nada, porque llevas dos meses decidiendo por él sin haberle preguntado. De todos modos, la decisión es tuya, y volver a Natales en dos años sigue siendo posible.</em><br><br><strong>PARTE B &mdash; hacia Natales</strong><br><em>Entiendo que el programa te tienta, y con razón: es una carrera con futuro y no aparece todos los años. Pero hay algo que las listas no ponen. Tu papá lleva un año enfermo y no te lo ha dicho, y eso también es información. Te aconsejo que te quedes los dos años, y que uses ese tiempo para estudiar instrumentación por tu cuenta. Además, es mejor que le digas a tu papá que te quedas porque quieres y no porque te sientes obligado; esa frase vale más que los dos años. Lo digo porque he visto a gente irse y volver bien, y a gente quedarse y no perdonárselo nunca. Pero es tu vida y yo no tengo que vivir con la decisión.</em><br><br><strong>Check yours, in this order:</strong><br>&middot; <strong>Move 1 first?</strong> Both models open in the indicative and both name <em>why it is hard</em> rather than sympathising in general.<br>&middot; <strong>Ratio.</strong> Three subjunctives each (<em>llames, pidas, hables</em> &middot; <em>quedes, uses, digas</em>) among roughly a dozen verbs. Everything else reports.<br>&middot; <strong>One trigger, two clauses?</strong> <em>Te aconsejo que llames&hellip; y que pidas&hellip;</em> — <em>te aconsejo</em> is stated once.<br>&middot; <strong>Process advice present?</strong> Model A has two (<em>llames, pidas</em>). Model B's is subtler: <em>que le digas por qué te quedas</em> &mdash; a step, not an outcome.<br>&middot; <strong>Limit at the end, not instead of the work?</strong> Both close with it, in one sentence, after doing something first.<br>&middot; <strong>And the honest question:</strong> which of your two paragraphs was harder to write? That is the one you did not believe when you started &mdash; and writing it is how you found out.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>La respuesta de Matías</strong><br><br>
+        Tía:<br><br>
+        He leído tu correo tres veces. Tenías razón en una cosa: yo no estaba decidiendo; estaba esperando el viernes.<br><br>
+        Me <em>atreví</em> a hablar con mi papá. Me costó, porque nunca habíamos hablado de esto, y me dijo algo que no me esperaba: que la empresa aguanta dos años sin mí, y que él también fue el primero de su familia en salir de Natales.<br><br>
+        Le pedí una semana más al programa y me la dieron. He <em>considerado</em> las dos cosas con calma y todavía no sé qué voy a hacer. Pero ya no es lo mismo: antes tenía dos opciones y una excusa; ahora tengo dos opciones.<br><br>
+        Te <em>agradezco</em> el correo, y te agradezco más otra cosa: me <em>planteaste</em> la pregunta que yo no me estaba haciendo, y no me dijiste qué hacer. Me <em>comprometo</em> a avisarte antes del jueves.<br><br>
+        Matías</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Count the subjunctives in Matías's reply. There are <strong>none</strong> — and that is the shape of the whole exchange. <strong>The adviser pushes; the person who has been advised reports.</strong> He narrates what he did (<em>me atreví, le pedí, me la dieron</em>), what he now knows (<em>la empresa aguanta</em>), and what he will do (<em>me comprometo a avisarte</em>). Not one clause tries to move anybody.<br><br>Five of Módulo 8's verbs are working here: <em>atreverse a, considerar, agradecer, plantear, comprometerse a</em>. Check the prepositions as you read.<br><br>Two grammar spirals worth pausing on. <em>«Nunca habíamos hablado de esto»</em> is Módulo 2's past perfect doing exactly what it is for: a stretch of time reaching back behind the story's own past. And <em>«me la dieron»</em> is a double-object pronoun from Spanish 2 — <em>la semana</em> and <em>a mí</em>, both compressed into three words.<br><br>And the line the whole lesson is aimed at: <em>«antes tenía dos opciones y una excusa; ahora tengo dos opciones.»</em> His aunt did not decide anything for him. She removed the thing he was hiding behind, which is very often the most any adviser can do.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Dos decisiones chilenas de 2010</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Chile spent 2010 making decisions under pressure, twice, and both are worth knowing.<br><br>On <strong>27 February 2010</strong> an earthquake of magnitude <strong>8.8</strong> struck off the Maule region — among the strongest ever instrumentally recorded anywhere on earth — followed by a tsunami along the central coast. Around <strong>five hundred people</strong> died. That is a great many, and it is also far fewer than an 8.8 has produced elsewhere; engineers generally credit decades of strict seismic building regulation, developed after Chile's own earlier disasters. Chile nonetheless <strong>tightened its building code again afterwards</strong>, which is a more honest comment on the night than any comparison: the codes worked, and they were still not finished.<br><br>Five months later, on <strong>5 August 2010</strong>, the San José copper-gold mine near <strong>Copiapó</strong> collapsed with <strong>33 men</strong> roughly 700 m underground. For seventeen days nobody knew whether they were alive. On <strong>22 August</strong> a probe came back up with a note attached: <em>«Estamos bien en el refugio los 33»</em>. All thirty-three were brought to the surface, one at a time in a capsule named <em>Fénix</em>, on <strong>13 October</strong> — sixty-nine days after the collapse.<br><br>The detail that belongs in today's lesson is how the rescue was planned. There were three drilling proposals, and rather than choose the best one, the engineers <strong>drilled all three at once</strong> — Plan A, Plan B and Plan C, in parallel, at enormous cost. Plan B reached the men. It was a refusal to choose between competing goods, and it worked because it could be afforded.<br><br>Matías cannot drill three shafts. Most people cannot. Which is the honest limit of the comparison, and worth remembering the next time somebody tells you not to decide yet.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; EL SERVICIO (MÓDULO 4)</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Módulo 4 named <strong>el servicio</strong>, and advice is where it is easiest to counterfeit. The counterfeit is recognisable: it sounds like helping and it is actually about being right. It arrives quickly, it is certain, it does not ask questions, and it tends to be the advice the adviser wishes somebody had given <em>them</em>.<br><br>Real service in a dilemma is slower and much less satisfying. You ask the question nobody has asked. You name the deadline out loud. You find the one fact that has been left out — <em>tu papá lleva un año enfermo y no te lo ha dicho</em> — and you hand it over even though it makes the choice harder rather than easier. Then you stop, and you let somebody else decide, and you accept that you will not be thanked for the part that took the most work. Matías's aunt did all of that, and what he thanked her for was the question. <em>Se aconseja para servir, no para tener razón.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 8.06 &mdash; El consejo por escrito</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow is the last day before the graded work opens: a longer Chilean reading, and the first draft of your <strong>Lengua en acción</strong> paragraph — which you will <em>revise</em> on Día 7 rather than start again. Then Día 7 opens the <strong>Vocabulary Check</strong> and <strong>Lengua en acción</strong>, Día 8 is the <em>Lectura interpretativa</em> with Gabriela Mistral, Día 9 records the <strong>Tarea oral</strong>, and Día 10 is the <strong>Grammar Quiz</strong> — the semester gate, at 16 out of 20.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then look at your two paragraphs side by side and mark the <strong>one sentence</strong> that appears in both of them in some form. There nearly always is one, and it is nearly always process advice — the thing that was worth saying to Matías whichever way he goes. That sentence is the most valuable line either paragraph contains.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A dilemma with no answer in it, two paragraphs arguing opposite ways, and the discovery that the best thing you can often offer somebody is a question and a removed excuse. Five days of practice are done; from here the semester is assessed. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.05 &middot; Aconsejar en un dilema</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

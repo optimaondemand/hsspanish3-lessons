@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 3.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 3</div>
+        <div style="font-size: 12px; color: #666;">La ciudad</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Las direcciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La ciudad y las direcciones</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Las direcciones — la forma de una indicación</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Good directions are not more detailed. They are better ordered.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned the parts of a city. Today you add the <strong>verbs of movement</strong> — <em>seguir derecho, doblar, cruzar</em> — and something more useful than vocabulary: the <strong>four-part shape</strong> a set of directions takes in any language.<br><br>Still no new grammar. Today you use infinitives and the <em>«tiene que»</em> frame; tomorrow you get the command forms that make it sound native.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten expressions of movement and position.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the four parts of a set of directions and put them in order.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give directions using <em>tiene que</em> + infinitive, before I have the command forms.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why most directions fail</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Think about the last time someone gave you directions you could not follow. It was almost certainly not a vocabulary problem — it was that they gave you <strong>six steps when you could hold three</strong>, or never told you what you were looking for at the end.<br><br>Good directions have a shape: how far, which turns, what you will see, and a fallback. Part 3 makes that explicit.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">When someone gives you directions, what helps you most?</div>
+            <div class="widget-options">
+                <button data-response="A landmark is the single most useful thing you can give someone - it tells them whether they are still right. Part 3 makes it move 3, and most people skip it.">A landmark to look for</button>
+                <button data-response="Distance helps you commit: three blocks means you stop worrying for three blocks. It is move 1 in Part 3's shape.">Knowing how far it is</button>
+                <button data-response="Fair, and the honest reason the shape matters: fewer, clearer steps beat complete ones. Three moves you remember are worth more than six you do not.">Honestly, keeping it short</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; MOVERSE POR LA CIUDAD <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud. These are given as infinitives today — tomorrow they become commands.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/seguir-derecho.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">seguir derecho</span><span class="v-en">to go straight on</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/doblar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">doblar</span><span class="v-en">to turn</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/girar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">girar</span><span class="v-en">to turn, rotate</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/cruzar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">cruzar</span><span class="v-en">to cross</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/quedar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">quedar</span><span class="v-en">to be located</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/al-lado-de.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">al lado de</span><span class="v-en">next to</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/enfrente-de.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">enfrente de</span><span class="v-en">opposite, facing</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/hasta.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">hasta</span><span class="v-en">as far as, until</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-senal.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la señal</span><span class="v-en">sign, signal</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/perderse.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">perderse</span><span class="v-en">to get lost</span></li>
+        </ul>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><strong><em>Doblar</em> and <em>girar</em></strong> both mean to turn and are largely interchangeable for directions; <em>doblar</em> is more common in Latin America, and it also means <em>to fold</em>. Both take <em>a</em>: <em>doblar <u>a</u> la derecha</em>.<br><br><strong><em>Seguir derecho</em></strong> is worth learning as a unit. Careful with the near-neighbour <em>la derecha</em> (the right): <em>derecho</em> = straight ahead, <em>a la derecha</em> = to the right. One letter, opposite instructions — and a genuinely common way to get lost.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS CUATRO MOVIMIENTOS <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four moves, in this order</h3>
+        <table class="gtable">
+            <thead><tr><th>Move</th><th>What it does</th><th>Example (with <em>tiene que</em>)</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. La distancia</strong></td><td>Commit them for a stretch</td><td><span class="pron">Tiene que seguir</span> derecho tres cuadras.</td></tr>
+                <tr><td><strong>2. El giro</strong></td><td>One turn, with a marker</td><td><span class="pron">Tiene que doblar</span> a la izquierda en el semáforo.</td></tr>
+                <tr><td><strong>3. La referencia</strong></td><td>What they will see — the reassurance</td><td>El museo queda <span class="pron">enfrente de</span> la plaza.</td></tr>
+                <tr><td><strong>4. El plan B</strong></td><td>What to do if it goes wrong</td><td>Si <span class="pron">se pierde</span>, puede preguntar en la tienda.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Move 3 is the one people leave out</strong>, and it is the most valuable. A landmark tells the listener whether they are still right — without it they have to trust their counting for three blocks with no way to check.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; POR AHORA: <em>TIENE QUE</em> + INFINITIVO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">You do not have the command forms yet, so today use <strong><em>tiene que</em> + infinitive</strong> — <em>tiene que seguir</em>, <em>tiene que doblar</em>. It is correct, polite, natural Spanish and it uses only the present tense you have had since Spanish 1.<br><br>Tomorrow you learn the shorter, more idiomatic version: <em>siga</em>, <em>doble</em>. Both are good Spanish. <em>Tiene que</em> is slightly softer, which is occasionally exactly what you want.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; one letter, opposite instructions</div>
+            <div class="widget-question">You want to tell someone to keep going straight ahead. Which is right?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Seguir derecho» - straight ahead. Learn it as one unit.">Seguir derecho</button>
+                <button data-correct="false" data-fb="«Seguir a la derecha» sends them to the RIGHT. One letter and «a la», and the instruction reverses.">Seguir a la derecha</button>
+                <button data-correct="false" data-fb="«Seguir la derecha» is not idiomatic. For straight ahead: seguir derecho.">Seguir la derecha</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which move is missing?</div>
+            <div class="widget-question">«Tiene que seguir derecho cuatro cuadras y doblar a la derecha en la avenida.» What has been left out?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="The distance is there - «cuatro cuadras». That is move 1.">The distance</button>
+                <button data-correct="true" data-fb="Move 3 - the landmark. They have no way to check they are still right, and no idea what they are looking for.">The reference point</button>
+                <button data-correct="false" data-fb="The turn is there - «doblar a la derecha en la avenida», with its marker. That is move 2.">The turn</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the plan B</div>
+            <div class="widget-question">«Si ___ , puede preguntar en cualquier tienda.» (perderse, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«se pierde» - reflexive, third person for usted. Present tense, no new grammar needed.">se pierde</button>
+                <button data-correct="false" data-fb="«te pierdes» is the tú form - fine with a friend, but a stranger gets usted.">te pierdes</button>
+                <button data-correct="false" data-fb="«me pierdo» is «I get lost» - the wrong person entirely.">me pierdo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: give directions from your front door to the nearest shop, using <strong>all four moves</strong> and <em>tiene que</em> + infinitive.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Tiene que salir y seguir derecho dos cuadras hasta el semáforo. Ahí tiene que doblar a la derecha. La tienda queda al lado de la parada del autobús, enfrente de un parque pequeño. Si se pierde, puede llamarme.</strong><br><br>Check yours: all four moves present · <em>derecho</em> for straight and <em>a la derecha</em> for right · and a landmark in move 3, not just a count of blocks.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Perdida en Cartagena</strong><br><br>
+        La primera tarde en Cartagena me <em>perdí</em> completamente. El centro histórico es un laberinto de calles estrechas y todas las esquinas se parecen: casas de colores, balcones con flores, la misma luz.<br><br>Le <em>pregunté</em> a una señora que <em>vendía</em> fruta. No me <em>dio</em> ni una sola distancia. Me <em>dijo</em>: <em>«Usted tiene que caminar hasta la iglesia amarilla, la que se ve desde aquí. Ahí tiene que doblar a la izquierda. Al ver el mar, ya llegó.»</em><br><br>Y <em>funcionó</em>. No <em>conté</em> cuadras ni <em>miré</em> el mapa: <em>caminé</em> hacia una iglesia amarilla y después hacia el mar. En una ciudad donde las calles no tienen números, las referencias valen más que las distancias.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">The fruit seller gave <strong>two</strong> of the four moves — the turn and the reference points — and skipped distance entirely. In Cartagena's old town that is the right call, and it is the opposite of the Bogotá grid you read about yesterday. Two Colombian cities, two systems.<br><br>Notice the phrase <em>«al ver el mar»</em> — <em>al</em> + infinitive, meaning &ldquo;upon seeing&rdquo;. It is a compact construction worth stealing: <em>al salir</em>, <em>al llegar</em>, <em>al cruzar</em>. Spanish uses it constantly where English needs a whole clause. Reading closely for a construction like that is normal; it is the habit Módulo 0 asked you to build.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COLOMBIA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Bogotá se calcula, Cartagena se camina</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Two Colombian cities, two entirely different relationships with an address. <strong>Bogotá</strong> is a numbered grid at 2,600 metres in the Andes, where a direction is arithmetic. <strong>Cartagena</strong>, on the Caribbean coast, has a walled colonial centre — a UNESCO World Heritage site — where the streets are narrow, curved, and named rather than numbered, and where people navigate by churches, plazas and colours.<br><br>That difference is worth knowing because it changes what a helpful answer looks like. In Bogotá, <em>«está a ocho cuadras»</em> is genuinely useful. In Cartagena it is nearly meaningless, and <em>«hasta la iglesia amarilla»</em> is what gets you there.<br><br>Colombians switch between the two without thinking about it. Noticing which mode a place runs on is a real travel skill.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA CORTESÍA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The fruit seller did something courteous that costs nothing and is easy to miss: she gave directions the <em>listener</em> could use, not the ones that were most accurate. She could have counted streets. Instead she picked a yellow church visible from where they stood. <em>La cortesía</em> in giving help is largely a matter of thinking from the other person's position. <em>Dar bien una indicación es imaginar el camino desde los ojos del otro.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 3.03 &mdash; Mandatos formales</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's grammar, and the most consequential lesson of the semester: <em>siga, doble, cruce</em>. These are the same forms you will use for the subjunctive in Módulo 7, so learning them properly now pays twice.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then give your four-move directions aloud once more — and check that move 3 names something a person could actually <em>see</em>.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Twenty words for a city, a four-move shape, and a way to give directions before you even have the command forms. Tomorrow the forms arrive — and they matter more than they look. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.02 &middot; Las direcciones</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.08 &middot; Day 8 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lectura interpretativa · Las meninas</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lectura interpretativa — dos frases que lo dicen todo a la vez</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two sentences of real Spanish that do the work of about seven. Then you take them apart.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Módulo 6's reading day, and the text is short on purpose: the opening two sentences of the Spanish Wikipedia article on <em>Las meninas</em>. Unadapted, unsimplified, and denser than anything you have read in this course so far.<br><br>They are also a demonstration of exactly what this module has been teaching. Every technique for saying two things about one noun at once is in them &mdash; and by the end of the lesson you will do something that may feel like sabotage: <strong>you will rewrite them as three short sentences and decide which version you prefer.</strong> That is not a trick. Combining is a tool, and a tool has a right amount.<br><br>The graded <strong>Lectura interpretativa</strong> (15 pts) opens today.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state where each of the painting's two names comes from, and who supplied its date.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what each parenthetical clause, the phrase <em>el de plena madurez</em>, and the participle <em>aceptada</em> are doing to the sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> rewrite the passage as three simple sentences and say what that gains and what it costs.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; ANTES DE LEER <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Contexto y tres cosas que buscar</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>El contexto.</strong> These are the first two sentences of an encyclopedia article. That matters, because encyclopedic prose has an unusual obligation: every claim has to carry its own source <em>inside</em> the sentence. It cannot say &ldquo;people think&rdquo; and move on. Watch what that obligation does to the grammar.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;"><strong>Busca estas tres cosas.</strong> No dictionary on the first two passes:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 0 1.4rem;">
+            <li>¿Cuántos nombres tiene la obra, y de dónde viene cada uno?</li>
+            <li>¿Quién dio la fecha, y por qué el texto menciona a esa persona?</li>
+            <li>¿Cuántos sujetos explícitos hay en las dos oraciones? Cuéntalos.</li>
+        </ol>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; TÉCNICA &middot; tapa los paréntesis</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Do this literally: put a finger over each set of parentheses and read what is left. You get the backbone &mdash; <em>«Las meninas o La familia de Felipe IV se considera la obra maestra del pintor&hellip; Diego Velázquez»</em> &mdash; and it is a short, simple statement. Then put the parentheses back one at a time and notice what each one adds.<br><br>This is the single most useful habit for reading dense Spanish, and it works because the writer put those brackets there for the same reason: they are the parts you could skip.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL TEXTO <span class="pill-time">9 min</span></div>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA AUTÉNTICA &middot; TEXTO CON LICENCIA ABIERTA</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            <em>Las meninas</em> (como se conoce a esta obra desde el siglo XIX) o <em>La familia de Felipe IV</em> (según se describe en el inventario de 1734) se considera la obra maestra del pintor del Siglo de Oro español Diego Velázquez. Acabado en 1656, según Antonio Palomino, fecha unánimemente aceptada por la crítica, corresponde al último periodo estilístico del artista, el de plena madurez.
+            </div>
+            <div class="src">Wikipedia en español, «Las meninas». Texto disponible bajo licencia Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0).</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Ayuda de vocabulario</strong> &mdash; only after your second reading: <em>se conoce</em> = is known &middot; <em>según</em> = according to, as &middot; <em>el inventario</em> = an inventory, a list of a collection &middot; <em>se considera</em> = is considered &middot; <em>la obra maestra</em> = the masterpiece &middot; <em>el Siglo de Oro</em> = the Spanish Golden Age, roughly 1550&ndash;1680 &middot; <em>acabado</em> = finished &middot; <em>unánimemente</em> = unanimously &middot; <em>la crítica</em> = critics and scholars taken together, as a body &middot; <em>corresponder a</em> = to belong to &middot; <em>el periodo estilístico</em> = a stylistic period &middot; <em>plena madurez</em> = full maturity.</p>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:10px 0 0;"><strong>Answer question 3 before you go on.</strong> Explicit subjects in those two sentences: <strong>zero</strong>. Nobody knows the painting, nobody describes it, nobody considers it a masterpiece &mdash; grammatically, at least. Part 4 explains how Spanish manages that, and why encyclopedias like it.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; COMPRENSIÓN <span class="pill-time">10 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Practice first &mdash; ungraded. The graded item asks the same kinds of question, and you are expected to reread the passage while answering it.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; IDEA GENERAL &middot; gist</div>
+            <div class="widget-question">¿Qué tipo de información dan estas dos oraciones?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El fragmento no describe a nadie. No aparece ni la infanta, ni las meninas, ni el perro: es un párrafo de identificación, no de descripción.">Una descripción de las personas que aparecen en el cuadro</button>
+                <button data-correct="false" data-fb="No hay ninguna opinión personal. El texto atribuye los juicios a otros - a la crítica, a Palomino, al inventario - y esa es justamente su manera de trabajar.">La opinión del autor sobre por qué el cuadro es bello</button>
+                <button data-correct="true" data-fb="Exacto: dos nombres con su origen, una fecha con su fuente, y el lugar de la obra dentro de la carrera del pintor. Cuatro datos, dos oraciones.">Los dos nombres de la obra, su fecha, y su lugar en la carrera del pintor</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; detail</div>
+            <div class="widget-question">¿De dónde viene el nombre <em>La familia de Felipe IV</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El siglo XIX sí aparece en el texto, pero va con el otro nombre: «como se conoce a esta obra desde el siglo XIX» se refiere a «Las meninas».">De un catálogo del siglo XIX</button>
+                <button data-correct="true" data-fb="«Según se describe en el inventario de 1734» - el paréntesis dice exactamente de dónde sale ese nombre, y por eso está ahí.">Del inventario de 1734</button>
+                <button data-correct="false" data-fb="Palomino aporta la fecha, no el nombre. El texto mantiene las dos cosas separadas con mucho cuidado.">De Antonio Palomino</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; GRAMÁTICA EN EL TEXTO &middot; the Honors item</div>
+            <div class="widget-question">El texto termina con <em>«el de plena madurez»</em>. ¿Por qué no escribe <em>«el periodo de plena madurez»</em>?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Para no repetir «periodo», que acaba de aparecer en la misma oración. El sustantivo se calla porque el lector lo tiene fresco - la misma economía que compra un pronombre relativo.">Para no repetir <em>periodo</em>, que ya está en la misma oración</button>
+                <button data-correct="false" data-fb="«El» no puede referirse al artista: la oración habla del último periodo estilístico, y «el de plena madurez» es lo que lo identifica. No hay cambio de tema, solo ahorro.">Porque <em>el</em> se refiere al artista, no al periodo</button>
+                <button data-correct="false" data-fb="No existe esa regla. Lo que hay aquí es una elipsis: el español calla un sustantivo cuando acaba de decirlo, y deja el artículo solo para señalarlo.">Porque en español el sustantivo se omite después de una fecha</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; INFERENCIA &middot; inference</div>
+            <div class="widget-question">El texto no dice solo «1656»: dice <em>«según Antonio Palomino, fecha unánimemente aceptada por la crítica»</em>. ¿Qué revela eso sobre cómo se fecha un cuadro?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El texto no dice eso, y su manera de escribirlo apunta a lo contrario: cita una fuente y habla de acuerdo entre especialistas, y ninguna de las dos cosas hace falta cuando la fecha está escrita en el lienzo.">Que la fecha está escrita en el cuadro y nadie la discute</button>
+                <button data-correct="true" data-fb="La fecha viene de Palomino, un pintor y biógrafo posterior, y vale porque la crítica la acepta. Fechar una obra es un acto de lectura de documentos, no una medición.">Que depende de un testimonio antiguo y del acuerdo de los especialistas</button>
+                <button data-correct="false" data-fb="Al contrario: da una fecha exacta. Lo que añade es de dónde viene y quién la acepta - más precisión, no menos.">Que la crítica prefiere no dar fechas exactas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; LA FRASE POR DENTRO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Cinco cosas trabajando a la vez</h3>
+        <table class="gtable">
+            <thead><tr><th>En el texto</th><th>Qué es</th><th>Qué le está haciendo a la oración</th></tr></thead>
+            <tbody>
+                <tr><td><em>(como se conoce a esta obra desde el siglo XIX)</em></td><td>Una aclaración relativa entre paréntesis</td><td>Mete la <strong>historia del nombre dentro del nombre</strong>. Sin ella harían falta dos oraciones seguidas</td></tr>
+                <tr><td><em>(según se describe en el inventario de 1734)</em></td><td>La misma cosa, en paralelo</td><td>Hace lo mismo con el segundo nombre. Las dos son <strong>simétricas</strong>: nombre + de dónde sale. Esa simetría es lo que hace legible una oración tan cargada</td></tr>
+                <tr><td><em>el de plena madurez</em></td><td>Elipsis: <em>el (periodo) de plena madurez</em></td><td>Sustituye un sustantivo ya dicho. Es la <strong>misma economía</strong> que compra un pronombre relativo, con otra herramienta</td></tr>
+                <tr><td><em>aceptada por la crítica</em></td><td>Participio con concordancia + <em>por</em> + agente</td><td><em>Aceptada</em> concuerda con <strong>fecha</strong>, femenino singular &mdash; Módulo 2. <em>Por</em> marca <strong>quién</strong> acepta &mdash; Módulo 5. Los dos, en un texto real</td></tr>
+                <tr><td><em>se considera &middot; se conoce &middot; se describe</em></td><td><em>Se</em> impersonal</td><td>Por esto la oración <strong>no tiene ni un sujeto explícito</strong>. Nadie firma los juicios: los firma «se»</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>The two parentheticals are the sentence's engineering, so look at them once more.</strong> Each one attaches a fact about a <em>name</em> to the name itself. Written as separate sentences you would get: the work is called <em>Las meninas</em>; that name dates from the nineteenth century; it is also called <em>La familia de Felipe IV</em>; that name comes from the 1734 inventory. Four sentences, and the reader has to hold them all to see the pattern. Bracketed inside one sentence, the pattern is visible immediately. <strong>That is combining used well.</strong></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><em>Aceptada</em> is worth a second look for a different reason: it is a Módulo 2 form and a Módulo 5 preposition, sitting in a sentence written by someone who was not thinking about either. <em>Fecha</em> is feminine singular, so the participle is <em>aceptada</em> &mdash; and if the writer had said <em>dato</em> instead, it would read <em>dato aceptado</em>. Agreement is not decoration; it is what tells you which noun the participle belongs to in a sentence this crowded.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; SOBRE EL «SE» &middot; una habilidad de lectura, no una forma tuya</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><em>Se considera</em>, <em>se conoce</em> and <em>se describe</em> are the <strong>impersonal <em>se</em></strong>, and it is the reason this prose has almost no subjects. Read them as English &ldquo;is considered&rdquo;, &ldquo;is known&rdquo;, &ldquo;is described&rdquo; and move on.<br><br><strong>This is recognition only.</strong> You are not asked to produce it here, nothing on this page or in the graded item requires it, and you meet it properly as a topic later in the sequence. Recognising a construction in a real text and being able to write it are two different skills, and today only the first one is yours. Reading around and through an unfamiliar structure is itself a skill this course keeps asking for &mdash; the same habit Módulo 3's travel-guide sentence needed.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 5 &middot; DESHACER LA FRASE <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Ahora al revés</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">For ten days this module has taught you to combine. Now do the opposite, on paper, before you read any further: <strong>rewrite the whole passage as three short, simple sentences in Spanish.</strong> No parentheses, no relative clauses, no participle phrases. Keep as much of the information as three plain sentences will carry.</p>
+        <div>
+            <button class="reveal-btn">Reveal one possible version</button>
+            <div class="reveal-body"><strong>Tres frases simples:</strong><br>1. Diego Velázquez pintó esta obra en 1656.<br>2. Hoy la llamamos <em>Las meninas</em>, pero el inventario de 1734 la llamó <em>La familia de Felipe IV</em>.<br>3. La crítica la considera su obra maestra, del último periodo del pintor.<br><br><strong>Now count what fell out.</strong> Palomino is gone. <em>Unánimemente</em> is gone. The nineteenth century is gone. And with them goes the whole point that the date is not a fact printed on the canvas but a scholarly agreement about a document &mdash; the very thing the inference item asked you about. Three sentences cannot hold it. A fourth could, and then you are combining again.</div>
+        </div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 10px 0;">So the honest conclusion of this module is not &ldquo;combine more.&rdquo; It is that <strong>combining is a decision with a price</strong>, and the price is paid by your reader. Encyclopedic Spanish pays it deliberately, because a source has to sit next to the claim it supports. Your <em>Lengua en acción</em> paragraph should not read like this passage &mdash; and now you can say precisely why.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which version would you rather read?</div>
+            <div class="widget-options">
+                <button data-response="Defensible, and it is the right choice for an encyclopedia: every claim carries its source inside the sentence, so a reader can check it without leaving the line. The price is that you cannot read it fast, and you almost cannot read it aloud.">The original — it holds more</button>
+                <button data-response="Also right, for a different job. But notice what the three sentences threw away: Palomino, «unánimemente», and the idea that the date is agreed rather than recorded. Speed cost you the sourcing.">The three short ones — I understood them at once</button>
+                <button data-response="That is what practised readers of dense prose actually do: build a plain skeleton first, then go back for the qualifications. It is also a good drafting strategy - write simple, then combine on the second pass.">The short ones first, then the original</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Cómo sabemos lo que sabemos</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Today's sentence cites two sources, and neither is decoration. They are the actual evidential basis for almost everything this course has told you about <em>Las meninas</em>, so it is worth knowing what they are.<br><br><strong>Antonio Palomino</strong> (1655&ndash;1726) was a painter who became a biographer. His <em>Museo pictórico y escala óptica</em>, published in Madrid between 1715 and 1724, includes lives of the Spanish painters &mdash; and it is where the date <strong>1656</strong> comes from. Notice the arithmetic: Palomino was born in 1655, the year before the painting was finished. He never saw Velázquez work. He wrote roughly sixty years afterwards, from what could still be found out. That is the foundation the whole field stands on, and it is why the text says <em>«según Antonio Palomino»</em> rather than simply <em>«en 1656»</em>.<br><br>The other spine is the <strong>royal inventories</strong>: periodic lists of what the crown owned and where each item hung. They are dry, and they are priceless, because they record what a painting was called and where it was on a given date. The <strong>1734 inventory</strong> named it <em>La familia del señor rey Felipe IV</em> &mdash; and that is the second name in today's sentence.<br><br>So: one book by a man born too late, and a list of furniture. Everything else is inference. When a Spanish encyclopedia says <em>«fecha unánimemente aceptada por la crítica»</em>, that is not padding &mdash; it is an accurate description of how much of art history actually works.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Today's real work was not translating two sentences. It was noticing what those sentences were <em>doing to you</em> &mdash; making you hold four facts at once, and hiding every agent behind a <em>se</em> &mdash; and then being willing to undo it to find out what the effect had cost. That is a step past comprehension. Most readers accept a difficult sentence or give up on it; very few take it apart and ask whether it needed to be that difficult. <em>Entender una frase es saber qué te está haciendo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.09 &mdash; Tarea oral</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you record 60&ndash;90 seconds about <strong>one specific work</strong> and one detail in it &mdash; spoken Spanish, out loud, with relative clauses that a listener can follow. Twenty points, and the most heavily weighted component of the course. Choose your painting tonight, and look at it for longer than feels necessary.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then complete the graded <strong>Lectura interpretativa</strong> (15 pts, two attempts). Keep this page open while you answer &mdash; you are expected to reread the passage, not to recall it.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two sentences of unadapted encyclopedic Spanish, read, dismantled, rebuilt three different ways &mdash; and you can now say what a parenthesis costs a reader. That is a reading skill most people never acquire in their own language. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.08 &middot; Lectura interpretativa · Las meninas</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

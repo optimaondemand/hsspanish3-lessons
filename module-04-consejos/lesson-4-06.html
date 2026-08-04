@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 4.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 4</div>
+        <div style="font-size: 12px; color: #666;">Consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Aconsejar de verdad</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Consejos entre amigos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Aconsejar de verdad — el párrafo de un buen consejo</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Advice that only tells someone what to do is the easy half. The other half is why they should listen.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last full practice day. You now have affirmative <em>tú</em> commands, negative <em>tú</em> commands, and pronouns in both positions. Today you hold them together across a <strong>connected paragraph</strong> — the Honors standard, and exactly what tomorrow's <em>Lengua en acción</em> asks for.<br><br>Advice has a shape, and it is not a list of instructions. The shape is what makes the difference between advice a friend takes and advice a friend nods at.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write 6&ndash;8 connected sentences of advice using both <em>tú</em> command forms.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> place every pronoun and every tilde correctly in either form.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the five moves of a piece of advice and say which one people skip.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why good advice usually starts by listening</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Look again at Módulo 4's very first reading, back on Day 1: the friend awake at midnight asked <em>one question</em> before saying anything else — <em>«¿Cuántas veces has practicado?»</em>. Then they gave advice built on the answer.<br><br>That is the move almost everyone skips. Advice given before you know the situation is a guess, and it usually sounds like one.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Think of advice you were given that you actually took. What made it land?</div>
+            <div class="widget-options">
+                <button data-response="Almost always this. Advice from someone who has done the thing carries weight that identical words from a stranger do not - which is why move 4 in Part 2 is «say why you know».">The person had been through it</button>
+                <button data-response="A reason turns an instruction into an argument you can agree with. That is move 3, and it is what separates advice from an order.">They explained the reasoning</button>
+                <button data-response="Then you already know why move 1 exists. Being asked about your situation before being told what to do is most of what makes advice bearable.">They asked me about it first</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LOS CINCO MOVIMIENTOS <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A shape for advice, and the form each move wants</h3>
+        <table class="gtable">
+            <thead><tr><th>Sentence</th><th>Move</th><th>Form</th><th>Opener</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Ask, or acknowledge</td><td>afirmativo + pronoun</td><td>Cuéntame&hellip; / Escúchame&hellip;</td></tr>
+                <tr><td>2&ndash;3</td><td>What to do</td><td>afirmativo</td><td>Habla con&hellip; / Duerme&hellip; / Pide&hellip;</td></tr>
+                <tr><td>4</td><td><strong>What not to do</strong></td><td><span class="pron">negativo</span></td><td>No le escribas&hellip; / No te compares&hellip;</td></tr>
+                <tr><td>5&ndash;6</td><td>The reason</td><td>present or past</td><td>porque&hellip; / a mí me pasó&hellip;</td></tr>
+                <tr><td>7</td><td>Reassure</td><td><span class="pron">negativo</span> or afirmativo</td><td>No te preocupes&hellip; / Ten paciencia&hellip;</td></tr>
+                <tr><td>8</td><td>Stay available</td><td>afirmativo + pronoun</td><td>Llámame&hellip; / Escríbeme&hellip;</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Move 5&ndash;6 is the one people skip</strong>, and it is where your other modules earn their keep: the reason is usually a past experience, so it wants the tenses from Módulos 0 to 2. <em>«A mí me pasó lo mismo y no dormí en dos semanas»</em> does more work than any command.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LA REGLA DE LOS CONECTORES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">No connector twice. For advice you have: <em>primero · además · pero · porque · sin embargo · en serio · al final · y otra cosa</em>. Eight, and eight sentences need at most five.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; MODELO ANOTADO <span class="pill-time">10 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>A una amiga que quiere dejar el equipo</strong><br><br>
+        <sup>1</sup> <strong>Cuéntame</strong> otra vez qué pasó en el entrenamiento, porque ayer estabas muy alterada. <sup>2</sup> <strong>Habla</strong> con la entrenadora antes de decidir nada. <sup>3</sup> <strong>Pídele</strong> una reunión de diez minutos, no un correo largo. <sup>4</sup> <em>No dejes</em> el equipo esta semana, y <em>no le escribas</em> nada al grupo todavía. <sup>5</sup> A mí me pasó algo parecido en segundo año: <em>quise</em> irme en octubre y <em>me arrepentí</em> en enero. <sup>6</sup> Lo que <em>había cambiado</em> no era el equipo, era yo, y eso <em>se arregló</em> solo. <sup>7</sup> <em>No te compares</em> con las que llevan cinco años; <strong>ten</strong> paciencia contigo. <sup>8</sup> <strong>Llámame</strong> el jueves y me cuentas cómo fue.</p>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Count the forms: <strong>five affirmative</strong> commands (<em>cuéntame, habla, pídele, ten, llámame</em>), <strong>four negative</strong> (<em>no dejes, no le escribas, no te compares</em>), pronouns attached in the affirmatives with tildes where needed, and in front in the negatives without. Sentences 5 and 6 carry the whole persuasive weight and contain no commands at all — preterite and past perfect from Módulos 0 and 2. Five connectors, none repeated.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what is missing?</div>
+            <div class="widget-question">«Habla con la entrenadora. No dejes el equipo. No te compares con nadie. Ten paciencia.» What has been left out?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="The reason - moves 5 and 6. Four commands with nothing behind them read as orders rather than advice.">The reason behind the advice</button>
+                <button data-correct="false" data-fb="Both forms are present: two affirmative, two negative. The gap is not grammatical.">A negative command</button>
+                <button data-correct="false" data-fb="There are four commands, which is plenty. The problem is that none of them is supported.">More instructions</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pronoun position, affirmative</div>
+            <div class="widget-question">«___ una reunión corta.» (pedir + le, affirmative <em>tú</em>)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Pídele» - attached, three syllables, tilde required: PÍ-de-le.">Pídele</button>
+                <button data-correct="false" data-fb="«Pidele» without the tilde would be read pi-DE-le. The accent holds the stress.">Pidele</button>
+                <button data-correct="false" data-fb="«Le pide» is a statement - «he asks him». Affirmative commands attach the pronoun.">Le pide</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pronoun position, negative</div>
+            <div class="widget-question">«___ nada al grupo todavía.» (escribir + le, negative <em>tú</em>)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No le escribas» - pronoun in front, no tilde, and the verb from «no escriba» + s.">No le escribas</button>
+                <button data-correct="false" data-fb="«No escríbele» keeps the pronoun attached and the affirmative form. Both change in the negative.">No escríbele</button>
+                <button data-correct="false" data-fb="«No le escribe» is a statement: «he doesn't write to him». The negative command needs «escribas».">No le escribe</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú — tomorrow's graded task, rehearsed. Write <strong>6&ndash;8 sentences</strong> of advice to a friend facing a real decision, following Part 2's shape. Keep it; you will revise rather than restart.</p>
+            <button class="reveal-btn">Reveal a checklist</button>
+            <div class="reveal-body"><strong>Before you call it finished:</strong><br>&bull; Every command a <strong><em>tú</em></strong> form — this is a friend, not a stranger.<br>&bull; <strong>At least two negative</strong> commands, built from the Ud. form + <em>-s</em>.<br>&bull; At least one pronoun <strong>attached</strong> to an affirmative, with its tilde: <em>cuéntame, pídele, llámame</em>.<br>&bull; At least one pronoun <strong>in front</strong> of a negative, without a tilde: <em>no le escribas, no te compares</em>.<br>&bull; <strong>Sentences 5&ndash;6 give a reason</strong>, ideally from your own experience — and therefore in a past tense.<br>&bull; No affirmative irregular used as a negative: <em>no hagas</em>, never «no haz».<br>&bull; Four or more different connectors, none repeated.<br>&bull; At least three words from this module's twenty.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El colmado de la esquina</strong><br><br>
+        En muchos barrios dominicanos, el <em>colmado</em> no es solo una tienda pequeña. Es donde se compra el arroz, se paga la luz, se pide un fiado a fin de mes y se pregunta por la gente. El dueño conoce a las familias de tres calles a la redonda.<br><br>Mi tía dice que en el colmado se dan más consejos que en cualquier oficina. Alguien llega alterado por un problema, y siempre hay dos o tres personas apoyadas en el mostrador dispuestas a opinar. <em>«No hagas eso ahora»</em>. <em>«Habla con él primero»</em>. <em>«A mí me pasó igual»</em>.<br><br>No siempre es buen consejo, pero rara vez le falta lo que sí importa: alguien escuchó, y alguien contó algo propio. Mi tía se ríe y dice que la mitad del país se ha arreglado la vida apoyado en el mostrador de un colmado.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Find the three quoted pieces of advice and match each to a move from Part 2: one negative command, one affirmative, and one reason drawn from experience. Between them they cover the shape in three short lines.<br><br>Then notice <em>apoyadas</em> and <em>dispuestas</em> — participles working as adjectives, agreeing with the nouns they describe. Módulo 2's <em>haber</em> test, still working. And <em>se ha arreglado</em> in the last line is Módulo 1's present perfect.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; REPÚBLICA DOMINICANA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El colmado</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The <strong><em>colmado</em></strong> is a genuinely central Dominican institution and has no clean English equivalent. It is a small neighbourhood shop that also functions as a message board, a credit line, a bar and a place to stand around. The practice of buying <em>al fiado</em> — on informal credit, written in a notebook, settled at the end of the month — still operates on the shopkeeper's judgement of who is good for it.<br><br>Why that matters for this module: advice in the Dominican Republic is frequently <strong>public and unsolicited</strong>, and that is not considered intrusive. Explaining your problem in front of three strangers who then all weigh in is normal. US students often find this the sharpest cultural difference in the module — more than any grammar point.<br><br>And notice what the reading says makes it work. Not that the advice is good, but that <em>«alguien escuchó, y alguien contó algo propio»</em> — someone listened, and someone told you something of their own. That is moves 1 and 5 of Part 2, arrived at independently by people leaning on a counter.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; EL SERVICIO</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The model in Part 3 does something that costs the writer more than any of its commands: it admits a mistake. <em>«Quise irme en octubre y me arrepentí en enero»</em> — the advice works because the person giving it was willing to look worse in order to be useful. <em>El servicio</em> quite often means spending your own dignity rather than your time. <em>Servir a veces cuesta contar en qué te equivocaste.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 4.07 &mdash; Integración &middot; graded work opens</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the <strong>Vocabulary Check</strong> (15 pts, listening, one attempt) and <strong>Lengua en acción</strong> (20 pts) open. The advice you just wrote is what <em>Lengua</em> asks for — bring it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Keep your paragraph — and check specifically that <strong>sentences 5 and 6 give a reason</strong>. That is the half most people leave out, and it is the half that persuades.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Eight sentences, both command forms, pronouns in both positions — and a reason drawn from your own past, which is what turns instructions into advice. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.06 &middot; Aconsejar de verdad</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

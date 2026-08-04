@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 1.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 1</div>
+        <div style="font-size: 12px; color: #666;">La salud</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Ya, todavía no, alguna vez</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La salud y el cuerpo</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Ya, todavía no, alguna vez — y los reflexivos</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Four small words that almost always bring this tense with them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned to choose the perfect. Today you learn the four expressions that <em>live</em> in it — <strong>ya, todavía no, alguna vez, nunca</strong> — because each one is about a window that has not closed.<br><br>Then the second half: <strong>reflexive verbs</strong> in the perfect. This is where pronoun placement stops being a rule you can recite and becomes something you have to produce, and it is the commonest error in the module's writing task.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>ya</em>, <em>todavía no</em>, <em>alguna vez</em> and <em>nunca</em> with the present perfect.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> place reflexive and object pronouns correctly before <em>haber</em>, every time.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> ask somebody about their experience using <em>¿Alguna vez has&hellip;?</em></div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why these four belong together</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Look at what they have in common. <em>Ya</em> = it has happened <strong>by now</strong>. <em>Todavía no</em> = it has not happened <strong>yet</strong> — and &ldquo;yet&rdquo; implies it still might. <em>Alguna vez</em> = at any point <strong>in a life so far</strong>. <em>Nunca</em> = at no point <strong>so far</strong>.<br><br>Every one of them measures from the past up to <em>now</em>. That is the present perfect's entire job, which is why the four of them pull it so reliably.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">«Todavía no he tomado la medicina.» What does this imply about whether you will?</div>
+            <div class="widget-options">
+                <button data-response="Exactly. «Todavía no» carries an expectation that it is still coming - which is why it needs an open window and takes the perfect.">That I still intend to</button>
+                <button data-response="That would be «no he tomado la medicina» or «no la tomé» - a flat negative. Adding «todavía» is what inserts the expectation.">That I have decided not to</button>
+                <button data-response="Reasonable, but Spanish speakers hear «todavía no» as «not yet, but expected». If you truly meant never, you would say «nunca».">It says nothing either way</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LOS CUATRO MARCADORES <span class="pill-time">11 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Expression</th><th>Means</th><th>Where it goes</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td><strong>ya</strong></td><td>already, by now</td><td>Before <em>haber</em>, or at the end</td><td><span class="pron">Ya</span> he tomado la medicina.</td></tr>
+                <tr><td><strong>todavía no</strong></td><td>not yet</td><td>Before <em>haber</em></td><td><span class="pron">Todavía no</span> he ido al consultorio.</td></tr>
+                <tr><td><strong>alguna vez</strong></td><td>ever, at any time</td><td>After the participle, or after <em>haber</em></td><td>¿Has estado <span class="pron">alguna vez</span> en el hospital?</td></tr>
+                <tr><td><strong>nunca</strong></td><td>never (so far)</td><td>Before <em>haber</em></td><td><span class="pron">Nunca</span> he tenido una operación.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Two things to notice. <strong><em>Nunca</em> before <em>haber</em> needs no <em>no</em></strong> — <em>nunca he tenido</em>, not «nunca no he tenido». And <em>ya</em> is remarkably flexible in position, which is unusual; the other three are not, so do not generalise from it.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ¿ALGUNA VEZ HAS&hellip;? &middot; the most useful question in this lesson</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><strong>¿Alguna vez has&hellip;?</strong> is how you ask about anybody's life experience, in any topic — not just health. <em>¿Alguna vez has viajado a México? ¿Alguna vez has probado el mole?</em> It is the single most conversationally valuable structure in this module, and the answer comes back in the same tense: <em>Sí, he ido dos veces</em> / <em>No, nunca he ido</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS REFLEXIVOS EN EL PERFECTO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The pronoun goes first. Always.</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Health talk is full of reflexive verbs — you hurt <em>yourself</em>, you fall, you wake up, you get sick. In the perfect, the pronoun sits <strong>in front of <em>haber</em></strong>, and nothing may come between <em>haber</em> and the participle:</p>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>Correct</th><th>Never</th></tr></thead>
+            <tbody>
+                <tr><td>lastimarse</td><td><span class="pron">me he</span> lastimado el tobillo</td><td>«he me lastimado» &middot; «he lastimado me»</td></tr>
+                <tr><td>caerse</td><td><span class="pron">se ha</span> caído en la escalera</td><td>«ha se caído»</td></tr>
+                <tr><td>despertarse</td><td><span class="pron">nos hemos</span> despertado tarde</td><td>«hemos nos despertado»</td></tr>
+                <tr><td>enfermarse</td><td><span class="pron">te has</span> enfermado dos veces</td><td>«has te enfermado»</td></tr>
+                <tr><td>sentirse</td><td><span class="pron">me he</span> sentido mal</td><td>«he me sentido»</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">And when a negative joins in, the order is <strong><em>no</em> + pronoun + <em>haber</em> + participio</strong>: <em>No me he sentido bien esta semana.</em> Four words, one fixed order, no exceptions. Note also <em>caerse → se ha ca<span class="pron">í</span>do</em> — the accent rule from Day 3 is still working, because the stem ends in a vowel.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; nunca needs no «no»</div>
+            <div class="widget-question">«___ una operación en mi vida.» (never had)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Nunca no he tenido» doubles the negative. In Spanish «nunca» before haber does the work alone.">Nunca no he tenido</button>
+                <button data-correct="true" data-fb="«Nunca he tenido» - «nunca» before haber, and no extra «no».">Nunca he tenido</button>
+                <button data-correct="false" data-fb="«No he nunca tenido» splits haber from the participle, which is never allowed.">No he nunca tenido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pronoun placement</div>
+            <div class="widget-question">«Mi hermano ___ dos veces este mes.» (enfermarse)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«ha se enfermado» puts the pronoun between haber and the participle. It goes in front of haber.">ha se enfermado</button>
+                <button data-correct="true" data-fb="«se ha enfermado» - pronoun, then haber, then participle. And «este mes» correctly pulls the perfect.">se ha enfermado</button>
+                <button data-correct="false" data-fb="«ha enfermado se» attaches the pronoun to the end, which only happens with infinitives and gerunds.">ha enfermado se</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; negative + reflexive</div>
+            <div class="widget-question">«___ bien desde el lunes.» (I have not felt well)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No me he sentido» - the fixed order: no, pronoun, haber, participle.">No me he sentido</button>
+                <button data-correct="false" data-fb="«Me no he sentido» puts «no» in the wrong slot. It comes first of all four.">Me no he sentido</button>
+                <button data-correct="false" data-fb="«No he me sentido» splits haber from the participle - the one thing that is never allowed.">No he me sentido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the accent again</div>
+            <div class="widget-question">«Mi abuela ___ dos veces este año, pero está bien.» (caerse)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«se ha caido» is missing the tilde. The stem «ca-» ends in a vowel, so the i must be accented: caído.">se ha caido</button>
+                <button data-correct="true" data-fb="«se ha caído» - stem ends in a vowel, so the i takes the accent: ca-í-do, three syllables.">se ha caído</button>
+                <button data-correct="false" data-fb="«ha se caído» has the right accent but the wrong pronoun position.">ha se caído</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: ask and answer three <em>¿Alguna vez has&hellip;?</em> questions about health — and make at least one answer use <em>nunca</em> and one use a reflexive verb.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;¿Alguna vez te has lastimado jugando un deporte? &mdash;Sí, me he lastimado el tobillo dos veces, pero nunca he necesitado una operación.<br>&mdash;¿Alguna vez has estado en el hospital? &mdash;Sí, he estado una vez, cuando era pequeño.<br>&mdash;¿Ya has ido al consultorio esta semana? &mdash;Todavía no he ido; voy el jueves.</strong><br><br>Check three things: <em>nunca</em> with no extra <em>no</em> · every pronoun sitting in front of <em>haber</em> · and <em>todavía no</em> before <em>he</em>, not after.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Formulario del paciente</strong><br><br>
+        <em>Por favor conteste las siguientes preguntas.</em><br><br>
+        ¿<strong>Alguna vez ha estado</strong> usted en el hospital? &mdash; Sí, una vez, en 2019.<br>
+        ¿<strong>Ha tenido</strong> fiebre esta semana? &mdash; Sí, dos noches.<br>
+        ¿<strong>Se ha caído</strong> en los últimos seis meses? &mdash; No, <strong>nunca me he caído</strong>.<br>
+        ¿<strong>Ya ha tomado</strong> algún medicamento hoy? &mdash; <strong>Todavía no he tomado</strong> nada.<br>
+        ¿Cómo <strong>se ha sentido</strong> últimamente? &mdash; <strong>No me he sentido</strong> bien. <strong>Me he despertado</strong> con dolor de garganta varios días.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Every question on a real intake form is in the present perfect, and now you can see why: a form asks about your life <em>up to today</em>. Find all four markers from Part 2 in the answers, then check each reflexive — <em>se ha caído</em>, <em>me he caído</em>, <em>se ha sentido</em>, <em>me he despertado</em> — and confirm the pronoun is in front of <em>haber</em> every single time. Note the questions use <em>usted</em>: this is a clinic, not a friend.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; MÉXICO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El formulario y el usted</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Notice that the form addresses the patient as <strong>usted</strong> throughout — <em>¿ha estado usted&hellip;?</em>, <em>conteste</em>. In Mexico this is not about age or status; it is the default register of any institution speaking to an individual, and a sixteen-year-old filling in a clinic form will be addressed exactly this way.<br><br>Worth knowing because the reverse also holds: a Mexican teenager who addressed a nurse as <em>tú</em> would sound noticeably rude, in a way that has no real equivalent in English. English has no grammatical way to be impolite by pronoun choice — Spanish does, and health settings are among the places it matters most.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA TEMPLANZA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A patient form is an exercise in temperance nobody thinks of as one: it asks you to report your own body accurately, without dramatising and without brushing things off. <em>Todavía no he tomado nada</em> is a small, exact truth. Medicine works on precisely such truths. <em>La exactitud también es una virtud.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 1.06 &mdash; Remedios y tradiciones</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you put everything into <strong>paragraph</strong> form — the Honors standard — and read about <em>la medicina tradicional</em> in Mexico. Last full practice day: graded work opens on Day 7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then ask a family member three <em>¿Alguna vez has&hellip;?</em> questions out loud — in Spanish, even if they answer in English. The structure only becomes automatic by being said.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Four markers, one fixed pronoun order, and the most useful question in the module: <em>¿Alguna vez has&hellip;?</em> You can now fill in a real clinic form in Spanish — which is a genuinely practical thing to be able to do. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.05 &middot; Ya, todavía no, alguna vez</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

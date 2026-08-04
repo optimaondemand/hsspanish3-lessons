@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Acciones sostenibles</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Acciones sostenibles — la forma de un argumento ambiental</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Anyone can list problems. An argument has four moves, and most people stop after two.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned the words for the damage. Today you get the words for <strong>doing something about it</strong> &mdash; <em>ahorrar, reducir, reutilizar</em> &mdash; and something more valuable than vocabulary: the <strong>four-move shape</strong> that an environmental argument takes in Spanish, in English, and in the UNESCO text you will read on Day 8.<br><br>Still no new grammar. Everything today runs on the present tense and the perfect tenses you already own. But watch moves 2 and 4 closely: they are exactly where <em>por</em> and <em>para</em> live, and tomorrow the module's grammar begins there.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten verbs and nouns of sustainable action correctly.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the four moves of an environmental argument and spot which one is missing.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose correctly among <em>ahorrar</em>, <em>guardar</em> and <em>salvar</em> &mdash; three Spanish verbs for one English word.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why most environmental writing is boring</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read enough of it and you notice the same failure again and again: a fact, then an emotion, then nothing. <em>Hay mucho plástico en el mar. Es terrible.</em> Both sentences are true and the paragraph goes nowhere, because it never names a <strong>cause</strong> and never names a <strong>proposal</strong>.<br><br>Those two moves are what make writing on this subject worth reading, and &mdash; usefully for you &mdash; they are the two that Spanish marks with a single small word each. Part 3 gives you the shape; Days 3 to 5 give you the words.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of these do you find hardest to produce in your own writing, in any language?</div>
+            <div class="widget-options">
+                <button data-response="Very common, and it is the honest difficulty: a real cause requires you to know something. That is why Part 5 and Day 8 give you facts about Galápagos - a proposal is only as good as the cause it answers.">Naming the actual cause</button>
+                <button data-response="Also common. A proposal feels presumptuous when you are sixteen and writing in a second language. The fix is scale: a proposal about your own household is a real proposal, and far better than a vague one about the planet.">Proposing something concrete</button>
+                <button data-response="Then today's job is ordering rather than inventing. Notice in Part 3 that the four moves have a fixed sequence, and that a proposal placed before its cause reads as an opinion rather than an argument.">I can do both, but they come out jumbled</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; LAS ACCIONES SOSTENIBLES <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud. Six of these are verbs &mdash; say them as infinitives now, because from Day 3 you will be putting them after <em>para</em>.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/ahorrar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">ahorrar</span><span class="v-en">to save (money, water, energy)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/desperdiciar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">desperdiciar</span><span class="v-en">to waste</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/reducir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">reducir</span><span class="v-en">to reduce</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/reutilizar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">reutilizar</span><span class="v-en">to reuse</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/danar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">dañar</span><span class="v-en">to damage, to harm</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/sostenible.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">sostenible</span><span class="v-en">sustainable</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-recurso.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el recurso</span><span class="v-en">resource</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/amenazado.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">amenazado</span><span class="v-en">threatened, at risk</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-huella.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la huella</span><span class="v-en">footprint, trace</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-esfuerzo-colectivo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el esfuerzo colectivo</span><span class="v-en">collective effort</span></li>
+        </ul>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><strong>Three Spanish verbs, one English word.</strong> English &ldquo;save&rdquo; splits three ways and mixing them up is one of the more visible errors an intermediate student makes.<br>&bull; <em><strong>ahorrar</strong></em> &mdash; to use less of a finite thing: <em>ahorrar agua, ahorrar dinero, ahorrar energía</em>.<br>&bull; <em><strong>guardar</strong></em> &mdash; to keep or put away: <em>guardo las botellas para reutilizarlas</em>.<br>&bull; <em><strong>salvar</strong></em> &mdash; to rescue from destruction: <em>salvaron a la tortuga</em>. Strong word; use it for lives, not for water.<br><br><strong><em>Amenazado</em></strong> is a participle used as an adjective, so it agrees &mdash; the pattern you learned in Módulo 2: <em>un bosque amenaz<u>ado</u></em>, <em>una especie amenaz<u>ada</u></em>, <em>dos islas amenaz<u>adas</u></em>. In conservation writing you will also meet <em>en peligro de extinción</em>, which is stronger.<br><br><strong><em>La huella</em></strong> is a footprint or a track in the ground, and by extension <em>la huella ecológica</em> and <em>la huella de carbono</em>. It is also the word in <em>huella digital</em>, a fingerprint. One image, three uses.<br><br><strong><em>El esfuerzo</em></strong> — effort — you already met in Módulo 2, where it belonged to personal achievement. <em><strong>El esfuerzo colectivo</strong></em> is the phrase this module keeps returning to, because that is the honest scale of the problem, and because Galápagos is a real example of it working. Note how little Spanish has to change to move a word from one register to the other: same noun, one adjective, completely different politics.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS CUATRO MOVIMIENTOS <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four moves, in this order</h3>
+        <table class="gtable">
+            <thead><tr><th>Move</th><th>What it does</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. El dato</strong></td><td>What is happening &mdash; a fact, not a feeling</td><td>Cada año llegan más de doscientos mil visitantes a las islas.</td></tr>
+                <tr><td><strong>2. La causa</strong></td><td>Why &mdash; <span class="pron">where <em>por</em> lives</span></td><td>El número ha crecido <span class="pron">por</span> la fama del archipiélago.</td></tr>
+                <tr><td><strong>3. La consecuencia</strong></td><td>What follows from it</td><td>Por eso hay más basura, más barcos y más especies introducidas.</td></tr>
+                <tr><td><strong>4. La propuesta</strong></td><td>What we should do, and what for &mdash; <span class="pron">where <em>para</em> lives</span></td><td>Hay que reducir el número de barcos <span class="pron">para</span> proteger las costas.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Move 2 is the one that separates an argument from a complaint.</strong> A fact plus a proposal with no cause between them is just a preference. And notice that move 4 needs both halves: the action <em>and</em> the purpose. «Hay que reducir el número de barcos» on its own invites the question <em>¿para qué?</em> &mdash; so answer it in the same sentence.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; LAS TRES R &middot; Y POR QUÉ ESTÁN EN ESE ORDEN</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">In Spanish they are <strong><em>reducir, reutilizar, reciclar</em></strong>, and the order is an argument, not a slogan. <em>Reducir</em> comes first because a thing never produced needs no handling at all. <em>Reutilizar</em> comes second because using an object again costs almost nothing. <em>Reciclar</em> comes last because recycling is itself an industrial process: it consumes energy, water and transport.<br><br>So when you write move 4, notice which of the three R's you are proposing. A student who proposes recycling is proposing the most expensive of the three &mdash; which may still be right, but is worth knowing.</div>
+        </div>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LA REGLA DE LOS CONECTORES &middot; still in force</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">No connector twice, the rule since Módulo 0. For an argument you have: <em>en primer lugar · además · por eso · por lo tanto · sin embargo · en cambio · a pesar de esto · al final</em>. Eight, and a six-sentence paragraph needs at most four.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; three verbs, one English word</div>
+            <div class="widget-question">«Si cierras el grifo mientras te lavas los dientes, ___ mucha agua.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«ahorras» - ahorrar is the verb for using less of a finite resource: agua, energía, dinero.">ahorras</button>
+                <button data-correct="false" data-fb="«salvas» means rescue from destruction. You save a life or a species with «salvar», not a litre of water.">salvas</button>
+                <button data-correct="false" data-fb="«guardas» means keep or put away - you would be storing the water somewhere. The verb for consuming less is «ahorrar».">guardas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which move is missing?</div>
+            <div class="widget-question">«Hay plástico en las playas de Galápagos. Llega por las corrientes del Pacífico. Por eso las tortugas lo confunden con comida.» ¿Qué falta?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El dato está en la primera frase - «hay plástico en las playas». That is move 1, and it is a fact rather than a feeling, which is what move 1 requires.">El dato</button>
+                <button data-correct="false" data-fb="La causa está ahí - «por las corrientes del Pacífico». That is move 2, and it is the move most writers skip.">La causa</button>
+                <button data-correct="true" data-fb="La propuesta. The paragraph ends on the consequence, so the reader is left with a problem and no direction. Move 4 is missing - and it is the move the reader remembers.">La propuesta</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; a participle that agrees</div>
+            <div class="widget-question">«En el archipiélago hay varias especies ___.» (amenazar)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«amenazadas» - «especies» is feminine plural, and a participle used as an adjective agrees with its noun. Módulo 2's rule, still running.">amenazadas</button>
+                <button data-correct="false" data-fb="«amenazado» is masculine singular. It would fit «un bosque amenazado», not «varias especies».">amenazado</button>
+                <button data-correct="false" data-fb="«amenazada» is feminine but singular. The noun is plural, so the adjective must be too.">amenazada</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the order of the three R's</div>
+            <div class="widget-question">According to the logic in Part 3, which action does the <em>least</em> additional damage?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Reciclar is third for a reason: recycling is an industrial process that itself consumes energy, water and transport. Useful, but not free.">reciclar una botella</button>
+                <button data-correct="true" data-fb="Reducir - not producing the thing at all. Nothing to collect, transport or process. It is first in the list because it is first in effect.">no comprar la botella</button>
+                <button data-correct="false" data-fb="Reutilizar is genuinely cheap and comes second, but the bottle still had to be made. Not producing it beats reusing it.">reutilizar la botella en casa</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: write <strong>four sentences</strong> about a real environmental problem where you live &mdash; one for each move, in order. Use at least three words from today's ten. Keep it: you will rebuild this paragraph on Day 6 with the module's grammar.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>En mi ciudad se tira mucha comida todos los días. Se desperdicia por costumbre y porque una lechuga cuesta poco. Por eso la basura orgánica llena los camiones y produce gases en el vertedero. En mi casa hemos empezado a comprar menos cantidad cada semana para reducir el desperdicio.</strong><br><br>Check yours: four separate moves, in order &middot; the cause is a real cause, not a feeling &middot; the proposal is small enough to be true &middot; and no connector used twice.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Treinta mil personas y doscientos setenta mil visitantes</strong><br><br>
+        En los años cincuenta casi nadie vivía en las Galápagos. Hoy viven allí unas treinta mil personas y llegan cada año muchos más visitantes que residentes: alrededor de doscientos setenta mil antes de la pandemia.<br><br>
+        El turismo no es un enemigo simple. Paga los sueldos de los guardaparques, financia parte de la investigación científica y da trabajo a familias enteras. Pero cada avión, cada barco y cada caja de fruta traen algo más: semillas, insectos, ratas. Las especies introducidas han hecho más daño al archipiélago que la contaminación.<br><br>
+        Por eso Ecuador controla las islas como pocos lugares del mundo. Hay inspección de equipaje al salir del continente, no solo al llegar. Los visitantes recorren los sitios con un guía autorizado y por rutas marcadas. La residencia está limitada por ley. Y desde 1998 existe una reserva marina enorme alrededor de las islas, ampliada de nuevo en 2022.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Find the four moves. Paragraph 1 is <strong>el dato</strong>. Paragraph 2 gives <strong>la causa</strong> and refuses the easy version of it &mdash; notice the sentence «el turismo no es un enemigo simple», which concedes something before it argues. Paragraph 3 is <strong>la consecuencia</strong> and <strong>la propuesta</strong> at once, because in this case the proposals already exist and are being carried out.<br><br>Then count the <em>por</em>: <em>por rutas marcadas</em>, <em>por ley</em>, <em>por eso</em>. Three different jobs again, and tomorrow you will be able to name all three.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El parque de 1959 y el 97 %</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Ecuador created the <strong>Parque Nacional Galápagos in 1959</strong> &mdash; the country's first national park, declared in the centenary year of <em>Origin of Species</em>. The park covers roughly <strong>97 % of the archipelago's land area</strong>. The remaining 3 % is where all thirty thousand residents live, on four inhabited islands.<br><br>That ratio is the whole management problem in one number. It is not a wilderness with nobody in it; it is a wilderness with a town inside, and the town needs schools, fuel, cargo ships and jobs. In <strong>1998</strong> Ecuador added the <em>Reserva Marina de Galápagos</em>, about 133,000 km&sup2; of ocean, and in <strong>2022</strong> declared a further marine corridor northwards toward Costa Rica's Isla del Coco, along the route migrating sharks and turtles actually swim.<br><br>Worth noticing: the biosecurity inspection happens at Quito and Guayaquil airports, <em>before</em> you fly, because the point is to stop a seed arriving rather than to catch it afterwards. That is a genuinely unusual piece of policy design, and it is what stewardship looks like when it is taken seriously rather than announced.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Move 4 is where responsibility enters the paragraph, and it is why the assignment asks for a proposal small enough to be true. A grand proposal costs the writer nothing; a small one commits them. The Galápagos luggage inspection is not a heroic act, it is a queue at an airport &mdash; and it is one of the most effective conservation measures in the Pacific. Stewardship is usually like that: unglamorous, repeated, and carried out by people whose names nobody knows. <em>La responsabilidad empieza donde termina la queja.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 5.03 &mdash; El uso de «por»</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's grammar begins, and it begins with move 2. One small word covering cause, exchange, duration, route and means &mdash; and one idea that holds all five together.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then keep your four-sentence paragraph somewhere you can find it &mdash; you rebuild it on Day 6 and submit it on Day 7. And check that <em>amenazado</em> agreed with whatever noun you attached it to.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Twenty words for the environment, three verbs where English has one, and a four-move shape you can now spot in anyone else's writing. Tomorrow the grammar arrives &mdash; and it arrives exactly where you have just been told to look. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.02 &middot; Acciones sostenibles</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

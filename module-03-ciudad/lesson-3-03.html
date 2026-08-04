@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 3.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 3</div>
+        <div style="font-size: 12px; color: #666;">La ciudad</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Mandatos formales afirmativos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La ciudad y las direcciones</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Mandatos formales — la forma que volverá en el Módulo 7</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Learn this form properly today and the hardest thing in the course becomes easy in November.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you build the <strong>formal command</strong> — <em>tome, siga, cruce</em> — the form used by a doctor, a police officer, a travel guide, a sign in an airport. Anyone addressing you as <em>usted</em>.<br><br>It is worth knowing now, before you start, that this is <strong>not just a lesson about street directions</strong>. The forms you learn today are the exact same forms you will use for the <em>subjunctive</em> in Módulo 7 — the biggest single topic of the year. Nothing new will be added to them. Only the reason for using them changes.<br><br>So the students who own this cold in October find November straightforward, and the ones who half-learn it do not.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build the Ud. and Uds. command of any regular verb using the <em>yo</em>-form method.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spell <em>cruce</em>, <em>siga</em> and <em>busque</em> correctly and explain why the spelling shifts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give a stranger three-step directions entirely in Ud. commands.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">You have already met these forms twice</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In Módulo 1 a doctor told you: <em>«<strong>Descanse</strong> tres días y <strong>beba</strong> mucha agua.»</em> The lesson said at the time that you would own those forms in Módulo 3 and were only being asked to recognise them.<br><br>This is Módulo 3. Today you own them.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Look at <em>descanse</em> and <em>beba</em>. What do you notice about their endings compared with the infinitives <em>descansar</em> and <em>beber</em>?</div>
+            <div class="widget-options">
+                <button data-response="Exactly the observation this lesson is built on: the vowels have swapped. An -ar verb takes an e ending, an -er verb takes an a. Part 2 explains why.">The vowels have swapped over</button>
+                <button data-response="They do look like other people's forms - «descanse» resembles the yo/él form of a different verb type. That instinct is right, and Part 2 turns it into a rule.">They look like forms of a different verb</button>
+                <button data-response="Then read Part 2 slowly. The single most useful thing to notice is that -ar verbs end in -e and -er/-ir verbs end in -a. Backwards from what you would expect.">I do not see a pattern yet</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; EL MÉTODO DE LA FORMA YO <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three steps, and it works for almost every verb</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click the <strong>&#128266;</strong> to hear the pattern, then work through the table.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/mandatos-formales.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">tome, coma, escriba&hellip;</span><span class="v-en">affirmative and negative</span></li>
+        </ul>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; LOS TRES PASOS</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">
+            <strong>1.</strong> Take the <strong><em>yo</em> form</strong> of the present tense &mdash; <em>tomo, sigo, cruzo</em><br>
+            <strong>2.</strong> Drop the <strong>-o</strong> &mdash; <em>tom-, sig-, cruz-</em><br>
+            <strong>3.</strong> Add the <strong>opposite vowel</strong>: <em>-ar</em> verbs take <strong>-e</strong>, <em>-er/-ir</em> verbs take <strong>-a</strong><br><br>
+            For <strong>ustedes</strong>, add an <em>-n</em>: <em>tome &rarr; tomen</em>.</div>
+        </div>
+        <table class="gtable">
+            <thead><tr><th>Infinitive</th><th><em>yo</em> form</th><th>Ud.</th><th>Uds.</th></tr></thead>
+            <tbody>
+                <tr><td>tomar</td><td>tomo</td><td><span class="pron">tome</span></td><td>tomen</td></tr>
+                <tr><td>doblar</td><td>doblo</td><td><span class="pron">doble</span></td><td>doblen</td></tr>
+                <tr><td>comer</td><td>como</td><td><span class="pron">coma</span></td><td>coman</td></tr>
+                <tr><td>escribir</td><td>escribo</td><td><span class="pron">escriba</span></td><td>escriban</td></tr>
+                <tr><td><strong>seguir</strong> (e&rarr;i)</td><td>si<strong>g</strong>o</td><td><span class="pron">siga</span></td><td>sigan</td></tr>
+                <tr><td><strong>tener</strong> (irregular yo)</td><td>ten<strong>g</strong>o</td><td><span class="pron">tenga</span></td><td>tengan</td></tr>
+                <tr><td><strong>salir</strong> (irregular yo)</td><td>sal<strong>g</strong>o</td><td><span class="pron">salga</span></td><td>salgan</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Why the <em>yo</em> form and not the infinitive?</strong> Because it carries the irregularities with it for free. <em>Seguir</em> becomes <em>sigo</em>, so the command is <em>siga</em> — not «segua». <em>Tener</em> becomes <em>tengo</em>, so the command is <em>tenga</em>. Any verb whose <em>yo</em> form is odd hands that oddness straight to its command, and you do not have to learn a second list.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9999;&#65039; PART 3 &middot; ORTOGRAFÍA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three spelling shifts that protect the sound</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">You met these in Módulo 0 with <em>busqué</em>, <em>llegué</em> and <em>empecé</em>. Exactly the same logic applies here, because the vowel flipping to <em>-e</em> would otherwise change how the consonant sounds.</p>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>Shift</th><th>Ud. command</th><th>Why</th></tr></thead>
+            <tbody>
+                <tr><td>cruzar</td><td>z &rarr; c</td><td><span class="pron">cruce</span></td><td>Spanish does not write <em>ze</em>; it writes <em>ce</em></td></tr>
+                <tr><td>buscar</td><td>c &rarr; qu</td><td><span class="pron">busque</span></td><td>Keeps the hard /k/ before <em>e</em></td></tr>
+                <tr><td>llegar</td><td>g &rarr; gu</td><td><span class="pron">llegue</span></td><td>Keeps the hard /g/ before <em>e</em></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">The verb has not become irregular. The <strong>sound stayed the same and the spelling moved to keep up</strong> — the same sentence you read in Módulo 0. <em>Cruce la calle</em> is pronounced with the same first syllable as <em>cruzar</em>.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">And a set of genuine irregulars — five, worth memorising as a block. Click to hear them:</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/mandatos-irregulares-ud.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">dé, esté, vaya, sea, sepa</span><span class="v-en">dar, estar, ir, ser, saber</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">These five have no usable <em>yo</em> form to build from (<em>doy, estoy, voy, soy, sé</em>), which is exactly why they are irregular. Note <strong><em>dé</em></strong> carries an accent to separate it from the preposition <em>de</em> — the same <em>tilde diacrítica</em> job as <em>tú/tu</em> and <em>él/el</em>. And <strong><em>esté</em></strong> is accented too: <em>este</em> without it is the demonstrative &ldquo;this&rdquo;.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the yo-form method</div>
+            <div class="widget-question">«___ derecho tres cuadras.» (seguir, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Siga» - from «sigo», so the stem change comes along automatically. That is the whole point of building from the yo form.">Siga</button>
+                <button data-correct="false" data-fb="«Segua» builds from the infinitive and loses the stem change. Start from «sigo».">Segua</button>
+                <button data-correct="false" data-fb="«Sigue» is the tú command - correct for a friend, but a stranger gets usted.">Sigue</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the opposite vowel</div>
+            <div class="widget-question">«___ el formulario, por favor.» (escribir, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Escriba» - an -ir verb takes -a. Backwards from what you would expect, which is why it is worth saying aloud.">Escriba</button>
+                <button data-correct="false" data-fb="«Escribe» is the tú command. For usted, the vowel flips to -a.">Escribe</button>
+                <button data-correct="false" data-fb="«Escribo» is «I write» - the yo form you START from, not the command itself. Drop the -o and add -a.">Escribo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; spelling protects sound</div>
+            <div class="widget-question">«___ la avenida en el semáforo.» (cruzar, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Cruce» - z becomes c before e. Same rule as «empecé» in Módulo 0.">Cruce</button>
+                <button data-correct="false" data-fb="«Cruze» - Spanish does not write ze. The z shifts to c: cruce.">Cruze</button>
+                <button data-correct="false" data-fb="«Cruza» is the tú command, and an -ar verb takes -e for usted anyway.">Cruza</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; one of the five irregulars</div>
+            <div class="widget-question">«___ a la esquina y espere el autobús ahí.» (ir, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Vaya» - one of the five with no usable yo form to build from. Memorise the block: dé, esté, vaya, sea, sepa.">Vaya</button>
+                <button data-correct="false" data-fb="«Va» is «he/she goes» or «you (Ud.) go» - a statement, not a command.">Va</button>
+                <button data-correct="false" data-fb="«Ve» is the tú command of ir. For usted it is the irregular «vaya».">Ve</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: a stranger asks how to get from your classroom to the main entrance. Give <strong>three</strong> Ud. commands. Say them aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Siga derecho por este pasillo hasta el final. Doble a la izquierda en la segunda puerta. Baje las escaleras y cruce el patio; la entrada principal queda enfrente.</strong><br><br>Check yours: every verb an Ud. form (<em>siga, doble, baje, cruce</em>) · <em>-ar</em> verbs ending in <em>-e</em> · and <em>cruce</em> spelled with a <em>c</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Instrucciones en la recepción del hotel</strong><br><br>
+        &mdash;Buenas tardes. ¿Cómo llego al Museo del Oro?<br>
+        &mdash;Es muy fácil. <strong>Salga</strong> por la puerta principal y <strong>doble</strong> a la derecha. <strong>Siga</strong> derecho cuatro cuadras hasta la Avenida Jiménez. <strong>Cruce</strong> la avenida en el semáforo &mdash; no en la esquina, ahí no hay señal. Después <strong>camine</strong> media cuadra más y el museo queda al lado de la estación.<br>
+        &mdash;¿Y si me pierdo?<br>
+        &mdash;<strong>Pregunte</strong> en cualquier tienda; la gente aquí ayuda mucho. O <strong>tome</strong> un taxi, son baratos. Pero <strong>vaya</strong> antes de las cinco, que cierran a las seis.<br>
+        &mdash;Muchas gracias.<br>
+        &mdash;Con mucho gusto.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Eight Ud. commands. Sort them by how they were built: which come straight from a regular <em>yo</em> form (<em>doble, camine, pregunte, tome</em>), which carry an irregular <em>yo</em> (<em>salga</em> from <em>salgo</em>, <em>siga</em> from <em>sigo</em>), which needed a spelling shift (<em>cruce</em>), and which is one of the five irregulars (<em>vaya</em>)?<br><br>Notice also that the receptionist uses <em>usted</em> throughout with a guest — and closes with <em>con mucho gusto</em> rather than <em>de nada</em>. Keep that phrase; you will hear it constantly in Colombia.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COLOMBIA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El usted que no marca distancia</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Colombia does something with <em>usted</em> that will surprise you. In much of the country — especially Bogotá and the Andean interior — people use <em>usted</em> with <strong>family and close friends</strong>, not only with strangers. Parents say it to their children. Couples say it to each other.<br><br>So the neat rule you learned in Módulo 4's register lesson — <em>usted</em> = distance, <em>tú</em> = closeness — is a good default across the Spanish-speaking world and <strong>not a universal law</strong>. In Colombia <em>usted</em> can carry warmth, and there is a third form, <em>vos</em>, used in Medellín and the Andes region.<br><br>The practical takeaway: keep using <em>usted</em> with people you do not know, everywhere. But when a Colombian friend addresses you as <em>usted</em>, do not read it as coldness. It may be the opposite.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA CORTESÍA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module's virtue is <strong>la cortesía</strong> — courtesy. Notice what the receptionist actually does: gives clear directions, warns about the crossing, offers a fallback if the guest gets lost, and mentions the closing time unprompted. None of that was asked for. Courtesy is mostly <em>anticipating the next question</em>, and it costs one extra sentence. <em>La cortesía es contestar también lo que no te preguntaron.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 3.04 &mdash; Los mandatos en uso</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you use them for real directions, and learn where object pronouns go when a command takes one — <em>tómelo</em>, <em>sígame</em>. Then Day 5 adds the negative: <em>no cruce</em>, <em>no lo tome</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write the five irregulars from memory — <em>dar, estar, ir, ser, saber</em> — and check the accents on <em>dé</em> and <em>esté</em>. Those two tildes carry meaning.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Three steps, three spelling shifts, five irregulars — and a form that will carry you all the way to the subjunctive in November. You can now give a stranger directions in a Colombian city. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.03 &middot; Mandatos formales afirmativos</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

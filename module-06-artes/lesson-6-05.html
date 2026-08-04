@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lo que y cuyo</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lo que y cuyo — la idea entera y el dueño</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two more relatives. One you will use every week for the rest of your life in Spanish; the other you mainly need to be able to read.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong><em>Lo que</em></strong> is the useful one, and it is genuinely useful — it is how Spanish says &ldquo;what&rdquo; in the middle of a sentence. <em>«Lo que más me impresiona es la luz.»</em> You will confuse it with <em>que</em> at first, and Part 2 gives you a one-second test that settles it.<br><br><strong><em>Cuyo</em></strong> means &ldquo;whose&rdquo;, and it does something no English speaker expects: it <strong>agrees with the thing owned, not with the owner</strong>. It is also formal and mostly written, so the honest goal is that you recognise it reliably and produce it once or twice — not that you force it into speech.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose between <em>que</em> and <em>lo que</em> by asking whether there is a noun in front.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>lo que</em> to refer back to a whole idea, not just a noun.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make <em>cuyo</em> agree with the thing possessed, and recognise it in formal writing.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">One word of difference</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.9;margin:0 0 10px 0;">
+        <em>El detalle <strong>que</strong> más me impresiona es la mirada de la niña.</em><br>
+        <em><strong>Lo que</strong> más me impresiona es la mirada de la niña.</em></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Both sentences are correct, and they are not the same sentence. The first says a <strong>detail</strong> impresses you and then names it. The second names no category at all — it points at whatever it is, an impression with no noun attached.<br><br>Look at what actually differs: the first has the noun <em>el detalle</em> sitting in front of <em>que</em>. The second has nothing in front, so <em>lo</em> steps in to hold the place. That is the whole distinction, and Part 2 turns it into a test you can run in one second.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">In English, which word would you use to start &ldquo;___ impresses me most is the light&rdquo;?</div>
+            <div class="widget-options">
+                <button data-response="«What» - and that is exactly the word «lo que» translates. Whenever English uses «what» in the middle of a statement rather than in a question, Spanish needs «lo que».">What</button>
+                <button data-response="«The thing that» is the long way round, and it is a useful instinct: «lo que» is literally «the thing that». If «the thing that» fits your English, «lo que» fits your Spanish.">The thing that</button>
+                <button data-response="«That» alone will not start an English sentence like this - and that mismatch is the point. English «that» maps to «que»; English «what» maps to «lo que». Two different words.">That</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LO QUE &middot; UNA IDEA ENTERA <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The one-second test</h3>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; ¿HAY UN SUSTANTIVO DELANTE?</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.85;">
+            <strong>Yes</strong> &rarr; <em>que</em>. The clause describes that noun.<br>
+            &nbsp;&nbsp;<em>el <u>cuadro</u> <strong>que</strong> vi</em> &middot; <em>la <u>luz</u> <strong>que</strong> entra</em> &middot; <em>el <u>pintor</u> <strong>que</strong> trabajó allí</em><br><br>
+            <strong>No</strong> &rarr; <em>lo que</em>. There is no noun, so the clause refers to a thing, a fact or an idea you are not naming.<br>
+            &nbsp;&nbsp;<em><strong>Lo que</strong> vi</em> &middot; <em><strong>Lo que</strong> más me impresiona</em> &middot; <em><strong>Lo que</strong> hizo Velázquez</em><br><br>
+            That is it. One question, one second, and the choice is settled every time.</div>
+        </div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:14px 0 6px;"><em>Lo que</em> then does three jobs, and all three are worth having:</p>
+        <table class="gtable">
+            <thead><tr><th>Job</th><th>Example</th><th>English</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. Subject</strong>, opening the sentence</td><td><span class="pron">Lo que</span> más me impresiona es la luz.</td><td>What impresses me most&hellip;</td></tr>
+                <tr><td><strong>2. Object</strong> of a verb</td><td>No entiendo <span class="pron">lo que</span> hace el hombre del fondo.</td><td>&hellip;what the man is doing</td></tr>
+                <tr><td><strong>3. Referring back</strong> to a whole clause</td><td>Se pintó a sí mismo, <span class="pron">lo que</span> era poco frecuente.</td><td>&hellip;which was unusual</td></tr>
+                <tr><td>After a preposition</td><td>Piensa en <span class="pron">lo que</span> ves, no en la etiqueta.</td><td>Think about what you see&hellip;</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/lo-que-cuyo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Lo que más me impresiona es la luz. El pintor cuyas obras vimos.</span><span class="v-en">listen for «cuyas» agreeing with «obras» — not with the painter</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">Job 3 is the one that most improves an Honors paragraph. English does it with a comma and &ldquo;which&rdquo;; Spanish does it with a comma and <em>lo que</em>, and it lets you comment on the sentence you have just written without starting a new one.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; NO CONFUNDIR &middot; <em>lo que</em> y <em>qué</em></div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">English uses &ldquo;what&rdquo; for both of these. Spanish does not.<br><br>
+            <strong>Pregunta</strong> &rarr; <em><strong>qué</strong></em>, with a tilde: <em>¿<strong>Qué</strong> te impresiona más?</em><br>
+            <strong>Afirmación</strong> &rarr; <em><strong>lo que</strong></em>, no tilde: <em><strong>Lo que</strong> más me impresiona es la luz.</em><br><br>
+            And in a reported question the two can sit side by side, which is worth seeing once: <em>Me preguntó <strong>qué</strong> veía</em> (reporting the question) against <em>Me dijo <strong>lo que</strong> veía</em> (reporting the answer). Same <em>tilde diacrítica</em> logic as <em>dé/de</em> from Módulo 3 — the accent marks the question word.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; CUYO &middot; EL DUEÑO Y LO POSEÍDO <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">It agrees with the wrong thing — on purpose</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong><em>Cuyo</em></strong> means &ldquo;whose&rdquo; and joins two sentences that share an <em>owner</em>. Everything about it is straightforward except one point, which catches everybody: it does <strong>not</strong> agree with the owner. It agrees with <strong>the thing owned</strong> — the noun that comes immediately after it.</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.8;margin:0 0 12px 0;">
+        <em>el pintor <strong>cuyas</strong> obras vimos</em><br>
+        <span style="font-size:15px;color:#6b7a99;">&#8593; not <em>cuyo</em> (pintor, m.s.) but <strong>cuyas</strong> &mdash; because of <em>obras</em>, feminine plural, which follows it</span></p>
+        <table class="gtable">
+            <thead><tr><th>El dueño</th><th>Lo poseído</th><th>Forma</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+                <tr><td>el pintor <em>(m.s.)</em></td><td>las obras <em>(f.pl.)</em></td><td><span class="pron">cuyas</span></td><td>el pintor <span class="pron">cuyas</span> obras vimos</td></tr>
+                <tr><td>la infanta <em>(f.s.)</em></td><td>el retrato <em>(m.s.)</em></td><td><span class="pron">cuyo</span></td><td>la infanta <span class="pron">cuyo</span> retrato está en el centro</td></tr>
+                <tr><td>el museo <em>(m.s.)</em></td><td>los cuadros <em>(m.pl.)</em></td><td><span class="pron">cuyos</span></td><td>el museo <span class="pron">cuyos</span> cuadros son famosos</td></tr>
+                <tr><td>los pintores <em>(m.pl.)</em></td><td>la obra <em>(f.s.)</em></td><td><span class="pron">cuya</span></td><td>los pintores <span class="pron">cuya</span> obra estudiamos</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">Read the last row twice. The owner is masculine plural and the form is feminine singular, and it is right. <strong>Look to the right of <em>cuyo</em>, never to the left.</strong></p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; TRES COSAS MÁS, Y UNA ES UNA PROHIBICIÓN</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.85;">
+            <strong>1. Nunca lleva artículo.</strong> The noun after <em>cuyo</em> goes bare:<br>
+            &nbsp;&nbsp;<em>el pintor <strong>cuyas obras</strong> vimos</em> &middot; <s>el pintor cuyas las obras vimos</s><br><br>
+            <strong>2. Nunca es una pregunta.</strong> To ask &ldquo;whose is this?&rdquo; Spanish uses <em>¿De quién&hellip;?</em>:<br>
+            &nbsp;&nbsp;<em>¿<strong>De quién</strong> es este cuadro?</em> &middot; <s>¿Cuyo es este cuadro?</s><br>
+            &nbsp;&nbsp;This is genuinely different from English, where &ldquo;whose&rdquo; does both jobs.<br><br>
+            <strong>3. Es formal, y casi solo escrito.</strong> Nobody says <em>cuyo</em> in conversation. In speech people split the sentence or go round it:<br>
+            &nbsp;&nbsp;formal: <em>el pintor <strong>cuyas</strong> obras vimos ayer</em><br>
+            &nbsp;&nbsp;hablado: <em>el pintor <strong>de quien</strong> vimos las obras ayer</em>, or simply two sentences.<br><br>
+            So the reasonable goal is this: <strong>recognise <em>cuyo</em> every time you read it</strong> — museum labels, catalogues and essays are full of it — and <strong>produce it once or twice</strong> in the module's written work, where formality is appropriate. Do not go hunting for chances to say it aloud.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">7 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the one-second test</div>
+            <div class="widget-question">«___ más me gusta de este cuadro es el perro.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Lo que» - run the test: is there a noun in front? No, the sentence starts here. So «lo» holds the place and you get «lo que».">Lo que</button>
+                <button data-correct="false" data-fb="«Que» on its own needs a noun in front of it to describe. There is nothing before it here, so the sentence has no starting point.">Que</button>
+                <button data-correct="false" data-fb="«Qué» with a tilde is the question word - «¿Qué te gusta más?». This sentence is a statement, so it takes «lo que», no accent.">Qué</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; cuyo looks to the right</div>
+            <div class="widget-question">«Velázquez es el pintor ___ obras llenan tres salas del Prado.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«cuyo» would agree with «el pintor», which is exactly the mistake. Cuyo agrees with the thing owned - and the thing owned is «obras».">cuyo</button>
+                <button data-correct="true" data-fb="«cuyas» - feminine plural, matching «obras», the noun immediately to its right. The gender of «el pintor» is irrelevant.">cuyas</button>
+                <button data-correct="false" data-fb="«cuyos» is masculine plural. It gets the number right and the gender wrong: «las obras» is feminine.">cuyos</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; commenting on a whole idea</div>
+            <div class="widget-question">«Velázquez se pintó a sí mismo dentro del cuadro, ___ era poco frecuente en su época.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«que» would have to describe a noun, and the nearest noun is «el cuadro» - which would say the painting was unusual, not the act of painting himself into it.">que</button>
+                <button data-correct="false" data-fb="«cuyo» introduces possession - «whose» - and nothing here is owned by anything. It is the wrong relative entirely.">cuyo</button>
+                <button data-correct="true" data-fb="«lo que» - it points back at the whole previous clause, the act itself. This is English «, which was unusual», and it is the most useful job lo que does.">lo que</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; asking, not stating</div>
+            <div class="widget-question">You are standing in front of an unlabelled painting and want to ask who painted it. What do you say?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«¿De quién es este cuadro?» Spanish asks possession with «de quién». Cuyo never appears in a question, however natural English «whose» feels.">¿De quién es este cuadro?</button>
+                <button data-correct="false" data-fb="«¿Cuyo es este cuadro?» copies English «whose», but cuyo is only ever a relative pronoun joining two clauses - never interrogative in modern Spanish.">¿Cuyo es este cuadro?</button>
+                <button data-correct="false" data-fb="«¿Quién es este cuadro?» asks who the painting IS - so the painting would have to be a person. You need «de quién» for the owner or maker.">¿Quién es este cuadro?</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: write <strong>three</strong> sentences about any painting or photograph you know — one opening with <em>lo que</em>, one using <em>lo que</em> to comment on a whole clause, and one with <em>cuyo</em> in the right form. Write all three before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Lo que más me llama la atención de esta foto es la sombra de la pared. Mi abuelo se puso el traje de los domingos para la foto, lo que no era normal en él. Es un retratista cuyas fotografías todavía cuelgan en media familia.</strong><br><br>Check yours: no noun in front of either <em>lo que</em> · the second <em>lo que</em> after a comma, pointing back at the whole clause before it · <em>cuyas</em> agreeing with <em>fotografías</em> and not with <em>retratista</em> · and no article after <em>cuyas</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.8;">
+        <strong>Notas de sala &mdash; sala 12</strong><br><br>
+        <strong>Lo que</strong> casi nadie espera al entrar en la sala 12 es el tamaño. En las reproducciones <em>Las meninas</em> parece un cuadro normal; delante del original, las figuras son casi del tamaño de una persona, y el suelo del cuarto pintado parece continuar el suelo del museo.<br><br>
+        <strong>Lo que</strong> Velázquez hizo aquí no tiene muchos antecedentes. Un pintor de corte, <strong>cuyo</strong> trabajo consistía en retratar a los demás, se colocó a sí mismo dentro del cuadro, con el pincel en la mano y la mirada hacia fuera. Se pintó trabajando, <strong>lo que</strong> en 1656 era poco frecuente.<br><br>
+        Y hay un detalle <strong>que</strong> muchos visitantes pasan por alto: la infanta, <strong>cuya</strong> figura ocupa el centro de la composición, es también la figura más iluminada. Todo lo demás &mdash; las meninas, el perro, el hombre de la puerta &mdash; está en penumbra o a media luz. La luz no es decorativa: organiza el cuadro.<br><br>
+        <strong>Lo que</strong> discuten los especialistas no es esto, sino el espejo del fondo. Pero eso ya lo sabes.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Four <em>lo que</em>, two <em>cuyo</em> and one plain relative <em>que</em> in twelve lines — the ordinary density of a museum text, which is why the Vocabulary Check and the Grammar Quiz both draw on writing like this.<br><br>Check the two <em>cuyo</em> forms against the rule: <em>«un pintor cuyo trabajo»</em> — masculine singular, agreeing with <em>trabajo</em>, not with <em>pintor</em>. <em>«la infanta cuya figura»</em> — feminine singular, agreeing with <em>figura</em>. Both times, look right.<br><br>Then find the one plain <em>que</em>: <em>«un detalle que muchos visitantes pasan por alto»</em>. There is a noun in front — <em>un detalle</em> — so <em>lo</em> is not needed. The test works on real prose, not only on exercises.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El cuadro que otros pintores no dejan en paz</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Some paintings are admired. A very small number get <em>argued with</em> by other painters, and <em>Las meninas</em> is the clearest case in Spanish art.<br><br>In <strong>1957</strong>, <strong>Pablo Picasso</strong> — Spanish, born in Málaga in 1881 — worked through the painting in a single sustained run of a few months and produced <strong>58 variations</strong> on it: the whole composition, then individual figures, then the dog on its own. He kept the series together and gave it to the <strong>Museu Picasso</strong> in Barcelona, where it still is. He was seventy-five, and he was rewriting a canvas painted three hundred years before he was born.<br><br>Now a licensing point, because it explains something about this course you may have noticed. <strong>Velázquez is in the public domain</strong> — his work is centuries out of copyright — which is why the Museo del Prado publishes his paintings in high resolution for anyone to download and use freely. <strong>Picasso died in 1973 and his work is still under copyright</strong>, so we can describe his 58 <em>meninas</em> in words but cannot reproduce them here.<br><br>That is not a technicality. It is why the images you meet in school skew heavily towards art made before about 1930, and it is worth knowing that the gap exists rather than assuming the older work is simply the more important.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Notice what <em>«lo que más me impresiona es&hellip;»</em> actually demands of you. It is a frame with one slot, and it will not accept a list. You have to decide which single thing mattered most and say it out loud.<br><br>That is harder than describing everything, and it is a better test of whether you looked. Vague admiration costs nothing; naming the one detail commits you. <em>Quien no sabe decir lo que más importa, todavía no ha mirado bastante.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.06 &mdash; «Lo que» y «cuyo» en uso</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you take <em>lo que</em> and <em>cuyo</em> into a walk through the Prado, with all four relatives working together across a connected paragraph — the Honors standard. It is also the day you write the first version of the paragraph that becomes your <strong>Lengua en acción</strong>. Graded work opens on <strong>Day 7</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then run the one-second test on these four, out loud: <em>el cuadro ___ vi</em> &middot; <em>___ vi</em> &middot; <em>el detalle ___ me gusta</em> &middot; <em>___ me gusta</em>. Noun in front, or nothing in front. If that is automatic by tomorrow, the hardest part of this module is behind you.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Four relative pronouns in three days: <em>que</em>, <em>quien</em>, <em>lo que</em>, <em>cuyo</em>. One test to choose between the first and the third, and one rule — look right, not left — for the fourth. That is the module's grammar complete. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.05 &middot; Lo que y cuyo</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

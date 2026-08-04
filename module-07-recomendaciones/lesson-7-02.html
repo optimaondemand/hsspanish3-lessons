@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 7.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 7</div>
+        <div style="font-size: 12px; color: #666;">Recomendaciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Los verbos que mueven el mundo</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Recomendaciones y deseos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Los verbos que mueven el mundo — desear, pedir, exigir, permitir</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Ten verbs. Every one of them is an attempt to move someone.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned that Spanish changes a verb's mood when a sentence stops reporting and starts pushing. Today you collect <strong>the ten verbs that do the pushing</strong> — the ones that will trigger everything you build from tomorrow onward.<br><br>Learn them today as ordinary vocabulary, used the simple way: with a noun, or with an infinitive. <em>«Te recomiendo dos días en Cusco.»</em> <em>«Me pidió ayuda.»</em> Nothing new grammatically.<br><br>That is deliberate. This course never gives you new words and new grammar on the same day. Tomorrow, when the grammar arrives, these ten will already be familiar — and you will only have one thing to think about.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten verbs of desire and influence with a noun or an infinitive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort them into wanting, asking and allowing — and rank them by force.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>esperar</em> means two different things in English.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Degrees of push</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Influence comes in strengths, and Spanish is precise about them in a way English often is not. Compare:<br><br><em>«Te <strong>sugiero</strong> otra ruta.»</em> — a possibility offered, easy to decline.<br><em>«Te <strong>recomiendo</strong> otra ruta.»</em> — a considered opinion, based on something.<br><em>«Te <strong>pido</strong> otra ruta.»</em> — a request; there is now something at stake for me.<br><em>«Te <strong>exijo</strong> otra ruta.»</em> — a demand. Rare between equals, and it will land as such.<br><br>Same sentence shape, four very different social acts. Choosing the wrong strength is not a grammatical error; it is a much more visible kind of mistake.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">In English, how do you usually soften a request?</div>
+            <div class="widget-options">
+                <button data-response="Common, and it transfers badly. English piles on modals - «could you possibly maybe…» - and a literal Spanish version sounds strange rather than polite. Spanish softens by choosing a gentler VERB («te sugiero» rather than «te pido»), and later this module, by choosing a gentler structure. The politeness lives in the choice, not in the padding.">By adding words — could you possibly&hellip;</button>
+                <button data-response="A good instinct, and Spanish does this too - «¿me pasas el agua?» as a question is softer than a command. But notice Spanish has a second lever English lacks: it can change the verb's mood. That is what this module is for.">By turning it into a question</button>
+                <button data-response="Then you may find Spanish comfortable. Between people who know each other, Spanish is markedly more direct than English, and a plain «pásame el agua» is friendly rather than rude. What matters is matching the strength to the relationship - which is exactly today's vocabulary.">I am fairly direct, honestly</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; DIEZ VERBOS DE INFLUENCIA <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud. Say each one in a short sentence of your own before moving on.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/desear.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">desear</span><span class="v-en">to wish, want (formal register)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/esperar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">esperar</span><span class="v-en">to hope — and also to wait, and to expect</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/preferir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">preferir</span><span class="v-en">to prefer</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/pedir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">pedir</span><span class="v-en">to ask for, request</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/recomendar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">recomendar</span><span class="v-en">to recommend</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/insistir-en.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">insistir en</span><span class="v-en">to insist on</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/exigir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">exigir</span><span class="v-en">to demand, require</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/permitir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">permitir</span><span class="v-en">to allow, permit</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/prohibir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">prohibir</span><span class="v-en">to forbid, prohibit</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/advertir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">advertir</span><span class="v-en">to warn</span></li>
+        </ul>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; DOS TRAMPAS DE TRADUCCIÓN</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;"><strong><em>Esperar</em> is three English words at once</strong> — <em>to wait</em>, <em>to hope</em> and <em>to expect</em> — and context does all the work. <em>«Te espero abajo»</em> = I'll wait for you downstairs. <em>«Espero verte pronto»</em> = I hope to see you soon. Spanish does not feel this as ambiguity; the three meanings are one idea about the future being open.<br><br><strong><em>Advertir</em> does NOT mean &ldquo;to advertise.&rdquo;</strong> It means <strong>to warn</strong>. Advertising is <em>la publicidad</em> or <em>el anuncio</em>. This is one of the more consequential false friends in the language: <em>«me advirtieron»</em> means somebody warned me, not that somebody marketed at me.</div>
+        </div>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Three structural notes worth banking now, because tomorrow you will be busy with something else.<br><br><strong><em>Insistir</em> keeps its <em>en</em></strong>, exactly as <em>confiar</em> did in Módulo 4: <em>insisto en la misma idea</em>, never «insisto la misma idea».<br><br><strong><em>Pedir</em> and <em>preguntar</em> are both &ldquo;ask&rdquo; and they are not interchangeable.</strong> <em>Pedir</em> asks <em>for</em> a thing — <em>pido un café</em>. <em>Preguntar</em> asks a question — <em>pregunto la hora</em>. Getting these backwards is the single most common intermediate error with this pair.<br><br><strong>Four of these are stem-changing</strong> in the present: <em>preferir → prefiero</em>, <em>pedir → pido</em>, <em>recomendar → recomiendo</em>, <em>advertir → advierto</em>. You already handle that pattern; note it now because tomorrow those altered stems reappear somewhere new.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TRES FAMILIAS <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Wanting, asking, allowing</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Ten verbs is a lot to hold. Three families is not.</p>
+        <table class="gtable">
+            <thead><tr><th>La familia</th><th>Los verbos</th><th>Qué hace</th><th>Ejemplo (con sustantivo o infinitivo)</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. Querer</strong> &middot; el deseo</td><td><em>desear, esperar, preferir</em></td><td>You want an outcome. Nobody is being addressed.</td><td>Prefiero <span class="pron">salir</span> temprano.</td></tr>
+                <tr><td><strong>2. Pedir</strong> &middot; la petición</td><td><em>pedir, recomendar, insistir en, exigir, advertir</em></td><td>You aim the want at a person.</td><td>Te recomiendo <span class="pron">el ceviche</span>.</td></tr>
+                <tr><td><strong>3. Permitir</strong> &middot; el permiso</td><td><em>permitir, prohibir</em></td><td>You open or close a door for someone.</td><td>No permiten <span class="pron">mochilas</span> grandes.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Family 2 almost always carries an indirect object — <em>te, le, les, nos</em> — because the influence has to land on somebody. That is why <em>«te recomiendo»</em> feels incomplete without the <em>te</em>.</p>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128073; POR QUÉ ESTAS FAMILIAS IMPORTAN MAÑANA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">All three families share one property, and it is the reason they are grouped: <strong>none of them reports anything.</strong> Every one is an attempt on the world — wanting it different, asking someone to change it, permitting or forbidding a change.<br><br>Tomorrow you will learn that when any of these verbs takes <strong>a whole clause</strong> instead of a noun or an infinitive, the verb inside that clause shifts mood. Today's <em>«Prefiero salir temprano»</em> becomes <em>«Prefiero que salgamos temprano»</em> — and the shape of <em>salgamos</em> will not surprise you.<br><br>So there is nothing to memorise tonight beyond the ten words. The list you just learned is the list of triggers.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pedir o preguntar</div>
+            <div class="widget-question">You want to say &ldquo;I asked the guide what time we leave.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Le pedí al guía a qué hora salimos» would mean you requested the departure time as a thing to be handed over. «Pedir» asks FOR something.">Le pedí al guía a qué hora salimos.</button>
+                <button data-correct="true" data-fb="«Le pregunté al guía…» - you asked a question, so «preguntar». Reserve «pedir» for asking for a thing: «le pedí el mapa».">Le pregunté al guía a qué hora salimos.</button>
+                <button data-correct="false" data-fb="«Le exigí» means you DEMANDED it of the guide. Grammatically fine, socially a very different conversation.">Le exigí al guía a qué hora salimos.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; el falso amigo</div>
+            <div class="widget-question">A sign at a trailhead reads <em>«Se advierte del peligro de derrumbes»</em>. What is it doing?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="This is the false-friend trap. «Advertir» is not «to advertise» - advertising is «la publicidad». A trailhead sign is not selling landslides.">Advertising landslide tours</button>
+                <button data-correct="false" data-fb="«Prohibir» would forbid something. This sign is not closing the trail; it is telling you what to expect on it.">Forbidding access because of landslides</button>
+                <button data-correct="true" data-fb="«Advertir» = to warn. The sign warns of the danger of landslides - «los derrumbes». Note it takes «de»: advertir DE un peligro.">Warning of the danger of landslides</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; la fuerza correcta</div>
+            <div class="widget-question">You are a guest in someone's home in Arequipa and you would like more water. Which verb?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Pedir» - «¿me puedes pedir un poco más de agua?» or simply «me gustaría un poco más de agua, por favor». A guest requests.">pedir</button>
+                <button data-correct="false" data-fb="«Exigir» is to demand. A guest who demands water has said something about the relationship they did not intend to say.">exigir</button>
+                <button data-correct="false" data-fb="«Insistir en» means to press a point after being refused. Nobody has refused you anything yet.">insistir en</button>
+                <button data-correct="false" data-fb="«Advertir» is to warn. Warning your host about water would be a memorable evening, but not the one you want.">advertir</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: a friend is visiting Perú for a week. Give them <strong>three</strong> pieces of advice aloud, one from each family in Part 3 — a preference, a recommendation aimed at them, and something that is not permitted. Use nouns and infinitives only; you do not need <em>que</em> yet.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Prefiero viajar en la temporada seca, entre mayo y septiembre. Te recomiendo dos días en Cusco antes de subir a Machu Picchu, por la altura. Y en el sitio no permiten mochilas grandes ni comida, así que lleva solo agua.</strong><br><br>Check yours: family 1 with an infinitive (<em>viajar</em>) · family 2 with <em>te</em> and a noun (<em>dos días</em>) · family 3 with a noun (<em>mochilas</em>). No <em>que</em> anywhere, and all three are complete, natural Spanish. Tomorrow you get a fourth option for each of them.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>En el mercado de San Pedro</strong><br><br>
+        &mdash;¿Es tu primera vez en Cusco? Te lo noto en la cara.<br>
+        &mdash;¿Tanto se ve?<br>
+        &mdash;Todos llegan con la misma cara. Mira, te <em>recomiendo</em> el caldo de gallina antes que cualquier otra cosa. Es lo que tomamos aquí cuando el cuerpo no responde.<br>
+        &mdash;Me <em>advirtieron</em> del soroche, pero pensé que exageraban.<br>
+        &mdash;Nadie exagera con la altura. Yo <em>prefiero</em> caminar despacio los primeros días; no es debilidad, es sentido común. Y te <em>pido</em> un favor: no subas mañana. Espera un día más.<br>
+        &mdash;¿Y el mate de coca?<br>
+        &mdash;Ayuda, sí. Pero mucha gente <em>espera</em> milagros de una hoja. Lo que de verdad funciona es tiempo y agua.<br>
+        &mdash;¿Aquí <em>permiten</em> llevarse las hojas?<br>
+        &mdash;Aquí sí. Fuera del país, muchos aeropuertos lo <em>prohíben</em>. <em>Insisto en</em> eso porque cada año alguien se lleva un problema en la mochila.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Seven of today's ten verbs are in that conversation. Find them, and notice what follows each one: a noun (<em>el caldo</em>, <em>un favor</em>, <em>milagros</em>), an infinitive (<em>caminar</em>, <em>llevarse</em>), or a preposition plus a noun (<em>del soroche</em>, <em>en eso</em>). <strong>Not one of them takes a <em>que</em> clause.</strong> That is a real limitation and you can already feel it: the market seller cannot yet say <em>«te pido que no subas»</em>, so she says <em>«te pido un favor»</em> and then gives a command — <em>«no subas mañana»</em>.<br><br>Tomorrow she gets to say it in one sentence.<br><br>Two things worth keeping: <em>«el cuerpo no responde»</em> is how you say your body is not cooperating, and <em>prohíben</em> carries a written accent because <em>-hi-</em> would otherwise merge into one syllable. The <em>h</em> is silent but it does not stop the vowels needing separating.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; PERÚ</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El país de las tres mil papas</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The potato is Peruvian. Not &ldquo;popular in Peru&rdquo; — <strong>domesticated in the Andes</strong>, thousands of years ago, and Peru still grows <strong>over three thousand native varieties</strong> in colours, shapes and textures that no supermarket outside the region stocks. The <em>Centro Internacional de la Papa</em> in Lima holds one of the world's largest potato genebanks, and part of its work is exactly the conservation problem you met in Módulo 5: keeping varieties alive that no market currently rewards.<br><br>Every potato eaten in Europe descends from that Andean stock. So does the tomato's neighbour on the same plate, and <em>la quinua</em>, and the chili. It is worth sitting with how strange that is: a great deal of what the rest of the world considers its own ordinary food came from this one region within the last five centuries.<br><br>Peruvian cooking has become one of the most admired in the world on the strength of that inheritance plus a long history of arrival — Spanish, West African, Japanese, Chinese and Italian cooking all folded in. <em>El ceviche</em> is the national dish and has its own national day; <em>lomo saltado</em> is stir-fried beef with soy sauce and chips on the same plate, which tells you the whole story of Chinese-Peruvian <em>chifa</em> cooking in one mouthful.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Look again at the market seller. She has ten ways to push and she uses the gentlest ones — <em>recomiendo</em>, <em>prefiero</em>, <em>te pido un favor</em> — and she reserves her one firm moment (<em>insisto en eso</em>) for the thing that could actually get someone into trouble at an airport.<br><br>That is <strong>la prudencia</strong> operating on vocabulary. Prudence is not being soft; it is spending force where force is warranted and nowhere else. A person who demands everything has no way left to signal that something matters. <em>Quien exige por todo, no puede insistir en nada.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.03 &mdash; La regla de los dos sujetos</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the grammar arrives, and it is one rule: <strong>one subject takes an infinitive, two subjects take <em>que</em> plus the subjunctive.</strong> You already own the forms and you now own the triggers, so tomorrow has exactly one new idea in it. Graded work opens on <strong>Día 7</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then name the three families aloud with their verbs, and say which of the ten you would be least comfortable using with a stranger. If you said <em>exigir</em>, you have understood the lesson.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ten verbs of influence, sorted into three families and ranked by force — plus two false friends caught before they could cost you anything. The triggers are loaded. Tomorrow you pull them. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.02 &middot; Los verbos que mueven el mundo</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

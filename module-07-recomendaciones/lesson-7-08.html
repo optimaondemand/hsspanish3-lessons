@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 7.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 7</div>
+        <div style="font-size: 12px; color: #666;">Recomendaciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.08 &middot; Day 8 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lectura interpretativa · fray Gómez</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Recomendaciones y deseos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lectura interpretativa — «le pido y ruego que me preste»</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">One word, <em>que</em>, doing two completely different jobs — four lines apart, in the same speech.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Módulo 7's reading day, and this is the text the whole semester was pointing at. A poor pedlar walks into a friar's cell in colonial Lima and asks for a loan. He is nervous, he is polite, and he talks too much — which is lucky for you, because in one long speech he uses <strong>two verbs of request sharing a single <em>que</em> clause</strong>, and then uses <em>que</em> again a few words later with the indicative.<br><br>Nobody wrote that to teach you anything. It was published in <strong>1896</strong>, in Lima, by a Peruvian writer collecting the stories his city told about itself. A student who can explain why one <em>que</em> takes <em>preste</em> and the other takes <em>quiere</em> has understood Módulo 7 completely.<br><br>The graded <strong>Lectura interpretativa</strong> (15 pts) opens today.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what the pedlar wants, what he has already tried, and how long he says he needs it for.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>preste</em> is a subjunctive and <em>quiere</em> is not, in the same sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find Módulo 1, Módulo 4 and Módulo 5 operating inside a text written in 1896.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; ANTES DE LEER <span class="pill-time">7 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Contexto: una «tradición», un fraile y un buhonero</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>El género.</strong> <em>La tradición</em> is not a form Ricardo Palma inherited — <strong>he invented it</strong>. A <em>tradición peruana</em> is a short, dry, half-historical anecdote of colonial Lima: a real place, usually a real person, a story the city actually told, and a narrator who keeps interrupting himself with jokes and asides. Palma published ten series of them between 1872 and 1910, and they are the reason a great deal of Lima's oral memory survives at all.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Los personajes.</strong> <strong>Fray Gómez</strong> was real: a Franciscan lay brother in Lima, credited with miracles, and remembered long after his death. In this <em>tradición</em> he is in his cell when a knock comes. The visitor is <strong>el buhonero</strong> — a pedlar who carries his stock on his back and sells it door to door — and his name is <strong>Jeromo</strong>. He wants a loan of <strong>five hundred <em>duros</em></strong> to stock his trade, and he has already been turned down everywhere.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;"><strong>Busca estas tres cosas.</strong> No dictionary on the first two passes:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 0 1.4rem;">
+            <li>¿Qué ha hecho ya Jeromo antes de llegar a esta puerta, y con qué resultado?</li>
+            <li>¿Quién le dio la idea de venir a ver a fray Gómez?</li>
+            <li><strong>La palabra <em>que</em> aparece varias veces.</strong> ¿En cuáles va detrás un verbo conjugado normal, y en cuál va detrás una forma de subjuntivo?</li>
+        </ol>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; TÉCNICA &middot; una sola voz, tres arranques iguales</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">This is one long speech and it has an obvious skeleton once you see it: <strong>Jeromo begins three sentences with <em>«Y es el caso que&hellip;»</em></strong> — roughly &ldquo;and the thing is that&hellip;&rdquo;. Find those three openings first and you have divided the speech into its three moves before you have translated a word of it. Move 1 is what he has already tried. Move 2 is why he came here. Move 3 is the actual request.<br><br>Locating the repeated phrase before reading is a faster way into a long paragraph than starting at the left-hand end and pushing. It also tells you something true about the character: a man who says <em>«es el caso que»</em> three times is stalling before he asks for money.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL TEXTO <span class="pill-time">10 min</span></div>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA AUTÉNTICA &middot; DOMINIO PÚBLICO &middot; PERÚ, 1896</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            —Pues es el caso que a muchas puertas he llegado en demanda de habilitación por quinientos duros, y todas las he encontrado con cerrojo y cerrojillo. Y es el caso que anoche, en mis cavilaciones, yo mismo me dije a mí mismo: «¡Ea!, Jeromo, buen ánimo y vete a pedirle el dinero a fray Gómez; que si él lo quiere, mendicante y pobre como es, medio encontrará para sacarte del apuro». Y es el caso que aquí estoy porque he venido, y a su paternidad le pido y ruego que me preste esa puchuela por seis meses…
+            </div>
+            <div class="src">Ricardo Palma, «El alacrán de fray Gómez», <em>Tradiciones peruanas</em> (séptima serie), 1896. Dominio público.</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;">The passage stops mid-sentence on purpose. Jeromo keeps going in the original — into a snatch of verse — and we cut him off there. <strong>The <em>…</em> is the cut, not his hesitation.</strong></p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128220; GLOSARIO &middot; read this only after your second pass</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.75;">
+            <strong><em>el buhonero</em></strong> — a pedlar; someone who carries his stock and sells door to door<br>
+            <strong><em>la habilitación</em></strong> — money advanced to set up or stock a business; a working loan<br>
+            <strong><em>los duros</em></strong> — silver coins. Five hundred of them is a serious sum<br>
+            <strong><em>cerrojo y cerrojillo</em></strong> — bolt and little bolt: bolted and double-bolted, i.e. every door shut in his face<br>
+            <strong><em>las cavilaciones</em></strong> — brooding; turning something over and over at night<br>
+            <strong><em>mendicante</em></strong> — mendicant; living entirely on alms, as a friar of his order did<br>
+            <strong><em>el apuro</em></strong> — a tight spot, a fix<br>
+            <strong><em>la puchuela</em></strong> — a trifle, a piddling little amount<br><br>
+            <strong>That last one is the best thing in the passage, and you would miss it without this box.</strong> Five hundred <em>duros</em> is not a <em>puchuela</em>. It is close to a fortune for a pedlar, and Jeromo knows it perfectly well. Calling it a trifle is <strong>deference</strong> — he is making his own request sound small so that refusing it would seem ungenerous, exactly as an English speaker says &ldquo;I only need a tiny favour.&rdquo; The irony is his, not Palma's, and it tells you more about the man than three sentences of description would.<br><br>Two more turns of phrase worth keeping: <em>a su paternidad</em> is how you addressed a friar, third person, like <em>usted</em> — and <em>yo mismo me dije a mí mismo</em> piles up three ways of saying &ldquo;myself&rdquo; because Jeromo is a man who repeats himself when he is nervous.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; COMPRENSIÓN <span class="pill-time">10 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Practice first — ungraded. The graded item asks the same kinds of question, and you are expected to reread the passage while answering it rather than remember it.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; IDEA GENERAL &middot; gist</div>
+            <div class="widget-question">¿Qué hace Jeromo en este discurso?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="No se queja de nadie. Menciona las puertas cerradas como antecedente de su petición, no como reproche: no nombra a ninguno de los que lo rechazaron.">Se queja de la gente que lo ha rechazado</button>
+                <button data-correct="true" data-fb="Exacto, y en tres movimientos: lo que ya intentó, quién le dio la idea de venir, y la petición misma. Los tres empiezan igual - «es el caso que».">Explica lo que ya intentó y luego pide un préstamo</button>
+                <button data-correct="false" data-fb="No ofrece nada a cambio en este fragmento: ni interés, ni garantía, ni trabajo. Solo un plazo - seis meses - y eso no es una oferta, es una condición de la petición.">Ofrece algo a cambio del dinero</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; detail</div>
+            <div class="widget-question">¿Quién le dio a Jeromo la idea de venir a ver a fray Gómez?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Fray Gómez no lo mandó llamar; Jeromo llega por su cuenta y tiene que explicarse. De ahí los tres arranques antes de pedir.">Fray Gómez lo mandó llamar</button>
+                <button data-correct="false" data-fb="En el texto no aparece ningún vecino ni amigo. Todo lo que Jeromo dice sobre la idea ocurre dentro de su propia cabeza, de noche.">Un vecino se lo aconsejó</button>
+                <button data-correct="true" data-fb="Él mismo: «yo mismo me dije a mí mismo». La idea le llegó de noche, «en mis cavilaciones», y se la dio hablándose en voz alta y llamándose por su nombre - «¡Ea!, Jeromo».">Nadie: se lo dijo él mismo, de noche</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; detail</div>
+            <div class="widget-question">¿Cuánto pide, para qué, y por cuánto tiempo?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Quinientos duros, «en demanda de habilitación» - dinero para surtir su negocio - y «por seis meses». Los tres datos están, pero repartidos: el importe y el propósito al principio, el plazo en la última línea.">Quinientos duros, para surtir su negocio, por seis meses</button>
+                <button data-correct="false" data-fb="La cantidad es correcta, pero el plazo no: el texto dice «por seis meses», y ese dato está justo al final, en la misma frase que la petición.">Quinientos duros, para comer, por un año</button>
+                <button data-correct="false" data-fb="«Una puchuela» no es una cantidad: es cómo Jeromo llama a los quinientos duros para hacer pequeña su petición. La cifra la dio al principio del discurso.">Una puchuela, para pagar deudas, por seis meses</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; GRAMÁTICA EN EL TEXTO &middot; the Honors item</div>
+            <div class="widget-question">Jeromo dice «le pido y ruego que me <strong>preste</strong> esa puchuela». ¿Por qué <em>preste</em> y no <em>presta</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="La misma frase lo desmiente: unas líneas antes escribe «que si él lo quiere», y «quiere» es indicativo. «Que» solo no manda nada; manda el verbo que va delante.">Porque detrás de <em>que</em> el español siempre pone subjuntivo</button>
+                <button data-correct="false" data-fb="La forma coincide con el mandato de usted, y eso no es casualidad - son la misma forma. Pero aquí no hay mandato: un buhonero no le ordena nada a un fraile. «Preste» está dentro de una cláusula que depende de «pido y ruego».">Porque es un mandato de usted dirigido a fray Gómez</button>
+                <button data-correct="true" data-fb="«Pedir» y «rogar» son verbos de petición, y el que presta es otra persona: dos sujetos, así que «que» abre una cláusula y el verbo cambia de modo. Dos disparadores, una sola cláusula - «pido y ruego» comparten el mismo «que me preste».">Porque <em>pedir</em> y <em>rogar</em> piden, y el que presta es otra persona</button>
+                <button data-correct="false" data-fb="No hay nada arcaico en «preste». Un peruano lo escribiría hoy exactamente igual: la regla de 1896 y la de 7.03 son la misma regla.">Porque el texto es de 1896 y el español antiguo prefería esa forma</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; INFERENCIA &middot; inference</div>
+            <div class="widget-question">¿Por qué llama <em>puchuela</em> a quinientos duros, si sabe que no lo son?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="No se ha equivocado con la cifra: la dijo él mismo al principio del discurso, «quinientos duros», sin dudar. La palabra no es un error de cuentas.">Porque no sabe cuánto vale realmente</button>
+                <button data-correct="true" data-fb="Para presentar la petición como algo pequeño: al que la niega le cuesta más negarla. Es la misma cortesía calculada del inglés «only a tiny favour» - y funciona porque quien la usa es quien pide, nunca quien da.">Para presentarla como algo pequeño y difícil de negar</button>
+                <button data-correct="false" data-fb="No hay burla en su tono. Lleva tres frases explicándose y llama al fraile «su paternidad»: un hombre que se burla no habla así.">Porque se está burlando del fraile</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; LOS DOS «QUE» <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">La misma palabra, dos oficios, a cuatro líneas de distancia</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Put these two side by side. They are in the same speech, spoken by the same man, and they are doing entirely unrelated things.</p>
+        <table class="gtable">
+            <thead><tr><th>En el texto</th><th>Qué va delante del <em>que</em></th><th>Qué modo</th><th>Por qué</th></tr></thead>
+            <tbody>
+                <tr><td>«le pido y ruego <strong>que me preste</strong>»</td><td><em>pedir</em> y <em>rogar</em> — dos verbos de petición</td><td><strong>subjuntivo</strong></td><td>Jeromo pide; fray Gómez presta. <strong>Dos sujetos</strong>, así que la cláusula cambia de modo</td></tr>
+                <tr><td>«<strong>que</strong> si él lo <strong>quiere</strong>»</td><td>nada que influya — <em>que</em> aquí es un enlace, casi un «porque»</td><td><strong>indicativo</strong></td><td>No es una petición: es una <strong>afirmación</strong> sobre fray Gómez. Nadie está empujando a nadie</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">This is the single most useful pair of examples in the module, and the reason is that <strong>the trigger is never the word <em>que</em>.</strong> It is always the verb in front of it. Jeromo's speech proves it by using both in one breath, and 7.01 said the same thing about <em>«la ventaja es que&hellip;»</em>: <em>ser</em> is not a verb of influence, so nothing changes.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DECIDE &middot; ¿qué manda, el «que» o el verbo?</div>
+            <div class="widget-question">Un lector dice: «en español, <em>que</em> siempre lleva subjuntivo detrás». ¿Cómo lo refutas con este mismo texto?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Exacto - «que si él lo quiere» está en el mismo párrafo y lleva indicativo. Un contraejemplo dentro del mismo texto es la refutación más limpia que existe.">Señalando «que si él lo <em>quiere</em>», indicativo, cuatro líneas antes</button>
+                <button data-correct="false" data-fb="«Preste» sí es subjuntivo, así que ese ejemplo confirma la regla falsa en vez de romperla. Para refutar algo hace falta un caso que NO encaje.">Señalando «que me <em>preste</em>», que es subjuntivo</button>
+                <button data-correct="false" data-fb="La fecha no viene al caso: la regla es exactamente la misma hoy, y el contraejemplo está dentro del propio texto, no en su antigüedad.">Diciendo que el texto es de 1896 y ya no vale</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 18px 0 8px 0;">Y tres módulos anteriores, en la misma voz</h3>
+        <table class="gtable">
+            <thead><tr><th>En el texto</th><th>Qué es</th><th>Módulo</th></tr></thead>
+            <tbody>
+                <tr><td><em>he llegado</em> &middot; <em>las he encontrado</em> &middot; <em>he venido</em></td><td>Presente perfecto: lo que ha pasado hasta este momento, y sigue contando</td><td><strong>M1</strong></td></tr>
+                <tr><td><em>vete a pedirle el dinero</em></td><td>Mandato afirmativo de <em>tú</em> con el pronombre pegado — y un segundo pronombre pegado al infinitivo, <em>pedir<strong>le</strong></em></td><td><strong>M4</strong></td></tr>
+                <tr><td><em>por quinientos duros</em></td><td><em>Por</em> de intercambio: eso es lo que se daría a cambio</td><td><strong>M5</strong></td></tr>
+                <tr><td><em>para sacarte del apuro</em></td><td><em>Para</em> de propósito, + infinitivo: para qué serviría el dinero</td><td><strong>M5</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;">Look at the last two rows together, because they are eight words apart in the original and they are the whole M5 contrast: <strong><em>por</em> quinientos duros</strong> is the sum on the table, and <strong><em>para</em> sacarte del apuro</strong> is what it would achieve. Behind and ahead, in one sentence, written by a man who never took a Spanish course.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;">And notice what <em>vete a pedirle</em> is doing. Jeromo is quoting himself giving himself an order — a <em>tú</em> command aimed at Jeromo by Jeromo. That is why the passage can carry a command and a polite request in the same breath without any clash of register: the command is what he said to himself at night, and the request is what he says out loud to a friar.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 5 &middot; PUENTE A LA PRODUCCIÓN <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Jeromo does three things before he asks: he says what he has already tried, he explains why he came <em>here</em>, and only then does he make the request — with a time limit attached. That is a shape, and it works.</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 10px 0;"><em>Mañana te toca aconsejar a alguien de verdad: ¿quién es, y qué decisión tiene delante?</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Tomorrow's <strong>Tarea oral</strong> asks you to advise one real person about one real decision. Choose the person now, not tomorrow. The recording that works is always the one where you actually have something to say — and, like Jeromo, you will do better if you explain the situation before you start telling anyone what to do.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">How did a text from 1896 go?</div>
+            <div class="widget-options">
+                <button data-response="Then the three «es el caso que» did their job. Finding a repeated phrase and using it to cut a long paragraph into moves is a reading strategy, not a trick - and it works on legal writing, news and exam questions just as well as on Palma.">Splitting it at the three «es el caso que» helped</button>
+                <button data-response="Honest, and expected: this is the longest single sentence you have read in this course, with a quotation inside a quotation. Reread it using only the three questions from Part 1 and the gloss box, and ignore everything else on the page.">I found it hard going</button>
+                <button data-response="Worth naming what you just did: you read unadapted nineteenth-century Peruvian prose and found two different jobs for the word «que» inside it. That is an Honors-level reading act, and it is the reason this course spends a day a fortnight on real texts.">Easier than I expected</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; PERÚ</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El centro de Lima, donde esta historia ocurre de verdad</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Fray Gómez's cell was not invented. He lived in the <strong>Franciscan convent in the centre of Lima</strong>, and the convent is still there — you can walk to it. That is the ordinary condition of a Palma <em>tradición</em>: the address is real, the person usually was too, and the miracle is what the neighbourhood said about them afterwards.<br><br>Lima was founded in <strong>1535</strong> and was for two centuries the administrative capital of Spanish South America, which is why its colonial centre is so large and so decorated — and why it is a UNESCO World Heritage Site. The Franciscan complex is the piece most visitors remember, partly for its library of old volumes and partly for the <em>catacumbas</em> underneath, ossuaries where thousands of burials were stacked in the years when the city buried its dead in church ground.<br><br>Two things about that centre are worth knowing before you picture it. It is a <strong>working city centre</strong>, not a preserved quarter — traffic, offices, street sellers, and around ten million people in greater Lima. And it sits in one of the driest places any large city occupies: Lima gets almost no rain, and its permanent grey winter overcast, <em>la garúa</em>, is a fog rather than weather. That is also why so much colonial fabric survived to be a World Heritage Site at all.<br><br>Palma himself became director of the <strong>Biblioteca Nacional</strong> and rebuilt its collection after the War of the Pacific, when much of it was carried off. The man who preserved Lima's stories spent his working life preserving its books.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Jeromo is a study in prudence, and not the timid kind. He has been refused at every door in the city and he does not give up; he thinks about it all night, works out the one person who might say yes, and then does something careful — he does <strong>not</strong> demand. He asks, twice over, inside a clause, with a deadline attached and his own request made to sound small.<br><br>He could have used <em>exigir</em>. He would have been thrown out. Módulo 7's grammar is exactly this calculation made visible: how hard to push, in a language that gives you ten different strengths of push and marks the choice on the verb. <em>Pedir bien es la mitad de recibir.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.09 &mdash; Tarea oral</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">You record 60&ndash;90 seconds of advice to one real person about one real decision. Twenty points, and the most heavily weighted component of the course — and the first speaking task all semester whose prompt is allowed to ask you for the subjunctive.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then complete the graded <strong>Lectura interpretativa</strong> (15 pts). Keep this page open while you do it — you are expected to reread the passage and the gloss box, not recall them.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A Peruvian pedlar from 1896, two verbs of request on one clause, and the word <em>que</em> caught doing two unrelated jobs in the same breath — plus Módulos 1, 4 and 5 turning up uninvited. <em>Ya puedes explicar por qué «preste» y no «presta».</em> <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.08 &middot; Lectura interpretativa · fray Gómez</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

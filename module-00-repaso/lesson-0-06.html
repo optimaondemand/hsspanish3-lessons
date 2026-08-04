@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 0.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 0</div>
+        <div style="font-size: 12px; color: #666;">Repaso</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Narración extendida</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Repaso · Contar lo que pasó</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Del enunciado al párrafo — narrar de verdad</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Correct sentences are not yet a paragraph. Today you build the paragraph.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned to choose a tense one sentence at a time. That is not how narration actually works — in real writing you hold a whole scene in view and the tenses arrange themselves around it.<br><br>This is the <strong>Honors standard</strong> for the rest of the year: <em>connected-paragraph length</em>, in every written and spoken task. Today you build one deliberately, with the tools you have. Tomorrow, graded work opens.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a narrative paragraph of 6&ndash;8 sentences with a clear <em>situación, complicación</em> and <em>resolución</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> vary my connectors instead of repeating <em>y luego</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read a longer authentic-style narrative and follow its tense logic.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The most common weakness in Spanish 3 writing</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">It is not verb errors. It is this: <em>Fui a la tienda. Luego compré pan. Luego volví a casa. Luego comí.</em> Every verb correct, every sentence correct — and it reads like a shopping list, because every sentence has the same length, the same shape, and the same connector.<br><br>An Honors paragraph varies. Some sentences are long and set a scene; one is short and lands the event.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Look honestly at your own Spanish writing so far. Which is closest?</div>
+            <div class="widget-options">
+                <button data-response="Extremely common, and the fix is mechanical rather than mysterious: Part 2 gives you eight connectors and a rule about not reusing one twice in a paragraph.">Mostly short sentences joined by «y» or «luego»</button>
+                <button data-response="Good - you are already varying. Today's work is to make that variation deliberate rather than accidental, so it holds up under a timed task.">I already mix long and short sentences</button>
+                <button data-response="Then today is well timed. Building the paragraph shape FIRST and filling in verbs second is exactly the method in Part 2.">I write sentence by sentence and never plan the paragraph</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA ARQUITECTURA DEL PÁRRAFO <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A shape you can reuse all year</h3>
+        <table class="gtable">
+            <thead><tr><th>Sentence</th><th>Job</th><th>Tense</th><th>Useful opener</th></tr></thead>
+            <tbody>
+                <tr><td>1&ndash;2</td><td>Set time, place, atmosphere</td><td><span class="pron">imperfecto</span></td><td>Era&hellip; / Hacía&hellip; / Al principio&hellip;</td></tr>
+                <tr><td>3</td><td>What you were doing</td><td><span class="pron">imperfecto</span></td><td>Mientras&hellip;</td></tr>
+                <tr><td>4</td><td><strong>The event</strong> — keep it short</td><td><span class="pron">pretérito</span></td><td>De repente&hellip;</td></tr>
+                <tr><td>5&ndash;6</td><td>What followed</td><td><span class="pron">pretérito</span></td><td>Entonces&hellip; / Después&hellip;</td></tr>
+                <tr><td>7</td><td>How it ended</td><td><span class="pron">pretérito</span></td><td>Al final&hellip; / Menos mal que&hellip;</td></tr>
+                <tr><td>8</td><td>Your comment on it</td><td>present or imperfect</td><td>Ahora sé que&hellip; / Todavía recuerdo&hellip;</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Sentence 4 is the hinge. Make it the <strong>shortest sentence in the paragraph</strong> — a short sentence after three long ones lands like a drumbeat, and it is the cheapest stylistic trick in any language.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LA REGLA DE LOS CONECTORES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Do not use the same connector twice in one paragraph. You have plenty: <em>al principio · mientras · de repente · entonces · después de · sin embargo · resulta que · menos mal que · al final</em>. Nine options, and an eight-sentence paragraph needs at most five.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; MODELO ANOTADO <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The shape, filled in</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El examen que no era</strong><br><br>
+        <sup>1</sup> <em>Era</em> lunes por la mañana y yo <em>estaba</em> más nervioso de lo normal. <sup>2</sup> <em>Hacía</em> frío en el pasillo y todos mis compañeros <em>repasaban</em> sus apuntes en silencio. <sup>3</sup> Mientras yo <em>buscaba</em> un bolígrafo en la mochila, <em>pensaba</em> en todas las fechas que no <em>recordaba</em>. <sup>4</sup> <strong>De repente la profesora abrió la puerta y se rió.</strong> <sup>5</sup> Entonces nos <strong>explicó</strong> que el examen <em>era</em> el miércoles, no el lunes. <sup>6</sup> Después de un segundo de silencio, todos <strong>empezamos</strong> a hablar a la vez. <sup>7</sup> Al final <strong>salimos</strong> al patio y <strong>estudiamos</strong> juntos una hora. <sup>8</sup> Todavía <em>recuerdo</em> ese lunes como el mejor día de repaso del semestre.</p>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Count what the model does: sentences 1&ndash;3 are long and entirely imperfect — no plot yet. Sentence 4 is <strong>ten words</strong> and carries two preterites. Sentences 5&ndash;7 advance and close. Sentence 8 steps outside the story to comment. Five different connectors, none repeated.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; diagnose the weakness</div>
+            <div class="widget-question">«Fui al parque. Luego jugué al fútbol. Luego comí un helado. Luego volví a casa.» What is the main problem?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="The verbs are all correct preterites. Form is not the issue here.">The verb forms are wrong</button>
+                <button data-correct="true" data-fb="No scene and no variety - four events in a row, same connector, same length. It needs an imperfect opening and different connectors.">There is no scene and the connector repeats</button>
+                <button data-correct="false" data-fb="Preterite is right for these events. What is missing is the imperfect FRAME around them.">It should all be imperfect</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which sentence is the hinge?</div>
+            <div class="widget-question">In a paragraph following Part 2's shape, which sentence should be the <em>shortest</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Sentence 1 sets the scene, so it usually wants room to breathe.">Sentence 1</button>
+                <button data-correct="true" data-fb="Sentence 4 - the event. Short after three long ones is what makes it land.">Sentence 4</button>
+                <button data-correct="false" data-fb="Sentence 8 is your comment; it can be any length. The hinge is the event itself.">Sentence 8</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; tense inside reported speech</div>
+            <div class="widget-question">«Nos explicó que el examen ___ el miércoles.» (the exam WAS on Wednesday)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«era». A scheduled state, described - not an event. Reported speech in the past pulls the imperfect.">era</button>
+                <button data-correct="false" data-fb="«fue» would make the exam itself a completed event, which is not what is being reported - the exam had not happened yet.">fue</button>
+                <button data-correct="false" data-fb="«es» is present; the reporting verb «explicó» has anchored the whole sentence in the past.">es</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú — the real practice for tomorrow's graded task. Write a <strong>6&ndash;8 sentence</strong> narrative paragraph about something that went wrong, following Part 2's shape. Check three things before you reveal: no connector repeated, sentence 4 is the shortest, and sentences 1&ndash;3 contain no preterite.</p>
+            <button class="reveal-btn">Reveal a checklist</button>
+            <div class="reveal-body"><strong>Before you call it finished:</strong><br>&bull; Sentences 1&ndash;3: imperfect only. Any preterite there means you started the plot too early.<br>&bull; Sentence 4: the event, and the shortest line you wrote.<br>&bull; At least four different connectors, none used twice.<br>&bull; Every <em>-er/-ir</em> imperfect has its accent: <em>vivía, comía, hacía</em>.<br>&bull; Check <em>saber/conocer/querer/poder</em> — did you mean the state or the moment?<br>&bull; Final sentence steps outside the story and comments on it.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>La carta de mi bisabuela</strong><br><br>
+        Mi bisabuela <em>nació</em> en un pueblo de Galicia, en el norte de España, y <em>salió</em> de allí a los diecinueve años. En casa <em>guardábamos</em> una carta que ella <em>escribió</em> desde el barco. En la carta <em>contaba</em> que el mar <em>estaba</em> tranquilo, que <em>había</em> gente de cuatro países en su camarote y que nadie <em>hablaba</em> el mismo español. <em>Decía</em> que <em>tenía</em> miedo, pero que no <em>quería</em> volver.<br><br>Cuando <em>llegó</em> a Buenos Aires, no <em>conocía</em> a nadie. <em>Trabajó</em> once años en una panadería y <em>aprendió</em> a leer de noche. Un día <em>conoció</em> a mi bisabuelo en la cola del pan. Mi madre todavía <em>guarda</em> esa carta en una caja de metal, y cada vez que la <em>leemos</em> nos <em>damos cuenta de</em> que la letra <em>era</em> de alguien que <em>estaba</em> aprendiendo a escribir.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Two things to notice. First, the tense logic: preterites carry her life's events (<em>nació, salió, llegó, trabajó, aprendió, conoció</em>) while imperfects hold what the letter <em>described</em> (<em>estaba, había, hablaba, tenía</em>). Second, the pair you learned yesterday appears again on purpose: <em>no conocía a nadie</em> (she knew no one) and then <em>conoció a mi bisabuelo</em> (she met him). Same verb, two tenses, two meanings.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; EL MUNDO HISPANO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>«Nadie hablaba el mismo español»</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">That line from the reading is historically exact. Between roughly 1880 and 1930, millions of Europeans crossed to the Americas, and Argentina received more immigrants per head of population than almost anywhere on earth — above all Spaniards and Italians. Buenos Aires absorbed so many that the city's Spanish changed permanently: the intonation of <em>porteño</em> speech, and words like <em>laburo</em> (work, from Italian <em>lavoro</em>), come from that arrival.<br><br>So the Spanish you are learning is not one thing that spread outward unchanged. It was remade by the people who carried it — which is why this course visits a different country each module rather than teaching &ldquo;Spanish&rdquo; as if it had one home.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA DILIGENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A woman who worked eleven years in a bakery and taught herself to read at night is the module's virtue made concrete. <em>La diligencia</em> is not intensity — it is showing up at the same task after the novelty is gone. Tomorrow graded work opens; that is precisely where this virtue gets tested rather than admired. <em>Se aprende de noche, poco a poco, sin público.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 0.07 &mdash; Integración &middot; graded work opens</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the <strong>Vocabulary Check</strong> (15 pts, listening) and <strong>Lengua en acción</strong> (20 pts, written) open in Canvas. The paragraph you just practised is the shape Lengua en acción asks for — keep it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Keep the paragraph you wrote in Part 4 — you will reuse and improve it tomorrow rather than starting from nothing.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You now have a paragraph architecture, a connector rule, and a checklist you can apply to any narrative task this year. Six days ago you were reactivating <em>fui</em>. Today you wrote a paragraph with deliberate tense design. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.06 &middot; Narración extendida</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

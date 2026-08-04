@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.08 &middot; Day 8 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lectura interpretativa · el parque nacional</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lectura interpretativa — dos frases, un «por» y una coma decimal</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two sentences of encyclopedia Spanish, and every difficulty in them is a real one.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Módulo 5's reading day. The text is the opening of the Spanish-language encyclopedia entry on the <strong>Parque Nacional Galápagos</strong> &mdash; unedited, unsimplified, and much shorter than you expect a reading day to be. That is deliberate. Two sentences hold three separate skills, and rushing past them is how students stay stuck at the same level for a year.<br><br>One of them is this module's grammar doing a job no lesson listed. One is arithmetic: Spanish writes numbers differently from English, and if you read this text with English habits you will be wrong by a factor of a thousand. One is a participle from Módulo 2 quietly agreeing with a noun.<br><br>The graded <strong>Lectura interpretativa</strong> (15 pts, two attempts) opens today.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read Spanish numbers correctly &mdash; a decimal comma, a spaced percent sign, and a squared unit.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why the text says <em>consideradas por expertos</em> and why <em>para</em> would say something else.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write my own <em>para</em> of purpose about the same park, and say how it differs from the text's <em>por</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; ANTES DE LEER <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Contexto y tres cosas que buscar</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>El contexto.</strong> This is the first paragraph of an encyclopedia article about the <em>Parque Nacional Galápagos</em>, in Spanish, written by volunteers for Spanish-speaking readers. Encyclopedia register is dense on purpose: it packs a date, an area, a proportion and an evaluation into two sentences and expects you to unpack them. You met the park's story in 5.06 and 5.07, so you are not reading cold.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;"><strong>Busca estas tres cosas.</strong> No dictionary on the first two passes:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 0 1.4rem;">
+            <li>¿Qué proporción del archipiélago protege el parque, y desde qué año?</li>
+            <li>Hay <strong>un solo</strong> <em>por</em> en el texto. Encuéntralo. ¿Qué trabajo hace?</li>
+            <li>¿Quién dice que el archipiélago está bien conservado? La gramática te lo dice.</li>
+        </ol>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LEER CIFRAS EN ESPAÑOL &middot; a technique, and a trap</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Before you read: in most of the Spanish-speaking world the <strong>comma is the decimal separator</strong>, and the thousands separator is a thin space rather than a comma. So <em>7995,4</em> is a number a little under eight thousand, with four tenths. Read the comma as an English thousands comma and you get eight million.<br><br>Spanish also puts a <strong>space before the percent sign</strong> &mdash; <em>97 %</em>, not <em>97%</em>. That is the Real Academia's recommendation, not a typing error, and it is one of the small signals that tells you a text was edited by someone who writes Spanish professionally.<br><br>One honest complication for you specifically: <strong>Mexico uses the decimal point</strong>, like the United States. Your audio in this course is Mexican, so you will hear <em>es-MX</em> Spanish and read a text using the other convention. Both are correct in their own place, which is worth knowing before you meet it in a lab report.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL TEXTO <span class="pill-time">9 min</span></div>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA AUTÉNTICA &middot; TEXTO CON LICENCIA ABIERTA</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            Fue fundado en 1959 y se convirtió en el primer parque nacional del país. Abarca unos 7995,4 km², un 97 % del área terrestre de las islas Galápagos, consideradas por expertos y científicos como el archipiélago volcánico mejor conservado del mundo.
+            </div>
+            <div class="src">Wikipedia en español, «Parque nacional Galápagos». Texto disponible bajo licencia Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0).</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Ayuda de vocabulario</strong> &mdash; only after your second reading: <em>fundar</em> = to found, to establish &middot; <em>convertirse en</em> = to become &middot; <em>abarcar</em> = to cover, to span &middot; <em>el área terrestre</em> = the land area, as opposed to the sea &middot; <em>considerado</em> = considered, held to be &middot; <em>el archipiélago</em> = the island group &middot; <em>volcánico</em> &middot; <em>conservado</em> = preserved.</p>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:10px 0 0;">Two grammatical notes so nothing looks stranger than it is. <em>Fue fundado</em> is <em>ser</em> + participle &mdash; the passive you have been meeting in authentic texts since Módulo 2, and it is why the sentence never says <em>who</em> founded the park. And <em>el área</em> takes <em>el</em> despite being feminine, because a feminine noun beginning with a stressed <em>a-</em> takes <em>el</em> in the singular: <em>el área</em>, but <em>las áreas</em>.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; COMPRENSIÓN <span class="pill-time">10 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Practice first &mdash; ungraded. The graded item asks the same five kinds of question, and you reread the passage while you answer it.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; IDEA GENERAL &middot; gist</div>
+            <div class="widget-question">¿Cuál es la idea general de las dos oraciones?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El texto no habla de turismo, de visitantes ni de dinero. Ese era el tema de 5.06, no de este párrafo — cuidado con contestar desde lo que ya sabes en vez de desde el texto.">Que el turismo amenaza las islas Galápagos</button>
+                <button data-correct="true" data-fb="Exacto: un parque antiguo, muy grande en proporción, y con reconocimiento externo de su buen estado. Las tres ideas están en dos oraciones.">Que el parque es el más antiguo del país, cubre casi toda la tierra del archipiélago, y su conservación tiene reconocimiento externo</button>
+                <button data-correct="false" data-fb="El texto dice que fue el primer parque nacional del país, no del mundo — y no compara Ecuador con otros países en ningún momento.">Que Ecuador creó el primer parque nacional del mundo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; la cifra</div>
+            <div class="widget-question">¿Qué es 7995,4?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Sí: unos siete mil novecientos noventa y cinco kilómetros cuadrados con cuatro décimas. La coma es decimal, así que la cifra está cerca de ocho mil, no de ocho millones.">Los kilómetros cuadrados que abarca el parque</button>
+                <button data-correct="false" data-fb="Casi ocho millones sería la lectura inglesa de esa coma, y es la trampa de la Parte 1. En español la coma separa los decimales.">Casi ocho millones de kilómetros cuadrados</button>
+                <button data-correct="false" data-fb="El texto no menciona especies ni cantidades de animales. Solo hay dos cifras en el párrafo: un año y una superficie.">El número de especies protegidas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; GRAMÁTICA EN EL TEXTO &middot; the Honors item</div>
+            <div class="widget-question">El texto dice «consideradas <strong>por</strong> expertos y científicos». ¿Por qué <em>por</em> y no <em>para</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="No es una cuestión de fórmula. «Considerado» no exige por porque sea un participio: lo exige porque el sentido pide la causa del juicio, y ese es el trabajo de por en cualquier construcción.">Porque después de un participio siempre va <em>por</em></button>
+                <button data-correct="false" data-fb="Al contrario: los expertos no reciben nada. Un destinatario sí lleva para — «un folleto para expertos» — y por eso «consideradas para expertos» diría que las islas están destinadas a ellos, algo que el texto no dice.">Porque los expertos reciben el juicio, y un destinatario lleva <em>por</em></button>
+                <button data-correct="true" data-fb="Eso es: los expertos son el agente, la fuente del juicio — el terreno que está detrás de la valoración. Por cubre ese terreno. «Para expertos» los convertiría en destinatarios, y las islas no están dirigidas a nadie.">Porque los expertos hacen la valoración: son la causa del juicio, el terreno de atrás</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; INFERENCIA &middot; inference</div>
+            <div class="widget-question">El texto no dice «el archipiélago mejor conservado del mundo» sin más: dice «consideradas por expertos y científicos como&hellip;». ¿Qué gana con eso?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="No lo suaviza: la valoración sigue siendo fuerte, «el mejor conservado del mundo». Lo que cambia no es la intensidad, sino de quién es la afirmación.">Que suaviza la afirmación para no exagerar</button>
+                <button data-correct="true" data-fb="Sí: la valoración deja de ser opinión del autor y pasa a ser un juicio atribuido a alguien. Así escribe una enciclopedia — informa de lo que otros sostienen en vez de alabar por su cuenta. Y toda esa maniobra ocurre dentro de un «por».">Que la valoración deja de ser del autor y pasa a tener una fuente</button>
+                <button data-correct="false" data-fb="Al revés: nombrar a expertos y científicos hace el texto más formal, no más cercano. La enciclopedia no busca cercanía.">Que el texto suena más personal y cercano</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; TRES COSAS QUE EL TEXTO EXIGE <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">1. Las cifras</h3>
+        <table class="gtable">
+            <thead><tr><th>Lo que ves</th><th>Cómo se lee</th><th>En inglés se escribiría</th></tr></thead>
+            <tbody>
+                <tr><td><strong>7995,4</strong></td><td>siete mil novecientos noventa y cinco coma cuatro</td><td>7,995.4</td></tr>
+                <tr><td><strong>97 %</strong></td><td>noventa y siete por ciento</td><td>97%</td></tr>
+                <tr><td><strong>km²</strong></td><td>kilómetros cuadrados</td><td>sq km</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">And notice the wording: <em>un 97 %</em>, with the article. Spanish normally puts <em>el</em> or <em>un</em> in front of a percentage, where English usually does not. <em>Un 97 % del área terrestre</em>, not <em>97 % del área terrestre</em>.</p>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 16px 0 8px 0;">2. El participio que concuerda &mdash; Módulo 2, en un texto real</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Look at <em>consideradas</em>. Feminine, plural. Now find the noun it agrees with, because there are two candidates in the sentence and only one of them fits:</p>
+        <table class="gtable">
+            <thead><tr><th>Candidato</th><th>Género y número</th><th>La forma sería</th><th>¿Es la que está en el texto?</th></tr></thead>
+            <tbody>
+                <tr><td>el archipiélago</td><td>masculino singular</td><td>considera<strong>do</strong></td><td>No</td></tr>
+                <tr><td><strong>las islas</strong> Galápagos</td><td>femenino plural</td><td>considera<strong>das</strong></td><td><strong>Sí</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">So the ending is not decoration &mdash; it is the only thing telling you what is being evaluated. And that is Módulo 2's rule, met again where it actually matters: a participle used as an adjective agrees with its noun, unlike a participle after <em>haber</em>, which never changes. One letter, and a different sentence.</p>
+
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 16px 0 8px 0;">3. Su <em>por</em>, y tu <em>para</em></h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The text gives you one <em>por</em> and no <em>para</em> at all. Supply the missing half yourself: <strong>write one sentence about the same park using <em>para</em> + infinitive to say what the park is <em>for</em></strong>. Produce it before you open the model.</p>
+        <button class="reveal-btn">Reveal a model, and the contrast</button>
+        <div class="reveal-body"><strong>Un modelo:</strong> <em>«El parque existe para proteger las especies endémicas del archipiélago.»</em><br><br>Now the two halves side by side.<br><br>&bull; <strong>consideradas por expertos y científicos</strong> &mdash; el agente: la persona que hace la valoración, la causa del juicio, el terreno de atrás. Cámbialo a <em>«consideradas para expertos»</em> y dice que las islas están destinadas a los expertos, como un folleto escrito para especialistas. Gramatical, y falso.<br><br>&bull; <strong>El parque existe para proteger las especies</strong> &mdash; el propósito. Hacia dónde apunta su existencia. Cámbialo a <em>«existe por proteger las especies»</em> y dice algo como «existe a causa de haber protegido», que no es una finalidad y en esta oración no significa nada.<br><br>Los dos son «for» en inglés. Ninguno de los dos es intercambiable.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 5 &middot; PUENTE A LA PRODUCCIÓN <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The encyclopedia describes a protected place in two sentences: what it is, how big, and why anyone rates it. Tomorrow's <strong>Tarea oral</strong> asks you to do the same for a place you have actually been, and then to go one step further than an encyclopedia can &mdash; to say what you have done and to ask something of your listener. Choose the place now:</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 10px 0;"><em>¿Cuál es un lugar natural que conoces y que vale la pena proteger?</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">It does not have to be famous, or far away, or in danger. A creek behind a housing development is a better subject than a national park you have only seen photographs of, because you can describe it and you cannot describe the other one.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">How did two sentences of encyclopedia Spanish go?</div>
+            <div class="widget-options">
+                <button data-response="Then the technique worked. Unpacking a dense sentence one piece at a time — date, area, proportion, judgement — is faster and far more reliable than translating left to right.">Shorter than expected, and harder</button>
+                <button data-response="Honest, and common. Reread using only the three questions from Part 1 and ignore everything else on the page. Two of the three answers are single words.">The numbers threw me completely</button>
+                <button data-response="Worth noticing what you just did: you read unedited encyclopedia Spanish, identified an agent construction nobody had taught you by name, and worked out which of two nouns a participle was agreeing with. That is a genuinely advanced reading act.">Easier than I expected</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>1835, 1859, 1959 &mdash; tres fechas y un centenario</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The date in the text is not an accident. The park was founded in <strong>1959</strong> &mdash; the <strong>centenary</strong> of the publication of <em>El origen de las especies</em>. Ecuador declared a national park in the year the world was marking a hundred years of the book the islands helped produce.<br><br>The visit itself was shorter and messier than the legend. Darwin arrived on the <em>Beagle</em> on <strong>15 September 1835</strong>, aged 26, and spent about five weeks in the archipelago, of which only around nineteen days were ashore, on four islands. He had <strong>no revelation there</strong>. He mixed up which island his finch specimens came from, and it was the ornithologist John Gould in London, more than a year later, who realised the birds were distinct species rather than varieties. The vice-governor of the penal colony, Nicholas Lawson, casually told him that the tortoises' shells differed island by island &mdash; a remark Darwin noted and did not immediately understand.<br><br>Two conclusions worth keeping. Understanding usually arrives later than the evidence does. And the islands were a prison colony before they were a laboratory: the same place, described by different people, <em>por</em> different reasons.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">There is a quiet act of responsibility inside <em>consideradas por expertos y científicos</em>. The writer had a strong claim to make &mdash; best-preserved in the world &mdash; and instead of asserting it, attached it to somebody. That is four extra words and a completely different level of accountability, and it is the same habit that makes a footnote or a licence line worth printing. Notice that this page carries the text's licence for exactly that reason. <em>Una afirmación honesta lleva su fuente al lado.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 5.09 &mdash; Tarea oral</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you record 60&ndash;90 seconds about the place you just chose: describe it, say why it is worth protecting, say what you have done, and end by asking one thing of the person listening. Twenty points, unlimited takes, and the most heavily weighted component of the course.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then complete the graded <strong>Lectura interpretativa</strong> (15 pts, two attempts). Keep this page open while you answer &mdash; you are expected to reread the two sentences, not remember them.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE!</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two sentences, one agent <em>por</em>, one decimal comma, one participle agreeing across a comma with the right noun &mdash; and a <em>para</em> you supplied yourself that the text never needed. Fifty of ninety points done. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.08 &middot; Lectura interpretativa · el parque nacional</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

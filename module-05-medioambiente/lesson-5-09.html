@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.09</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.09 &middot; Day 9 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Tarea oral</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.09</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Tarea oral — un lugar, una razón, un compromiso</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;"><em>Por</em> and <em>para</em> are two of the smallest words in the sentence and they are carrying your entire argument.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you record the <strong>Tarea oral</strong> (20 pts) &mdash; <strong>20% of your semester grade</strong>. The content is already chosen: yesterday's reading asked you to pick a natural place you actually know.<br><br>The specific difficulty is a speaking one. English speakers flatten unstressed function words into a mumble, and in English that is harmless. Here it is not: if a listener cannot tell your <em>por</em> from your <em>para</em>, they cannot tell your cause from your purpose, and the point of the whole recording disappears into two syllables. Part 4 is about landing them.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> speak for 60&ndash;90 seconds describing a place, its importance, and my own commitment to it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pronounce <em>por</em> and <em>para</em> distinctly enough that a listener can hear which one I chose.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> close by asking one concrete thing of my listener, using a direct <em>tú</em> command.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Seis palabras, no un guion</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same method as every module: a <strong>six-word outline</strong>, never a written-out text. A read script always sounds read, and here it costs you twice &mdash; reading aloud is exactly when unstressed words like <em>por</em> and <em>para</em> get swallowed, because your eyes are ahead of your mouth.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Say these two aloud, one after the other: <em>«Lo hago por ti.»</em> &middot; <em>«Lo hago para ti.»</em> Could somebody in the next room tell them apart?</div>
+            <div class="widget-options">
+                <button data-response="Good — that is the whole pronunciation goal of this lesson, and most students cannot do it on the first try. Keep the second syllable of para audible and the o in por rounded.">Yes, clearly different</button>
+                <button data-response="Very common, and fixable in about two minutes. The usual cause is reducing «para» to one syllable — something like «pra». Say PA-ra deliberately slowly three times; it will feel exaggerated and sound normal.">Honestly, they sounded almost the same</button>
+                <button data-response="Then record yourself saying just those two sentences and play it back before you do anything else on this page. You cannot fix what you have not heard, and phone playback is enough.">I could not tell from inside my own head</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 2 &middot; LA TAREA <span class="pill-time">9 min</span></div>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 12px 0;"><strong>El tema:</strong> <em>Describe un lugar natural que conoces, di por qué vale la pena protegerlo, cuenta qué has hecho tú y para qué, y termina con un mandato directo a la persona que te escucha.</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 12px 0;">Four moves: <strong>describe &middot; justify &middot; commit &middot; ask</strong>. The place does not need to be famous or endangered. A creek behind a shopping centre, the oak in your grandmother's yard, the stretch of beach you walk in summer &mdash; anything you can actually describe beats anywhere you have only seen in photographs.</p>
+        <table class="gtable">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Length</strong></td><td>60&ndash;90 seconds of connected speech</td></tr>
+                <tr><td><strong><em>Por</em></strong></td><td>At least <strong>three</strong> uses, doing at least <strong>two different jobs</strong> &mdash; and one of them has to be the reason the place matters</td></tr>
+                <tr><td><strong><em>Para</em></strong></td><td>At least <strong>two</strong>, one of them <em>para</em> + infinitive of purpose</td></tr>
+                <tr><td><strong>Vocabulario</strong></td><td>Four or more of this module's twenty</td></tr>
+                <tr><td><strong>El cierre</strong></td><td>A direct <em>tú</em> command to your listener, affirmative or negative &mdash; <em>ve, cuida, no tires, protege</em></td></tr>
+                <tr><td><strong>Delivery</strong></td><td>From an outline. <strong>Do not read a script.</strong></td></tr>
+                <tr><td><strong>Attempts</strong></td><td>As many as you like; submit your best</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Scored on &middot; 20 pts</th><th>What earns full marks</th></tr></thead>
+            <tbody>
+                <tr><td><strong><em>Por</em> / <em>para</em> accuracy</strong> &middot; 6</td><td>Every use correct, and purpose expressed as <em>para</em> + infinitive every time</td></tr>
+                <tr><td><strong>Discourse shape</strong> &middot; 4</td><td>All four moves present, in order, connected &mdash; not four separate sentences</td></tr>
+                <tr><td><strong>Fluency</strong> &middot; 4</td><td>Continuous speech; pauses fine, long silences and restarts not</td></tr>
+                <tr><td><strong>Comprehensibility</strong> &middot; 4</td><td>A patient listener can hear which preposition you chose, every time</td></tr>
+                <tr><td><strong>Range</strong> &middot; 2</td><td>Four or more module words, used correctly rather than listed</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Not scored: a native accent.</strong> Comprehensibility is scored; sounding Ecuadorian is not, and nobody will deduct for a foreign accent that leaves your meaning clear.</p>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:10px 0 0;">One reassurance, because this prompt sounds bigger than it is: <strong>every idea it asks for can be said with grammar you already own.</strong> Reasons take <em>porque</em> + a normal verb: <em>«Vale la pena protegerlo porque es el único bosque de la zona.»</em> Purposes take <em>para</em> + infinitive: <em>«Recojo basura para mantenerlo limpio.»</em> Judgements take an impersonal plus an infinitive: <em>«Es importante cuidar este lugar.»</em> If you find yourself reaching for something more elaborate, you have left the task rather than risen to it.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TU GUION DE SEIS PALABRAS <span class="pill-time">9 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Beat</th><th>Your word</th><th>Ejemplo</th><th>Lo que la gramática pide</th></tr></thead>
+            <tbody>
+                <tr><td>1. El lugar &mdash; nómbralo</td><td>&nbsp;</td><td><em>arroyo</em></td><td>descripción, presente</td></tr>
+                <tr><td>2. Un detalle que se ve</td><td>&nbsp;</td><td><em>garzas</em></td><td>descripción, presente</td></tr>
+                <tr><td>3. <strong>Por qué importa</strong></td><td>&nbsp;</td><td><em>último</em></td><td><span class="pron">por</span> &mdash; causa, o <em>porque</em></td></tr>
+                <tr><td>4. Lo que has hecho tú</td><td>&nbsp;</td><td><em>basura</em></td><td>perfecto + <span class="pron">para</span> + infinitivo</td></tr>
+                <tr><td>5. Tu plazo o tu meta</td><td>&nbsp;</td><td><em>verano</em></td><td><span class="pron">para</span> &mdash; plazo</td></tr>
+                <tr><td>6. <strong>El mandato</strong></td><td>&nbsp;</td><td><em>visita</em></td><td>mandato de <em>tú</em> + <span class="pron">por</span> &mdash; en lugar de alguien</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Beats 3 and 6 are both assessed.</strong> Write those two words first. A recording that describes a place and never says why it matters loses points under two criteria at once, and a recording with no command has no ending &mdash; it just stops.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ENSAYA TRES VECES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Say the whole thing aloud three times from your six words. On run three, listen for two things only: whether every <em>para</em> came out as <strong>two clear syllables</strong>, and whether beat 6 sounded like an invitation rather than an instruction. Both are fixed by slowing down, not by changing the words.<br><br>A model closing, if you want the shape: <em>«Ve al arroyo este fin de semana y llévate una bolsa. Hazlo por el lugar, no por mí.»</em> Two commands, one <em>por</em>, and it ends on somebody other than the speaker.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; PRONUNCIACIÓN <span class="pill-time">11 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click each and repeat aloud. These six are the module's hardest words to say, and four of them are almost certainly going into your recording.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-contaminacion.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la contaminación</span><span class="v-en">stress on the last syllable &mdash; ción</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-cambio-climatico.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el cambio climático</span><span class="v-en">cli-MÁ-ti-co &mdash; third from the end</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/danar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">dañar</span><span class="v-en">the ñ is one sound, not n + y</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-huella.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la huella</span><span class="v-en">the h is silent &mdash; it begins with a w sound</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/reutilizar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">reutilizar</span><span class="v-en">five syllables, no diphthong: re-u-ti-li-zar</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-esfuerzo-colectivo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el esfuerzo colectivo</span><span class="v-en">a long phrase &mdash; do not rush the two e sounds together</span></li>
+        </ul>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>1. <em>Para</em> has two syllables and both of them are audible.</strong> PA-ra. English reduces unstressed vowels almost to nothing, so <em>para</em> tends to come out as &ldquo;pra&rdquo; or &ldquo;pruh&rdquo;. Spanish does not reduce vowels: the second <em>a</em> is as full as the first. Overdo it while you practise.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>2. <em>Por</em> has a rounded Spanish <em>o</em>, not an English <em>er</em>.</strong> If it sounds like &ldquo;per&rdquo; or &ldquo;purr&rdquo;, the vowel has collapsed. Say <em>por</em> next to <em>pon</em> and <em>sol</em> until the <em>o</em> matches.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>3. Linking across the word is correct, and you should not fight it.</strong> <em>Por el bosque</em> genuinely runs together as <em>po-rel-BOS-que</em>; <em>para el agua</em> comes out as <em>pa-ra-el-A-gua</em>. That is what fluent Spanish sounds like. The thing to protect is the <strong>number of vowels</strong>, not the gaps between words.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what a swallowed vowel costs</div>
+            <div class="widget-question">You say «Recojo basura pra mantenerlo limpio», reducing <em>para</em> to one syllable. What is the actual risk?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="The grammar on paper is perfect — para + infinitive is exactly right. Nothing about the form is wrong, which is why this belongs to comprehensibility rather than accuracy.">The grammar becomes wrong</button>
+                <button data-correct="true" data-fb="Right. A one-syllable «pra» is closest to «por» in a listener's ear, so a purpose can be heard as a cause. That is the one pronunciation error in this module that changes meaning rather than just sounding foreign.">Your listener may hear <em>por</em>, and take a purpose for a cause</button>
+                <button data-correct="false" data-fb="It is not cosmetic. Everywhere else a foreign accent is harmless here, but these two words are the ones carrying the distinction the whole task is built on.">Nothing much &mdash; it is only an accent</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the rubric weighs</div>
+            <div class="widget-question">Two takes. One has a strong American accent but all four moves, three <em>por</em> phrases doing different jobs and a clear closing command. The other is smooth and fluent, describes the place beautifully, and never says why it matters or asks anything of the listener. Which scores higher?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="The first, and not narrowly. Discourse shape and por/para accuracy are 10 of the 20 points between them; accent is not on the rubric at all.">The one with the accent</button>
+                <button data-correct="false" data-fb="Fluency is worth 4 points and it is earning all of them. But it forfeits most of discourse shape and much of the accuracy criterion by never using the grammar the module is about.">The smooth one</button>
+                <button data-correct="false" data-fb="They do not come out level. Look again at the rubric in Part 2 — «discourse shape» requires all four moves, and one of those takes is missing two of them.">About the same</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9210; PART 5 &middot; GRABA Y ENTREGA <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Record in Canvas on the assignment itself. Listen once before submitting and check four things:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.75;margin:0 0 10px 1.4rem;">
+            <li>Did you say <strong>why the place matters</strong>? Beat 3.</li>
+            <li>Did you end with a <strong>command to your listener</strong>? Beat 6.</li>
+            <li>Can you hear <strong>two syllables in every <em>para</em></strong>?</li>
+            <li>Did you reach <strong>60 seconds</strong>? Short takes are almost always missing beats 4 and 5.</li>
+        </ol>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">If all four pass, submit. Takes are unlimited, so there is no reason to submit one you already know is missing a beat.</p>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Jorge y Diego &mdash; dos tortugas y un programa</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The Charles Darwin Research Station at Puerto Ayora is where two very different endings happened.<br><br><strong>El Solitario Jorge</strong> &mdash; Lonesome George &mdash; was the last known tortoise of Pinta Island. For four decades biologists tried to find him a mate and failed. He died on <strong>24 June 2012</strong>, and his subspecies died with him. He had become, entirely against his will, the most famous individual animal in conservation.<br><br><strong>Diego</strong> is the other ending. A tortoise from Española Island, he was sent back from the San Diego Zoo in the 1970s to join a captive breeding programme when fewer than fifteen Española tortoises remained alive. He fathered somewhere around <strong>800 offspring</strong>. In <strong>June 2020</strong>, aged past a hundred, he was retired and returned to Española &mdash; a species pulled back from the edge by a programme that outlasted most of the careers inside it.<br><br>Two tortoises, one station, sixty years. The difference between the two stories is not luck. It is how early somebody started, and how long they were willing to keep going &mdash; which is worth remembering when your own commitment sounds small.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Beat 6 is the whole virtue in one sentence. It is easy to describe a place and stop there, admiring it; asking somebody to do something about it puts you on the hook for meaning it. That is why the task ends with a command instead of a conclusion, and why the model closing points away from the speaker: <em>hazlo por el lugar, no por mí</em>. Stewardship is not affection for a place. It is what you are prepared to ask, out loud, on its behalf. <em>Cuidar no es admirar: es responder por algo que no puede hablar.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">10</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 5.10 &mdash; Repaso y Grammar Quiz</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Last day of the module: full review, then the <strong>Grammar Quiz</strong> (20 pts, two attempts, includes a listening item). Then a preview of Módulo 6, which moves from the environment to the arts &mdash; and from prepositions to the words that join clauses together.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, and confirm your recording actually uploaded &mdash; check that the submission shows a playable file, not just a completed page.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE!</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety seconds, unscripted, about a place you know &mdash; described, justified, committed to, and handed on to somebody else with a command. Seventy of ninety points done. <em>Una última lección. ¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.09 &middot; Tarea oral</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

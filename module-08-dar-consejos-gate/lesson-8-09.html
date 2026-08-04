@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.09</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.09 &middot; Day 9 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Tarea oral</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.09</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Tarea oral — noventa segundos de consejo sobre un problema real</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In writing, the difference between reporting and advising is one letter. Out loud, it is one vowel — and nothing else.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you record the <strong>Tarea oral</strong> (20 pts) — <strong>20% of your semester grade</strong>, and the last recording of Semester 1.<br><br>The task is the one this whole module has been building toward: somebody brings you a real problem, and you advise them in connected Spanish for sixty to ninety seconds.<br><br>The specific difficulty is audible. <em>Hablas</em> and <em>hables</em> differ by a single unstressed vowel at the end of a word, and that vowel is the only signal a listener gets that you are advising rather than describing. Today's pronunciation work is about landing it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> speak for 60&ndash;90 seconds advising a specific person about a specific decision.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pronounce the subjunctive ending clearly enough that a listener hears advice, not narration.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> carry three influence structures and two registers through one unscripted minute.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Six words, not a script</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same method as every module: a <strong>six-word outline</strong>, never a written-out text. With advice the difference is unusually audible. A read paragraph of advice sounds like a policy; the same content from six words sounds like a person who has thought about your problem — and the second one is the whole point of the task.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Say these two out loud, one after the other: <em>«Te recomiendo que hablas con él»</em> &middot; <em>«Te recomiendo que hables con él»</em>. What happened?</div>
+            <div class="widget-options">
+                <button data-response="Good - then you can already hear it, and your job today is only to make sure the vowel survives when you speed up. It is the first thing to go at speed, because it is unstressed and it is at the end of the word.">They sound almost identical to me</button>
+                <button data-response="Then you have the advantage on this task. Keep testing yourself the other way round: say «hables» and then ask whether somebody listening would have to guess. The vowel needs to be produced, not just intended.">I can hear the difference clearly</button>
+                <button data-response="Honest, and worth solving before you record rather than after. Slow both right down and hold the final vowel for half a second: habla-S, hable-S. Then speed up while keeping that vowel deliberate. Part 4 gives you five clips to copy.">I am not sure I am producing two different sounds</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 2 &middot; LA TAREA <span class="pill-time">9 min</span></div>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 12px 0;"><strong>El tema:</strong> <em>Alguien te plantea un problema real. Dale tu consejo en sesenta o noventa segundos.</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Use a real situation if you have one</strong> — your own or somebody's you actually know, with names changed if you prefer. Real dilemmas produce far better recordings, because you already know what the difficulty is. If you would rather not, take one of these three.</p>
+        <table class="gtable">
+            <thead><tr><th>El dilema</th><th>La situación</th></tr></thead>
+            <tbody>
+                <tr><td><strong>A &middot; Camila</strong></td><td>Ha entrado al equipo de natación, pero los entrenamientos son a la misma hora que el trabajo con el que paga el auto. No puede quedarse con los dos y no quiere renunciar a ninguno.</td></tr>
+                <tr><td><strong>B &middot; Tu primo</strong></td><td>Quiere cambiarse de la clase de química avanzada a la básica dos semanas antes del examen final, para proteger su promedio. Le gusta la materia; le da miedo la nota.</td></tr>
+                <tr><td><strong>C &middot; Nico</strong></td><td>No le habla a su hermano desde una discusión hace dos meses. El cumpleaños de su madre es el sábado y los dos van a estar en la misma mesa.</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Length</strong></td><td>60&ndash;90 seconds of connected speech</td></tr>
+                <tr><td><strong>The first ten seconds</strong></td><td>Name the person and the decision. <strong>No advice yet.</strong></td></tr>
+                <tr><td><strong>Structures</strong></td><td>≥3 influence structures across <strong>≥2 registers</strong> (<em>que</em> + subjuntivo · infinitivo · impersonal · mandato)</td></tr>
+                <tr><td><strong>Reasons</strong></td><td>At least two pieces of advice carry a <em>porque</em> or <em>ya que</em></td></tr>
+                <tr><td><strong>The negative</strong></td><td>One thing you advise <em>against</em></td></tr>
+                <tr><td><strong>El cierre</strong></td><td>The last sentence hands the decision back to them</td></tr>
+                <tr><td><strong>Delivery</strong></td><td>From an outline. <strong>Do not read a script.</strong></td></tr>
+                <tr><td><strong>Attempts</strong></td><td>As many as you like; submit your best</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Scored on &middot; 20 pts</th><th>What earns full marks</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Subjunctive of influence</strong> (6)</td><td>Every <em>que</em> clause in the subjunctive, every same-subject verb in the infinitive, endings audible</td></tr>
+                <tr><td><strong>Discourse shape</strong> (4)</td><td>Situation &rarr; reason &rarr; one central piece of advice &rarr; detail &rarr; decision handed back</td></tr>
+                <tr><td><strong>Fluency</strong> (4)</td><td>Continuous speech; pauses fine, long silences and restarts not</td></tr>
+                <tr><td><strong>Comprehensibility</strong> (4)</td><td>A patient listener follows the advice without needing it repeated</td></tr>
+                <tr><td><strong>Range</strong> (2)</td><td>Two or more registers, and module vocabulary used rather than avoided</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Not scored: a native-like accent.</strong> It is not on the rubric and it must not be — this course does not teach accent, so it cannot grade it. What <em>is</em> scored is whether your verb endings are audible, which is a different thing entirely and entirely learnable.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TU GUION DE SEIS PALABRAS <span class="pill-time">9 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">One word per beat, written in the margin of a page. These are the same seven jobs from 8.06, compressed to six for speech — the <em>dato</em> and the reason merge when you are talking.</p>
+        <table class="gtable">
+            <thead><tr><th>Beat</th><th>Your word</th><th>Example</th><th>Structure</th></tr></thead>
+            <tbody>
+                <tr><td>1. The situation, named</td><td>&nbsp;</td><td><em>natación</em></td><td>indicativo</td></tr>
+                <tr><td>2. The reason it is hard</td><td>&nbsp;</td><td><em>horario</em></td><td>indicativo + <em>porque</em></td></tr>
+                <tr><td>3. <strong>El consejo central</strong></td><td>&nbsp;</td><td><em>hablar</em></td><td><em>que</em> + <strong>subjuntivo</strong></td></tr>
+                <tr><td>4. The practical detail</td><td>&nbsp;</td><td><em>jefe</em></td><td>impersonal + <em>que</em>, or infinitivo</td></tr>
+                <tr><td>5. <strong>What not to do</strong></td><td>&nbsp;</td><td><em>silencio</em></td><td>negativo</td></tr>
+                <tr><td>6. Hand it back</td><td>&nbsp;</td><td><em>tuya</em></td><td>indicativo o mandato</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Beats 3, 5 and 6 are each named in the rubric.</strong> Write those three words first; if you run short of time on the recording, it is beats 2 and 4 that can go.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ENSAYA TRES VECES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Say the whole thing aloud three times from your six words, and change something each time. On run three, listen for three specific things: <strong>(1)</strong> did the vowel in your subjunctive endings survive the speed? <strong>(2)</strong> did you use more than one register, or did every piece of advice come out as <em>te recomiendo que</em>? <strong>(3)</strong> did the last sentence hand the decision back, or did it repeat the advice one more time?<br><br>Three runs is not a lot. The recordings that score badly are almost always first takes, and the giveaway is not the grammar — it is that they end twice.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; PRONUNCIACIÓN DEL CONSEJO <span class="pill-time">11 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click each, then say it back at the same speed. Do not slow the model down — copy its rhythm.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/te-aconsejo-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Te aconsejo que hables con ella.</span><span class="v-en">the run-up is fast; the last word is not</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/te-pido-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Te pido que me escuches.</span><span class="v-en">two unstressed pronouns, then the verb</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/sugiero-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Sugiero que lo pienses bien.</span><span class="v-en">no pause before <em>que</em></span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/recomiendo-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Recomiendo que lo intentes.</span><span class="v-en"><em>intentes</em>, not <em>intentas</em></span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/es-necesario-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Es necesario que llegues temprano.</span><span class="v-en">the impersonal register, same ending</span></li>
+        </ul>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>1. The trigger is a run-up, not the point.</strong> <em>Te aconsejo que</em> is five syllables of scaffolding said quickly and almost flat. The information is in the verb after it. English speakers do the opposite — they lean on <em>recomiendo</em> and then drop the ending, which puts the emphasis on the least informative part of the sentence.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>2. Never pause before <em>que</em>.</strong> A pause there splits one sentence into two fragments and the listener loses the connection between them. <em>Que</em> belongs to the run-up: <em>«sugieroque»</em>, almost one word, and then the verb lands clear.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>3. Hold the final vowel deliberately.</strong> <em>Hables</em>, <em>escuches</em>, <em>pienses</em>, <em>intentes</em>, <em>llegues</em> — that unstressed <em>-e-</em> before the <em>-s</em> is doing all the grammatical work in the sentence, and it is the first sound to disappear when you speed up. Give it more than feels natural. Overdoing it is not a fault a listener will notice; losing it is.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the rubric weighs</div>
+            <div class="widget-question">Two takes. <strong>A:</strong> strong American accent, three different structures, a reason on two of them, ends by handing the decision back. <strong>B:</strong> smooth and quick, five <em>te recomiendo que</em> in a row, no reasons, ends by repeating the advice. Which scores higher?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Smoothness is worth something under fluency, and B would earn it - but B forfeits range, most of discourse shape, and the reasons the shape depends on. One criterion cannot outweigh three.">B — it sounds better</button>
+                <button data-correct="false" data-fb="They are not close. Look at the five rows in Part 2: accent appears in none of them, and three of the five are things B does not do at all.">About the same — they trade strengths</button>
+                <button data-correct="true" data-fb="A, and not narrowly. Accent is not on the rubric at all; discourse shape, range and the reasons behind the advice are three separate named criteria, and A takes all three. This is the same result you found in Módulo 3, and it has not changed.">A — and by a clear margin</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; why one vowel matters</div>
+            <div class="widget-question">Why does the difference between <em>hablas</em> and <em>hables</em> matter more when you speak than when you write?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Right. In writing the reader can go back and look at the letter; in speech that vowel goes past once, unstressed, at the end of a word - and it is the only thing telling the listener whether you are advising or describing. Lose it and your advice is heard as a report.">Because it is the only signal that you are advising rather than describing, and it goes past once</button>
+                <button data-correct="false" data-fb="Spanish does not stress that syllable at all - «hables» is stressed on «ha-», which is exactly why the ending is vulnerable. The problem is that the informative vowel is the unstressed one.">Because Spanish stresses the final syllable of these forms</button>
+                <button data-correct="false" data-fb="A native-like accent is not on the rubric and is not graded in this course - the page says so under the rubric in Part 2. Audible verb endings are a comprehensibility question, not an accent one.">Because pronunciation accuracy is what the accent criterion measures</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9210; PART 5 &middot; GRABA Y ENTREGA <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Record in Canvas on the assignment. Listen to your take once before submitting and check four things:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.75;margin:0 0 10px 1.4rem;">
+            <li>Did the <strong>first ten seconds</strong> name the person and the decision, with no advice in them?</li>
+            <li>Can you hear the <strong>final vowel</strong> on every subjunctive?</li>
+            <li>Did you use <strong>more than one register</strong>, or was it <em>te recomiendo que</em> throughout?</li>
+            <li>Did the <strong>last sentence hand the decision back</strong>?</li>
+        </ol>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>And one thing to avoid saying at all.</strong> Keep your trigger verbs in the <strong>present</strong> — <em>te recomiendo que</em>, <em>te pido que</em>, <em>es importante que</em>. If you reach for the past (<em>«le recomendé que&hellip;»</em>) Spanish requires a form this course has not taught you for the verb after <em>que</em>, and there is no way around it. To mention advice already given, use a noun or an infinitive: <em>me pidió ayuda</em>, <em>le recomendé dos días de espera</em>. You are advising somebody now, so the present is where you belong anyway.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">If all four pass, submit. If one fails, it is faster to re-record than to talk yourself into it — you have unlimited takes and only the best one is graded.</p>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Los 33 — y una nota de una sola línea</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">On <strong>5 August 2010</strong> the San José mine near Copiapó, in the Atacama, collapsed and sealed thirty-three men roughly <strong>700 metres underground</strong>. For seventeen days nobody above ground knew whether any of them were alive.<br><br>Then a narrow exploratory drill broke into the shelter, and when it was pulled back up there was a note taped to it. Seven words: <strong><em>«Estamos bien en el refugio los 33»</em></strong>.<br><br>Think about the constraint. One chance, a scrap of paper, and no way to send a second line — so every word had to earn its place. They are alive (<em>estamos bien</em>), they are together in a known place (<em>en el refugio</em>), and there are thirty-three of them, which is the number rescuers needed most. No complaint, no request, no explanation. The rescue took another <strong>fifty-two days</strong>; the last man came up through a rescue capsule on <strong>13 October 2010</strong>, sixty-nine days after the collapse, and all thirty-three survived.<br><br>Chileans still quote that line. It is the national example of saying the necessary thing in the space available — which is, in a much smaller way, what you are being asked to do in ninety seconds today.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LAS OCHO, EN NOVENTA SEGUNDOS</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module has no virtue of its own, because advising somebody well needs all eight of them at once — and ninety seconds is short enough that you can watch each one arrive.<br><br><strong>La atención</strong> (M6) is beat 1: you cannot restate a situation you did not listen to. <strong>La templanza</strong> (M1) is choosing one central piece of advice when you have four. <strong>La responsabilidad</strong> (M5) is beat 2, the reason — the sentence that commits you to what you are about to say. <strong>La prudencia</strong> (M7) is beat 3, deciding whether this moment wants <em>hazlo</em> or <em>te pido que lo hagas</em>. <strong>La cortesía</strong> (M3) is the register that carries it, and <strong>el servicio</strong> (M4) is advising for their good rather than for the pleasure of being right — which is beat 5, the thing you tell them not to do even though it will not be welcome. <strong>La diligencia</strong> (M0) is rehearsing three times for a listener who will hear it once.<br><br>And <strong>la perseverancia</strong> (M2) is take four. Nobody will hear takes one, two and three; nobody will know the submitted version was the one where you finally stopped saying <em>te recomiendo que</em> five times. <em>En noventa segundos caben las ocho, y se nota cuando falta una.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">10</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 8.10 &mdash; Repaso, el Grammar Quiz y el cierre del semestre</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The last lesson of Semester 1. A full review, the <strong>Grammar Quiz</strong> — which is the semester gate at <strong>16 out of 20</strong>, cumulative, two attempts — and an honest account of what you can do now that you could not do in August.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, and confirm your recording uploaded — check that the submission shows a <strong>playable file</strong>, not just a completed page. A page marked done with no audio attached scores zero.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety unscripted seconds of advice on a problem that mattered, in a mood you had never heard of in September, with the endings audible. <em>Una última lección.</em> <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.09 &middot; Tarea oral</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

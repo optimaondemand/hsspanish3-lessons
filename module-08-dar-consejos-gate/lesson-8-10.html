@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.10</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.10 &middot; Day 10 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Repaso, el Grammar Quiz y el cierre del semestre</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.10</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El último día — el Grammar Quiz, la puerta del semestre, y lo que ya sabes hacer</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Last lesson of the semester. One quiz stands between here and the other side of it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Work the review, then take the <strong>Grammar Quiz</strong> (20 pts, <strong>two attempts</strong>, includes listening). This one is different from the seven before it: it is <strong>cumulative</strong>, it is the <strong>semester gate</strong>, and it needs <strong>16 out of 20</strong>.<br><br>Then read Part 4 properly rather than skimming it. It is an account of what you can do in Spanish today that you could not do in August, and it is worth more of your attention than the score.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decide, in any sentence, whether it takes an infinitive or <em>que</em> + subjunctive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use the semester's earlier grammar — <em>por/para</em>, relative pronouns, commands — alongside it without stopping to think.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name concretely what Semester 1 gave me, and what is left in it.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; REPASO DEL MÓDULO <span class="pill-time">7 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Area</th><th>What to have solid</th><th>Reopen if shaky</th></tr></thead>
+            <tbody>
+                <tr><td>Vocabulario</td><td>All twenty, <strong>by ear</strong>, with articles</td><td>8.01 &amp; 8.02</td></tr>
+                <tr><td>Uno o dos sujetos</td><td>One &rarr; infinitive &middot; two &rarr; <em>que</em> + subjuntivo</td><td>8.03</td></tr>
+                <tr><td>Los disparadores</td><td><em>querer, pedir, recomendar, aconsejar, sugerir, exigir, permitir, prohibir</em> + <em>es necesario/importante/mejor que</em></td><td>8.03</td></tr>
+                <tr><td>Las formas</td><td>Built from the <em>yo</em> form &middot; the six that are not: <em>dé, esté, vaya, sea, sepa, haya</em></td><td>Módulo 7, the forms table</td></tr>
+                <tr><td>El registro</td><td>Mandato &middot; infinitivo &middot; <em>que</em> + subjuntivo &middot; impersonal — and which the situation wants</td><td>8.04</td></tr>
+                <tr><td>El párrafo</td><td>Seven jobs; the central advice is short and arrives third</td><td>8.06 Part 3</td></tr>
+                <tr><td><em>Que</em> no dispara nada</td><td>The verb in front of <em>que</em> decides the mood</td><td>8.08 Part 4</td></tr>
+                <tr><td><em>Por</em> / <em>para</em></td><td>Cause and exchange vs purpose and destination</td><td>Módulo 5</td></tr>
+                <tr><td><em>que / quien / lo que</em></td><td>Which one each slot wants</td><td>Módulo 6</td></tr>
+                <tr><td>Los mandatos</td><td>Ud. and <em>tú</em>, affirmative and negative, pronouns and tildes</td><td>Módulos 3&ndash;4</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 2 &middot; EL GRAMMAR QUIZ &middot; LA PUERTA DEL SEMESTRE <span class="pill-time">6 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Points</th><th>Attempts</th><th>Format</th><th>Covers</th></tr></thead>
+            <tbody>
+                <tr><td>20</td><td><strong>Two</strong> — highest counts</td><td>Auto-graded, includes listening</td><td>Subjunctive of influence <strong>plus</strong> <em>por/para</em>, relative pronouns and command register</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#F5E7E8;border:1px solid #E3B8BD;border-left:5px solid #AA1E2D;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#128274; ESTA ES LA PUERTA &middot; read both halves</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">This quiz is the <strong>gate for Semester 1</strong>, and it works in two ways at once, which is worth understanding rather than discovering.<br><br><strong>1. It needs 16 out of 20 — 80%.</strong> Not to pass the module; to open the next one.<br><br><strong>2. The next module stays locked until you get there.</strong> Not as a threat: as arithmetic. Everything after this point in the course assumes you can decide between an infinitive and a <em>que</em> clause without thinking about it, because that decision sits underneath every structure Semester 2 adds on top. A student who is 60% sure of it does not have a small gap — they have a gap that compounds weekly.<br><br>You have <strong>two attempts and the higher one counts</strong>, and there is nothing on it that has not been taught. This is a fortnight of work you have already done, arranged in twenty questions.</div>
+        </div>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; CÓMO USAR DOS INTENTOS</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Take attempt 1 seriously and then <strong>stop</strong>. Its value is telling you which of the ten rows in Part 1 is weak — reopen that lesson, work it, and come back. Students who take both attempts back to back almost always score about the same twice, having learned nothing in between, and on a gated quiz that is an expensive way to spend your second attempt.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PRÁCTICA FINAL &middot; ACUMULATIVA <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Five items in the shape of the quiz — three on this module, two reaching back. Ungraded. If you miss one, reopen the lesson named in the feedback <strong>before</strong> your first attempt.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 1 &middot; uno o dos sujetos</div>
+            <div class="widget-question">«Quiero ___ contigo esta tarde, y quiero que me ___ la verdad.» (hablar &middot; decir)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Correcto en las dos mitades. «Quiero hablar» - un solo sujeto, infinitivo, sin «que». «Quiero que me digas» - dos sujetos y un «que», subjuntivo. Esta es la decisión central del módulo.">hablar &middot; digas</button>
+                <button data-correct="false" data-fb="La segunda mitad falla: «que me dices» reporta que dices la verdad, no la pide. Después de «quiero que» el verbo va en subjuntivo. Reabre 8.03.">hablar &middot; dices</button>
+                <button data-correct="false" data-fb="La primera mitad falla: «quiero que hable» necesitaría otro sujeto, y aquí el que quiere y el que habla son la misma persona. Mismo sujeto, infinitivo. Reabre 8.03.">que hable &middot; digas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 2 &middot; sin pistas &middot; el disparador es el mismo</div>
+            <div class="widget-question">Estás defendiendo un hecho: <em>tú tienes razón y no piensas ceder</em>. ¿Cuál dices?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Insisto en que me escuches» es correcto en español, pero pide algo: es influencia. Aquí no pides nada - afirmas un hecho sobre ti.">Insisto en que me escuches.</button>
+                <button data-correct="false" data-fb="«Insisto en que lo pienses otra vez» también es correcto, y también pide. Fíjate en lo que las dos opciones anteriores tienen en común: las dos empujan.">Insisto en que lo pienses otra vez.</button>
+                <button data-correct="true" data-fb="«Insisto en que tengo razón» - indicativo, porque insistes en un HECHO. Las tres frases usan el mismo disparador, «insistir en que», y las tres son correctas: lo que decide el modo no es la palabra sino lo que estás haciendo con ella. Esta es la clase de pregunta que el quiz incluye a propósito.">Insisto en que tengo razón.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 3 &middot; espiral &middot; <em>por</em> / <em>para</em> (Módulo 5)</div>
+            <div class="widget-question">«Gracias ___ el consejo; lo voy a usar ___ decidir mañana.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Al revés. «Gracias para el consejo» no existe: el agradecimiento va con «por», que mira hacia atrás, hacia la causa. Reabre Módulo 5.">para &middot; por</button>
+                <button data-correct="true" data-fb="«Gracias por el consejo» - la causa, lo que ya pasó. «Para decidir» - el propósito, lo que viene. Causa atrás, propósito adelante: eso es todo el contraste.">por &middot; para</button>
+                <button data-correct="false" data-fb="«Por decidir» existe pero significa otra cosa - «está por decidir» = queda por decidirse. Aquí la segunda mitad expresa un propósito, así que pide «para». Reabre Módulo 5.">por &middot; por</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 4 &middot; espiral &middot; relativos (Módulo 6)</div>
+            <div class="widget-question">«___ me dijo mi abuela aquella tarde cambió mi decisión.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Que» necesita un sustantivo delante al que referirse - «el consejo que me dijo». Aquí no hay ninguno: la cosa que cambió la decisión no se ha nombrado. Reabre Módulo 6.">Que</button>
+                <button data-correct="false" data-fb="«Quien» se refiere a personas, y el sujeto de «cambió mi decisión» no es la abuela sino lo que dijo. Reabre Módulo 6.">Quien</button>
+                <button data-correct="true" data-fb="«Lo que» - «the thing that». Es el relativo que se usa cuando no hay ningún sustantivo antes al que referirse, y aquí la cosa dicha nunca se nombra.">Lo que</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 5 &middot; del mandato a la petición</div>
+            <div class="widget-question">Tienes <em>«Habla con ella.»</em> Conviértelo en una petición con <em>te pido que</em>.</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Te pido que habla con ella» deja el indicativo después de «que». El mandato «habla» y el subjuntivo «hables» no son la misma forma en tú - en el afirmativo el mandato toma la forma de él/ella. Reabre 8.03.">Te pido que habla con ella.</button>
+                <button data-correct="true" data-fb="«Te pido que hables con ella» - y fíjate en el detalle que sorprende a casi todo el mundo: en tú, el mandato afirmativo «habla» NO coincide con el subjuntivo «hables». Coincide el negativo: «no hables». Los mandatos de Ud. sí coinciden con el subjuntivo en las dos formas.">Te pido que hables con ella.</button>
+                <button data-correct="false" data-fb="«Te pido hablar con ella» dice que TÚ quieres hablar con ella - un solo sujeto, y por eso el infinitivo. La frase es correcta pero significa otra cosa.">Te pido hablar con ella.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127881; PART 4 &middot; LO QUE PUEDES HACER AHORA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Ninety lessons ago it was August</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 12px 0;">Semesters end with a number and a grade, and neither of those tells you anything about what happened to you. So here it is concretely — not &ldquo;you have learned a lot&rdquo;, but the specific things you can do in Spanish today and could not do on the first day of Módulo 0.</p>
+        <table class="gtable">
+            <thead><tr><th>You can now&hellip;</th><th>Which you could not do before</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Tell the story of something that happened to you</strong> — and choose, sentence by sentence, whether the verb reports an event or a background</td><td>Módulo 0. In August you knew both past tenses and guessed between them.</td></tr>
+                <tr><td><strong>Say what has changed and what had already happened before that</strong> — <em>he aprendido</em>, <em>ya había decidido</em> — with <em>hecho, dicho, visto, escrito, puesto</em> correct</td><td>Módulos 1&ndash;2. Two whole tenses that did not exist for you in September.</td></tr>
+                <tr><td><strong>Give a stranger directions in a city you have never visited</strong>, in Ud. commands, with pronouns attached and the tildes in the right places</td><td>Módulo 3.</td></tr>
+                <tr><td><strong>Tell a friend what not to do</strong> without sounding cold — <em>no lo dejes</em>, <em>dímelo</em></td><td>Módulo 4.</td></tr>
+                <tr><td><strong>Explain a purpose and a cause without guessing</strong> — <em>por</em> and <em>para</em>, decided by function rather than by a memorised list</td><td>Módulo 5, and this is the one most Spanish students never stop guessing at.</td></tr>
+                <tr><td><strong>Describe something and qualify the description in the same sentence</strong> — <em>que</em>, <em>quien</em>, <em>lo que</em></td><td>Módulo 6. It is what makes writing sound adult rather than assembled.</td></tr>
+                <tr><td><strong>Ask somebody for something without ordering them</strong> — in a mood you had not heard of in September and had, in fact, been conjugating since October</td><td>Módulos 7&ndash;8.</td></tr>
+                <tr><td><strong>Hold that for a whole paragraph</strong>, choosing between four registers as you go, and give the reasons</td><td>Módulo 8. This is the Honors difference, and it is the thing employers and universities actually notice.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 10px 0;">And one more, which is easy to undersell. <strong>You have read eight authentic Spanish texts this semester, unadapted.</strong> José Martí on a childhood in Cuba. A real travel guide to Bogotá, written by a volunteer for travellers. A Spanish encyclopedia article on the Galápagos, and another on <em>Las meninas</em>. A Peruvian <em>tradición</em> from 1896 with a pedlar begging for a loan. And, yesterday, a Chilean village schoolteacher's prayer from 1922, in 1922 Spanish, in which you identified the mood of every verb in the opening sentence.<br><br>Nobody simplified any of those for you. That is what the <em>Lectura interpretativa</em> strand was for, and it is why this course has five graded components instead of four.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; CIERRE DEL SEMESTRE &middot; no wrong answer</div>
+            <div class="widget-question">Looking back across the whole semester — what actually changed?</div>
+            <div class="widget-options">
+                <button data-response="The most valuable answer on the list, and the hardest to arrive at. Notice how you got there: Módulo 3 gave you the forms as commands, four weeks of daily use made them automatic, and Módulo 7 renamed them. You never had a bad week fighting a conjugation - that was the design, and it worked.">I stopped being afraid of the subjunctive</button>
+                <button data-response="Then the reading strand did its job. Reading around an unfamiliar form instead of stopping at it is the single most transferable skill in this course - it is what makes the difference between somebody who studied Spanish and somebody who reads Spanish.">I can read things nobody wrote for a student</button>
+                <button data-response="That is the Honors difference in one sentence. Sentence-level Spanish is a test-taking skill; paragraph-level Spanish is a language. Every module asked you for six to eight connected sentences precisely so that this would be true in January.">I can hold a paragraph together, not just a sentence</button>
+                <button data-response="Worth taking seriously rather than shrugging at. Name the module to yourself now and reopen it this week, not in February - Semester 2 builds directly on Módulos 7 and 8, and a gap there compounds. If a second pass does not fix it, message your facilitator with the lesson number. That is faster than waiting for a grade to tell you.">Something still feels unfinished</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#10145;&#65039; PART 5 &middot; LO QUE VIENE <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three things left in Semester 1, and then January</h3>
+        <table class="gtable">
+            <thead><tr><th>What</th><th>Points</th><th>What it asks of you</th></tr></thead>
+            <tbody>
+                <tr><td><strong>El proyecto VR &mdash; <em>El consultorio</em></strong></td><td>100</td><td>You run an advice clinic in the headset: a briefing first, then you hear somebody's dilemma and advise them in connected Spanish, then a written reflection. It is this module's grammar, used live.</td></tr>
+                <tr><td><strong><em>Retrato de una virtud</em></strong></td><td>5% of the semester</td><td>One virtue, one real person, in Spanish. Eight virtues have gone past you since August; this is where you choose one.</td></tr>
+                <tr><td><strong>El examen final de S1</strong></td><td>10% of the semester</td><td>Cumulative across all nine modules. Everything on it has appeared in a lesson.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 10px 0;"><strong>And then Semester 2.</strong> The subjunctive has other triggers, and you now own the hard half of every one of them. Wanting and influencing were the first family; next come <strong>emotion</strong> (&ldquo;I am glad that&hellip;&rdquo;) and <strong>doubt</strong> (&ldquo;I do not think that&hellip;&rdquo;) — same forms, no new morphology, a different reason for reaching for them. The reading gets longer. The paragraphs get longer than a paragraph.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">But that is January. Today there is one quiz, and then a semester behind you.</p>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que te llevas de Chile</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Six things from this module worth keeping. <strong>The shape:</strong> 4,300 kilometres long, under 180 wide, so that the desert and the ice belong to the same country and nothing about travelling there is intuitive. <strong>The sky:</strong> the Atacama's dry air holds ALMA and the Very Large Telescope, and Chilean astronomers hold a guaranteed 10% of the observing time. <strong>Two Nobel Prizes in literature</strong> from twenty million people — Mistral in 1945, Neruda in 1971. <strong>And <em>¿cachai?</em></strong>, plus <em>al tiro</em> and <em>po</em>, in the fastest Spanish in the Americas.<br><br>Two more that belong together, because they are the same story told twice. <strong>Valparaíso</strong> is a port built up the sides of forty-odd hills, and to get people up them the city built <em>ascensores</em> — funicular railways, some from the 1880s, running on rails at absurd angles. Of the thirty or so built, fewer than half survive and only a handful run on any given day, but the historic quarter has been a <strong>UNESCO World Heritage site since 2003</strong> largely because of them.<br><br>And <strong>27 February 2010</strong>: a magnitude <strong>8.8</strong> earthquake off the Maule coast, one of the most powerful ever recorded anywhere. It was devastating, and it killed far fewer people than an 8.8 anywhere else would have — because Chile, having recorded the strongest earthquake in human history in 1960, had spent fifty years writing and then <em>enforcing</em> some of the strictest building codes on earth. A country that took its own advice, in writing, for half a century. There is a reason this module's virtue is a synthesis of all the others.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LAS OCHO, JUNTAS</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Eight modules, eight virtues, and this module had none of its own — because advising somebody well turns out to need all eight at once, and you can watch each one doing its job.<br><br><strong>La diligencia</strong> (M0) revises the paragraph instead of sending the first draft. <strong>La templanza</strong> (M1) gives one piece of advice when it has five. <strong>La perseverancia</strong> (M2) says the useful thing a second time, differently, without getting tired. <strong>La cortesía</strong> (M3) chooses the register that leaves the other person room to answer. <strong>El servicio</strong> (M4) spends the advice on them rather than on being right. <strong>La responsabilidad</strong> (M5) owns what the advice will cost if it turns out wrong. <strong>La atención</strong> (M6) notices the situation before speaking about it. <strong>La prudencia</strong> (M7) decides which of the four registers this particular moment is asking for.<br><br>None of those is a grammar point. But every one of them shows up in the grammar — in whether you attach a reason, in whether you choose <em>hazlo</em> or <em>te pido que lo hagas</em>, in whether your last sentence returns the decision or takes it. That is why this course teaches virtue and Spanish in the same lesson rather than in different rooms. <em>Aconsejar bien es mirar antes de hablar, y hablar dejando la decisión donde estaba.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">VR</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>El proyecto de VR &mdash; <em>El consultorio</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Then <em>Retrato de una virtud</em> and the S1 Final. The VR project unlocks once this Grammar Quiz shows <strong>16 or better</strong> — so take Part 2's advice about the two attempts seriously, and use them properly.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then take the <strong>Grammar Quiz</strong>. <strong>Review between your two attempts</strong> rather than taking them back to back. Then check that all five items for this module — and for the eight modules before it — show as submitted.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡TERMINASTE EL SEMESTRE 1&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Nine modules, ninety lessons, one hundred and eighty vocabulary words, two past tenses spiralled and two perfect tenses built, the whole command system, <em>por</em> and <em>para</em> settled, three relative pronouns, a mood you did not know you owned — and eight authentic texts nobody simplified for you.<br><br>In August you could tell somebody what you did last summer. Today you can hear somebody's dilemma and advise them, in a paragraph, in Spanish, choosing your register as you go. <em>Ya sabes aconsejar sin mandar &mdash; y eso no lo sabe hacer todo el mundo ni en su propio idioma.</em> &mdash; <em>¡Nos vemos en el Semestre 2!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.10 &middot; Repaso, el Grammar Quiz y el cierre del semestre</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

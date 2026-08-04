@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.09</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.09 &middot; Day 9 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Tarea oral</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.09</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Tarea oral — una obra, un detalle, una razón</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You cannot describe a detail you have not looked at.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today you record the <strong>Tarea oral</strong> (20 pts) &mdash; <strong>20% of your semester grade</strong>. One named painting, one detail inside it, and the reason that detail holds you. Then one direct instruction to whoever is listening.<br><br>The specific difficulty today is not grammar, it is <strong>breathing</strong>. A relative clause is long, and spoken relative clauses fall apart when the speaker does not pause where the commas are &mdash; or pauses where there are none. Part 4 is about landing them out loud.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> speak for 60&ndash;90 seconds about one work of art, using at least three relative clauses.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pause where a relative clause needs a pause, so a listener keeps hold of the main sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> justify a judgement about a painting by pointing at something visible in it.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Un minuto entero, mirando</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Before anything else: open a good image of your chosen painting and <strong>look at it for one full minute without writing.</strong> Time it. It will feel much longer than it is, and that reaction is the whole reason this module's virtue is <em>la atención</em>.<br><br>There is research on how long museum visitors actually stand in front of a painting, and the answer is unflattering: typically well under a minute, often a few seconds, famous works included. A minute is already unusual. Two minutes and you will start noticing things nobody told you about &mdash; which is exactly the material a good recording is made of.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">You have just looked for a minute. What did you notice that you had not noticed before?</div>
+            <div class="widget-options">
+                <button data-response="That is the best possible answer for this task, because it is yours. A detail you found yourself is easier to talk about for ninety seconds than a famous one you read about - you already have the reason for mentioning it.">Something small, in a corner</button>
+                <button data-response="Light and shadow are where Velázquez in particular repays looking - and «la luz» and «la sombra» are both in this module's twenty words, so you can say it. Try to name WHERE the light comes from.">Something about the light</button>
+                <button data-response="Where people are looking is one of the most productive questions you can ask of any painting with more than one figure, and it is the central question of «Las meninas» specifically. «La mirada» is in your vocabulary for this.">Where someone is looking</button>
+                <button data-response="Then look for another minute, and this time pick one square of the picture - a corner, a hand, the back wall - and look only at that. Attention narrows before it finds anything; a whole painting at once gives you nothing to say.">Honestly, nothing yet</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 2 &middot; LA TAREA <span class="pill-time">9 min</span></div>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 12px 0;"><strong>El tema:</strong> <em>Elige una obra concreta del Museo del Prado. Describe qué representa, di cuál es el detalle que más te llama la atención y explica por qué. Termina con un mandato directo a quien te escucha: dile qué tiene que mirar primero.</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 12px 0;"><strong>Una obra concreta, con su nombre.</strong> Not &ldquo;a painting in the Prado&rdquo; and not &ldquo;Spanish art&rdquo;. Any of these works, all of them in the Prado and all freely reproducible:</p>
+        <table class="gtable">
+            <thead><tr><th>Obra</th><th>Pintor</th><th>Aprox.</th><th>Si te interesa&hellip;</th></tr></thead>
+            <tbody>
+                <tr><td><em>Las meninas</em></td><td>Velázquez</td><td>1656</td><td>Las miradas y el espejo del fondo</td></tr>
+                <tr><td><em>Las hilanderas</em></td><td>Velázquez</td><td>c. 1657</td><td>Mujeres trabajando, y un mito escondido al fondo</td></tr>
+                <tr><td><em>La rendición de Breda</em></td><td>Velázquez</td><td>1635</td><td>Un ejército entero pintado con lanzas y cortesía</td></tr>
+                <tr><td><em>El 3 de mayo de 1808</em></td><td>Goya</td><td>1814</td><td>La luz de un farol, y una camisa blanca</td></tr>
+                <tr><td><em>La familia de Carlos IV</em></td><td>Goya</td><td>1800</td><td>Una respuesta a <em>Las meninas</em>, ciento cincuenta años después</td></tr>
+                <tr><td><em>El caballero de la mano en el pecho</em></td><td>El Greco</td><td>c. 1580</td><td>Una mano, y casi nada más</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Requirement</th><th>Detail</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Length</strong></td><td>60&ndash;90 seconds of connected speech</td></tr>
+                <tr><td><strong>Relative clauses</strong></td><td>At least <strong>three</strong>, including one <em>cuyo</em>-form and one <em>lo que</em></td></tr>
+                <tr><td><strong>One detail</strong></td><td>Something a listener could actually find in the picture</td></tr>
+                <tr><td><strong>The ending</strong></td><td>One <strong>direct <em>tú</em> command</strong> to your listener &mdash; <em>mira&hellip;</em>, <em>fíjate en&hellip;</em>, <em>busca&hellip;</em>, <em>no te pierdas&hellip;</em></td></tr>
+                <tr><td><strong>Delivery</strong></td><td>From a six-word outline. <strong>Do not read a script.</strong></td></tr>
+                <tr><td><strong>Attempts</strong></td><td>As many as you like; submit your best</td></tr>
+            </tbody>
+        </table>
+        <table class="gtable">
+            <thead><tr><th>Scored on &middot; 20 pts</th><th>What earns full marks</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Relative pronouns</strong></td><td>Three or more, each correct: no dropped <em>que</em>, <em>cuyo</em> agreeing with the thing possessed, <em>lo que</em> used for an idea</td></tr>
+                <tr><td><strong>Discourse shape</strong></td><td>Work &rarr; what it shows &rarr; the detail &rarr; the reason &rarr; the instruction. Not a list</td></tr>
+                <tr><td><strong>Fluency</strong></td><td>Continuous speech; pauses fine, long silences and restarts not</td></tr>
+                <tr><td><strong>Comprehensibility</strong></td><td>A patient listener could find your detail in the painting without a repeat</td></tr>
+                <tr><td><strong>Range</strong></td><td>Five or more of this module's twenty words, used where they belong</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Not scored: a native accent. Comprehensibility is scored; sounding Spanish is not, and a rubric that quietly rewarded accent would be grading something this course does not teach.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; TU GUION DE SEIS PALABRAS <span class="pill-time">9 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same method as every module: <strong>six words, not a text.</strong> A read script always sounds read, and here it costs you twice &mdash; a written relative clause read aloud comes out flat and unpaused, which is precisely the thing Part 4 is trying to fix.</p>
+        <table class="gtable">
+            <thead><tr><th>Beat</th><th>Your word</th><th>Example</th><th>La herramienta</th></tr></thead>
+            <tbody>
+                <tr><td>1. La obra, con su nombre</td><td>&nbsp;</td><td><em>meninas</em></td><td>Una relativa sin comas</td></tr>
+                <tr><td>2. Qué representa</td><td>&nbsp;</td><td><em>infanta</em></td><td><em>representar</em>, <em>el retrato</em></td></tr>
+                <tr><td>3. El pintor y algo suyo</td><td>&nbsp;</td><td><em>taller</em></td><td><strong><em>cuyo / cuya / cuyos / cuyas</em></strong></td></tr>
+                <tr><td>4. <strong>El detalle</strong></td><td>&nbsp;</td><td><em>espejo</em></td><td><em>la mirada</em>, <em>la luz</em>, <em>la sombra</em>, <em>el marco</em></td></tr>
+                <tr><td>5. Lo que te hace pensar</td><td>&nbsp;</td><td><em>nosotros</em></td><td><strong><em>lo que&hellip;</em></strong></td></tr>
+                <tr><td>6. <strong>El mandato final</strong></td><td>&nbsp;</td><td><em>fíjate</em></td><td>Mandato de <em>tú</em>, afirmativo o negativo</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Beats 3, 5 and 6 are all separately assessed.</strong> Write those three words first. A recording with no <em>cuyo</em>, no <em>lo que</em> or no command loses named criteria however good the rest of it is.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ENSAYA TRES VECES</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Say the whole thing aloud three times from your six words. On run three, listen for two things only: whether your <em>cuyo</em> agreed with the noun straight after it, and whether your longest sentence had a pause in it anywhere. Those are the two things a listener will notice, and they are the two things the rubric weighs most.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; PRONUNCIACIÓN Y RESPIRACIÓN <span class="pill-time">11 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click each and repeat aloud.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-exposicion.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la exposición</span><span class="v-en">stress on the last syllable</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-epoca.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la época</span><span class="v-en">É-po-ca — stress on the first</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-significado.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el significado</span><span class="v-en">five syllables, none of them rushed</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-mirada.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la mirada</span><span class="v-en">the -d- is soft, almost English «th»</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-lienzo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el lienzo</span><span class="v-en">-nzo, not -nso</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-obra.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la obra</span><span class="v-en">two syllables: O-bra</span></li>
+        </ul>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>1. The <em>-ción</em> words carry their stress at the end.</strong> <em>la exposi<span class="pron">CIÓN</span></em>. And notice what happens in the plural: <em>las exposiciones</em> loses the written accent, because the stress is no longer on the final syllable. Same word, same stress pattern by ear, different spelling &mdash; the accent was only ever marking the exception.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>2. <em>La época</em> is the trap in this set.</strong> English speakers say <em>e-PO-ca</em>, following the default. The tilde is telling you the stress sits on the <strong>first</strong> syllable, three from the end: <em><span class="pron">É</span>-po-ca</em>. Exaggerate it more than feels reasonable.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>3. <em>Cuyo</em> is two syllables: <span class="pron">CU-yo</span>.</strong> Not &ldquo;kwai-oh&rdquo;. The <em>y</em> sounds like the <em>y</em> of English &ldquo;yes&rdquo;, and the <em>u</em> is a plain Spanish <em>u</em>. And <em>lo que</em> runs together fast and unstressed, almost one word: <em>loque</em>.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;"><strong>4. And the one that decides your comprehensibility score: pause where the commas are.</strong> Compare these two aloud:</p>
+        <table class="gtable">
+            <thead><tr><th>Oración</th><th>Cómo suena</th></tr></thead>
+            <tbody>
+                <tr><td>El cuadro <strong>que</strong> está en la sala 12 es enorme.</td><td>Sin comas &rarr; <strong>un solo grupo</strong>, de un tirón, sin pausa</td></tr>
+                <tr><td>Velázquez, <strong>quien</strong> vivía en el palacio, se pintó dentro del cuadro.</td><td>Con comas &rarr; <strong>tres grupos</strong>, con dos pausas pequeñas</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">The commas are instructions for your voice. Ignore them and the listener hears one long undifferentiated stream and loses which verb belongs to <em>Velázquez</em>. Put a pause where no comma exists and you split a noun off from the clause that identifies it. Neither is an accent problem; both are comprehension problems, and both are fixed by reading your outline aloud once with the pauses marked.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; sin pausas</div>
+            <div class="widget-question">You say <em>«Velázquez quien vivía en el palacio se pintó dentro del cuadro»</em> in one breath, with no pauses at all. What is the risk?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="On paper the sentence is perfectly built. The problem exists only in the speaking - which is exactly what the comprehensibility criterion measures, and why it is a separate line from the grammar one.">The grammar becomes wrong</button>
+                <button data-correct="true" data-fb="Your listener loses the main sentence. Without the pauses, «quien vivía en el palacio» sounds like it continues the sentence rather than interrupting it, and «se pintó» arrives with no subject attached to it.">The listener loses the main sentence</button>
+                <button data-correct="false" data-fb="Spanish absolutely does pause there. The commas of a comma-set-off relative clause are instructions for reading aloud, not decoration on the page.">No risk — Spanish does not pause there</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the rubric weighs</div>
+            <div class="widget-question">Two takes. One has a strong foreign accent but three clean relative clauses, a specific detail and a closing command. The other is smooth and fast but is a list of separate facts with no relative clause in it. Which scores higher?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Smoothness helps fluency, which is worth 4. But a take with no relative clause forfeits most of the 6-point criterion this whole module exists to assess, and probably the discourse-shape points too.">The smoother one</button>
+                <button data-correct="false" data-fb="They do not score the same. Look again at the table in Part 2: «relative pronouns» is worth 6 points on its own and accent is not a line at all.">About the same</button>
+                <button data-correct="true" data-fb="The first, and not narrowly. Relative pronouns are the largest single criterion, discourse shape is a second, and accent is not scored anywhere - so the accented take wins on two counts and loses on none.">The one with the relative clauses</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9210; PART 5 &middot; GRABA Y ENTREGA <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Record in Canvas on the assignment. Listen once before submitting and check four things:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.75;margin:0 0 10px 1.4rem;">
+            <li>Is there a <strong><em>cuyo</em>-form</strong>, and did it agree with the noun straight after it?</li>
+            <li>Is there a <strong><em>lo que</em></strong>, referring to an idea rather than a thing?</li>
+            <li>Did you <strong>end with a command</strong> to your listener?</li>
+            <li>Did you reach <strong>60 seconds</strong>? Short takes are almost always missing beat 5 &mdash; the reason.</li>
+        </ol>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">If all four pass, submit. If you have time for one more take, do it for the pauses rather than for the words.</p>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El cuarto que ya no existe</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Something to know before you describe the room in <em>Las meninas</em>: <strong>that room is gone.</strong><br><br>It was in the <strong>Real Alcázar de Madrid</strong>, the old royal palace, where Velázquez lived and worked. On <strong>Christmas Eve 1734</strong> the Alcázar caught fire and burned for days. Much of the royal collection was lost. <em>Las meninas</em> was carried out &mdash; accounts say it had to be cut from its frame to get it clear &mdash; and it was damaged in the process and restored afterwards. The inventory drawn up of what had survived is the <strong>1734</strong> document that gives the painting its other name.<br><br>The palace was not rebuilt. The <strong>Palacio Real</strong> that stands on the site today is a different building, put up over the following decades in a different style. So the tall shadowed room in the painting, with its picture-hung walls and its open door at the back, exists nowhere except in the painting.<br><br>Which changes what you are looking at. It is not a picture <em>of</em> a room you could go and stand in; it is the only surviving view of a space that burned seventy-eight years after it was painted, saved by whoever thought to carry that canvas out first. When you record your ninety seconds, that is worth one sentence &mdash; and it is the kind of thing <em>la atención</em> finds: not in the painting, but in what the painting turns out to be for.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Ninety seconds of speech needs about two minutes of looking, and there is no way around that arithmetic. Students who record a weak version of this task have almost never run out of Spanish &mdash; they have run out of things they noticed. That is why Part 1 asked for a full minute with nothing to write: attention has to come first and it cannot be hurried at the end. <em>No se puede describir lo que no se ha mirado.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">10</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.10 &mdash; Repaso y Grammar Quiz</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Last day: full review, mixed practice, then the <strong>Grammar Quiz</strong> (20 pts, two attempts, includes listening). And a straight look at Módulo 7, which is the module this whole semester has been building toward.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, and confirm your recording uploaded &mdash; check that the submission shows a playable file, not just a completed page.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety unscripted seconds about a real painting, with the clauses paused in the right places and a reason attached to a detail you found yourself. <em>Una última lección.</em> <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.09 &middot; Tarea oral</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

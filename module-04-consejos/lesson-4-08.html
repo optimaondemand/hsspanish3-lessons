@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 4.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 4</div>
+        <div style="font-size: 12px; color: #666;">Consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.08 &middot; Day 8 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lectura interpretativa · tres monedas</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Consejos entre amigos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lectura interpretativa — un texto sin un solo mandato</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Three sentences of real advice about money in the Dominican Republic — and not one command in them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Módulo 4's reading day, and the opposite situation from Módulo 3. In 3.08 a travel guide handed you three commands in a single sentence. Today's text, from a guide to the same website's Dominican Republic page, gives genuinely useful guidance <strong>entirely in statements</strong>. <em>El peso es&hellip; El dólar es&hellip; El euro es&hellip;</em><br><br>So today's grammar work runs in the other direction: you will <strong>turn description into advice</strong>. That is a harder skill than spotting an imperative, and it is much closer to what you actually do when a friend asks you what they should do.<br><br>The graded <strong>Lectura interpretativa</strong> (15 pts, two attempts) opens today.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say which currency the text recommends for which setting, and why.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> rewrite the text's information as advice to a friend, using affirmative <em>and</em> negative <em>tú</em> commands.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>frecuentadas</em> ends in <em>-as</em>, and what that proves about participles.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; ANTES DE LEER <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Contexto y tres cosas que buscar</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>El contexto.</strong> This is from the <em>Comprar</em> section of a collaboratively written, openly licensed Spanish-language travel guide to the Dominican Republic. Three currencies circulate in the country in practice — the Dominican peso, the US dollar and the euro — and the passage explains where each one actually works. It is the kind of information a friend who has been there tells you at the airport.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;"><strong>Busca estas tres cosas.</strong> No dictionary on the first two passes:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 0 1.4rem;">
+            <li>¿Qué moneda conviene en los lugares de los dominicanos, y qué moneda en las zonas turísticas?</li>
+            <li>¿Cuántos mandatos hay en el texto? Cuéntalos con cuidado.</li>
+            <li>¿Qué palabra describe los lugares y las actividades, y por qué termina en <em>-as</em>?</li>
+        </ol>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; UNA ESTRUCTURA DE TRES &middot; a technique</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">The passage has an obvious skeleton: three sentences, each opening with a currency and the verb <em>es</em>. <em>El peso es&hellip; El dólar es&hellip; El euro es&hellip;</em> Read the three openings first and you have the shape of the whole thing before you translate a word of the detail.<br><br>Question 2 above is not a trick. The answer is a number, and the number matters — hold onto it until Part 4.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL TEXTO <span class="pill-time">10 min</span></div>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA AUTÉNTICA &middot; TEXTO CON LICENCIA ABIERTA</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            El peso es la mejor moneda para utilizar en lugares o actividades frecuentadas por los dominicanos (Autobuses, tiendas de la capital...). El dólar es la moneda de los resorts y las zonas turísticas, los precios de base se ponen en dólares y después se cambian a otras monedas. El euro es la moneda de los bancos, el mejor cambio se puede obtener con estos.
+            </div>
+            <div class="src">Wikivoyage, «República Dominicana», sección Comprar. Texto disponible bajo licencia Creative Commons Atribución-CompartirIgual 4.0 (CC BY-SA 4.0).</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Ayuda de vocabulario</strong> — only after your second reading: <em>la moneda</em> = currency (also a coin) &middot; <em>utilizar</em> = to use &middot; <em>frecuentadas por los dominicanos</em> = frequented by Dominicans &middot; <em>los resorts</em> = the resorts, borrowed straight from English in Dominican tourism &middot; <em>la zona turística</em> = tourist area &middot; <em>el precio de base</em> = the base price &middot; <em>el cambio</em> = the exchange, the exchange rate &middot; <em>obtener</em> = to obtain, to get.</p>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:10px 0 0;">Three forms are <strong>not yours yet</strong>: <em>se ponen</em>, <em>se cambian</em>, <em>se puede obtener</em>. Read them as &ldquo;are set&rdquo;, &ldquo;are changed&rdquo; and &ldquo;can be obtained&rdquo; and move on. This is the impersonal <em>se</em>, a construction you meet properly in Semester 2 of this course; nothing on this page or in the graded item asks you to use it. Authentic texts always contain grammar from further along the road, and reading past an unfamiliar form is itself a skill.</p>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:10px 0 0;">Two other things you may notice, both genuine features of a collaboratively written text rather than errors on your part: the parenthesis begins with a capital letter, and the second and third sentences join two clauses with a comma where an editor would have used a semicolon or <em>y</em>. Real Spanish, written by volunteers, is not copy-edited prose — and being able to read it anyway is the point of this strand.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; COMPRENSIÓN <span class="pill-time">9 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Practice first — ungraded. The graded item asks the same four kinds of question, plus one more detail.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; IDEA GENERAL &middot; gist</div>
+            <div class="widget-question">¿Cuál es la idea principal del texto?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El texto no dice que conviene llevar solo dólares. Dice lo contrario: el dólar es la moneda de los resorts y de las zonas turísticas, no la de los autobuses ni la de las tiendas de la capital.">Conviene llevar solo dólares, porque se aceptan en todas partes</button>
+                <button data-correct="true" data-fb="Exacto: cada moneda funciona mejor en un sitio distinto — el peso con los dominicanos, el dólar en el turismo, el euro en el banco. Las tres oraciones dicen justamente eso.">Cada moneda funciona mejor en un lugar distinto</button>
+                <button data-correct="false" data-fb="El texto no habla de dificultad. Describe con bastante seguridad dónde funciona cada moneda, sin advertir de ningún problema.">Cambiar dinero en la República Dominicana es difícil</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; detail</div>
+            <div class="widget-question">Según el texto, ¿dónde conviene pagar en pesos?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Los resorts son precisamente el ejemplo del dólar, no del peso. Vuelve a la segunda oración.">En los resorts y en las zonas turísticas</button>
+                <button data-correct="false" data-fb="Los bancos aparecen en la tercera oración, junto al euro y al cambio, no junto al peso.">En los bancos</button>
+                <button data-correct="true" data-fb="Correcto — el texto da dos ejemplos entre paréntesis: los autobuses y las tiendas de la capital. Son lugares «frecuentados por los dominicanos».">En los autobuses y en las tiendas de la capital</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; GRAMÁTICA EN EL TEXTO &middot; the Honors item</div>
+            <div class="widget-question">El texto <strong>describe</strong>; no aconseja. Convierte su primera oración en un consejo para un amigo o una amiga.</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Usa pesos en los autobuses y en las tiendas de la capital.» — mandato afirmativo de tú, tomado de la forma de él/ella («él usa»). Es exactamente lo que el texto quiere decir, dicho a una persona.">Usa pesos en los autobuses y en las tiendas de la capital.</button>
+                <button data-correct="false" data-fb="«Use pesos» es el mandato de usted, del Módulo 3. La forma está bien construida, pero es para un desconocido; a un amigo se le dice «usa».">Use pesos en los autobuses y en las tiendas de la capital.</button>
+                <button data-correct="false" data-fb="«Usas pesos» es el presente: «tú usas». Describe lo que hace tu amigo en vez de decirle qué hacer — el mismo problema que tiene el texto original.">Usas pesos en los autobuses y en las tiendas de la capital.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; INFERENCIA &middot; inference</div>
+            <div class="widget-question">El texto no lo dice directamente. ¿Qué se puede deducir sobre el país?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El texto no dice nada sobre las preferencias de los dominicanos. Menciona el euro solo por el cambio en los bancos.">Que los dominicanos prefieren el euro</button>
+                <button data-correct="true" data-fb="Sí: funcionan dos economías a la vez, una turística con precios en dólares y otra local en pesos. El texto lo demuestra sin decirlo, con sus dos listas de lugares.">Que hay dos economías paralelas, una turística y otra local</button>
+                <button data-correct="false" data-fb="El texto dice lo contrario: las tiendas de la capital son uno de sus dos ejemplos de pago en pesos.">Que el peso no se acepta en la capital</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; DE LA DESCRIPCIÓN AL CONSEJO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Zero commands in, six commands out</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The answer to question 2 is <strong>none</strong>. Not one imperative in three sentences. Now do what the text does not: say the same things to a friend.</p>
+        <table class="gtable">
+            <thead><tr><th>What the text says</th><th>Said to a friend &mdash; afirmativo</th><th>Said to a friend &mdash; negativo</th></tr></thead>
+            <tbody>
+                <tr><td>El peso es la mejor moneda&hellip; frecuentadas por los dominicanos</td><td><span class="pron">Usa</span> pesos en los autobuses.</td><td><span class="pron">No pagues</span> el autobús en dólares.</td></tr>
+                <tr><td>El dólar es la moneda de los resorts y las zonas turísticas</td><td><span class="pron">Paga</span> el hotel en dólares.</td><td><span class="pron">No uses</span> dólares fuera de las zonas turísticas.</td></tr>
+                <tr><td>El euro es la moneda de los bancos, el mejor cambio&hellip;</td><td><span class="pron">Cámbialos</span> en un banco.</td><td><span class="pron">No los cambies</span> en el aeropuerto.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Look at the last row, because it contains the whole module. <strong><em>Cámbialos</em></strong>: affirmative, pronoun attached, three syllables, tilde required. <strong><em>No los cambies</em></strong>: negative, the same pronoun in front, no tilde, and the verb built from the Ud. command <em>no cambie</em> plus <em>-s</em>. One pair of sentences, both halves of Days 4 and 5.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; POR QUÉ ESTE TEXTO NO MANDA</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">This is worth a moment, because it is a real difference in genre and not an accident. A <em>safety</em> paragraph instructs — Módulo 3's Bogotá sentence was three commands in a row, because the writer wanted one specific behaviour from you. A <em>money</em> paragraph informs, because what to do with the information depends on where you are going and what you are buying.<br><br>So the register tells you what the writer assumes about the reader. Commands assume there is one right action. Statements assume you will decide. Notice which one your own advice tends to use, and whether the person you are advising would agree with the assumption.</div>
+        </div>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; <em>FRECUENTADAS</em> &middot; el Módulo 2, otra vez</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Question 3. <strong><em>Frecuentadas</em></strong> is a participle — the same kind of form as <em>hablado</em>, <em>hecho</em>, <em>escrito</em> — and here it ends in <em>-as</em>. Apply Módulo 2's test: <strong>is there a <em>haber</em> in front of it?</strong><br><br>There is not. So it is not part of a perfect tense; it is working as an <strong>adjective</strong>, and adjectives agree with what they describe. <em>Actividades</em> is feminine plural, so the participle is <em>frecuentadas</em>. Compare <em>«un lugar frecuentado»</em>, <em>«unas actividades frecuentadas»</em> — and then compare <em>«han frecuentado»</em>, which never changes because it follows <em>haber</em>.<br><br>One honest note about this particular sentence. The text says <em>«lugares o actividades frecuentadas»</em>, and <em>lugares</em> is masculine while <em>actividades</em> is feminine. A careful editor would write <em>frecuentados</em>, since the masculine plural is what covers a mixed pair. The source agrees with the <em>nearer</em> noun instead — which is extremely common in real writing, and which you now know enough grammar to have noticed.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 5 &middot; PUENTE A LA PRODUCCIÓN <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">That passage is practical knowledge handed from someone who knows to someone who does not. Tomorrow's <strong>Tarea oral</strong> asks you to do the same thing out loud, as a voice note to a friend. Choose your situation now:</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 10px 0;"><em>Un amigo o una amiga te ha pedido consejo. ¿Sobre qué, y qué le vas a decir?</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Two kinds of situation work well. One is a <strong>decision</strong> — a job, a team, a class, a conversation they are dreading. The other is <strong>practical knowledge you happen to have and they do not</strong>, exactly like the currency passage: how to get somewhere, how to handle a particular teacher, what to do first in a place you know well.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">How did a text with no commands in it feel to work with?</div>
+            <div class="widget-options">
+                <button data-response="That is the honest reaction, and it is worth naming: turning a statement into a command is harder than recognising one, because you have to choose the verb yourself. It is also what real advice-giving consists of.">Harder than 3.08, oddly</button>
+                <button data-response="Then the three-sentence skeleton did its job. «El peso es… El dólar es… El euro es…» gives you the whole structure before any of the detail, and that habit works on far longer texts.">The three-sentence structure made it easy</button>
+                <button data-response="Good — that is the M2 spiral working as designed. A participle with no «haber» in front of it is an adjective, and adjectives agree. You met that six weeks ago and just used it on a text nobody wrote for you.">I spotted «frecuentadas» before Part 4 explained it</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; REPÚBLICA DOMINICANA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Dos economías en una isla</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The country's currency is the <strong>peso dominicano</strong>, written <strong>RD$</strong> — and the dollar sign in that abbreviation is why prices sometimes look, to a visitor, ten times cheaper or dearer than they are.<br><br>What the passage records without comment is genuinely how the country works. Tourism is one of the Dominican Republic's largest industries, concentrated in resort areas such as Punta Cana and Bávaro that are among the biggest in the Caribbean, and inside those areas prices are quoted in dollars. A few kilometres away, in a <em>colmado</em> or on a <em>guagua</em>, the peso is simply the money. Both economies are real; the text is telling you which one you are standing in.<br><br>A third flow matters just as much and is invisible in the passage: <strong>remesas</strong> — money sent home by Dominicans living abroad, above all in the United States — are one of the country's major sources of foreign income. That is the economic fact behind the <em>hermano mayor</em> in 4.05 advising a younger sibling from another country. The advice and the money travel down the same phone line.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; EL SERVICIO</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Somebody volunteered three sentences about currency for readers they will never meet, and those three sentences quietly save a stranger from being overcharged in a taxi. It is unglamorous, unsigned and genuinely useful — which is most of what service looks like. Notice too that the writer trusted the reader with the information rather than issuing orders. <em>Servir también es decirle a alguien lo que a ti nadie te dijo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 4.09 &mdash; Tarea oral</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you record 60&ndash;90 seconds as a <em>nota de voz</em>: advice to a friend who asked for it, in <em>tú</em> commands, with a warning and a reason. Twenty points, and the most heavily weighted component of the course.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then complete the graded <strong>Lectura interpretativa</strong> (15 pts, two attempts). Keep this page open while you answer — you are expected to reread the passage, not remember it.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">An authentic passage with no commands in it, and six commands of your own built out of it — plus a participle from Módulo 2 caught in the wild. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.08 &middot; Lectura interpretativa · tres monedas</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

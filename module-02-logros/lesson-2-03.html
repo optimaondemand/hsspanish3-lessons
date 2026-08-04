@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 2.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 2</div>
+        <div style="font-size: 12px; color: #666;">Logros</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Los participios irregulares</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Experiencias y logros</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Los participios irregulares — una lista cerrada</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Eight words. Learn them once and the irregular participle problem is over.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last module you built the present perfect and used only regular participles — <em>-ado</em> and <em>-ido</em>. That was deliberate: a rule is easier to own when it is not competing with a list of exceptions in the same week.<br><br>Today you get the exceptions. There are about <strong>eight that matter</strong>, and they are a <strong>closed list</strong> — no new ones will appear later in the course. Learn these and you have the entire system.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce the eight core irregular participles from their infinitives.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> predict a compound verb's participle from its base — <em>descubrir → descubierto</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use these participles in the present perfect without splitting the pair.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why these eight and not others</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">These are the oldest, most-used verbs in the language — <em>hacer, decir, ver, poner</em>. High-frequency words resist regularisation: they are said so often that the old forms survive instead of being smoothed out. English does exactly the same thing (<em>go/went</em>, <em>see/saw</em>) and for the same reason.<br><br>So the irregularity is a sign of usefulness. These eight are worth the ten minutes precisely because you will use them constantly.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Guess before you look: what do you think the participle of <em>hacer</em> is?</div>
+            <div class="widget-options">
+                <button data-response="A perfectly logical guess from the regular rule - and wrong, which is why this lesson exists. It is «hecho». Notice the c-to-ch shift, the same one in «hizo» from Module 0.">hacido</button>
+                <button data-response="Correct - «hecho». If you knew that already, you have probably met it in «¿qué has hecho?», one of the commonest questions in the language.">hecho</button>
+                <button data-response="Reasonable instinct, but «hacido» and «hacado» do not exist. The real form is «hecho» - short and irregular, like most very frequent words.">hacado</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LOS OCHO <span class="pill-time">11 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click the <strong>&#128266;</strong> to hear all eight in sequence, then read the table aloud twice.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/participios-irregulares.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">hecho, dicho, visto&hellip;</span><span class="v-en">the eight, in order</span></li>
+        </ul>
+        <table class="gtable">
+            <thead><tr><th>Infinitive</th><th>Participio</th><th>In use</th></tr></thead>
+            <tbody>
+                <tr><td>hacer</td><td><span class="pron">hecho</span></td><td>¿Qué has <span class="pron">hecho</span> hoy?</td></tr>
+                <tr><td>decir</td><td><span class="pron">dicho</span></td><td>Me han <span class="pron">dicho</span> que sí.</td></tr>
+                <tr><td>ver</td><td><span class="pron">visto</span></td><td>No he <span class="pron">visto</span> los resultados.</td></tr>
+                <tr><td>escribir</td><td><span class="pron">escrito</span></td><td>Ha <span class="pron">escrito</span> tres solicitudes.</td></tr>
+                <tr><td>poner</td><td><span class="pron">puesto</span></td><td>Hemos <span class="pron">puesto</span> mucho esfuerzo.</td></tr>
+                <tr><td>abrir</td><td><span class="pron">abierto</span></td><td>Han <span class="pron">abierto</span> las inscripciones.</td></tr>
+                <tr><td>volver</td><td><span class="pron">vuelto</span></td><td>He <span class="pron">vuelto</span> a intentarlo.</td></tr>
+                <tr><td>morir</td><td><span class="pron">muerto</span></td><td>El proyecto no ha <span class="pron">muerto</span>.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Three more you will meet often enough to learn now: <strong>romper → roto</strong>, <strong>cubrir → cubierto</strong>, <strong>resolver → resuelto</strong>. That is eleven in total, and the list is finished — Spanish has no further common irregular participles waiting for you.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PATRONES &middot; they are not random</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Look again and you will see families rather than chaos:<br>
+            &bull; <strong>-cho</strong>: <em>hecho, dicho</em><br>
+            &bull; <strong>-to</strong> after a consonant: <em>visto, escrito, puesto, muerto, roto, abierto, cubierto</em><br>
+            &bull; <strong>-elto</strong>: <em>vuelto, resuelto</em><br><br>
+            Almost all of them end in <strong>-to</strong> or <strong>-cho</strong>. If a participle you are unsure about ends in <em>-ado</em> or <em>-ido</em>, it is regular; if it ends in <em>-to</em> or <em>-cho</em>, it is on this list.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS COMPUESTOS <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Eight participles, but far more than eight verbs</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Here is the payoff. Any verb built on one of these eight <strong>inherits its participle</strong>. So learning eight gives you dozens:</p>
+        <table class="gtable">
+            <thead><tr><th>Base</th><th>Compound</th><th>Participio</th></tr></thead>
+            <tbody>
+                <tr><td>hacer → hecho</td><td>deshacer, rehacer, satisfacer</td><td>des<span class="pron">hecho</span>, re<span class="pron">hecho</span>, satis<span class="pron">fecho</span></td></tr>
+                <tr><td>poner → puesto</td><td>componer, proponer, suponer</td><td>com<span class="pron">puesto</span>, pro<span class="pron">puesto</span>, su<span class="pron">puesto</span></td></tr>
+                <tr><td>volver → vuelto</td><td>devolver, envolver, revolver</td><td>de<span class="pron">vuelto</span>, en<span class="pron">vuelto</span>, re<span class="pron">vuelto</span></td></tr>
+                <tr><td>escribir → escrito</td><td>describir, inscribir</td><td>de<span class="pron">scrito</span>, in<span class="pron">scrito</span></td></tr>
+                <tr><td>cubrir → cubierto</td><td>descubrir</td><td>de<span class="pron">scubierto</span></td></tr>
+                <tr><td>ver → visto</td><td>prever</td><td>pre<span class="pron">visto</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">So when you meet <em>proponer</em> for the first time, you do not need to look up its participle — you already know it is <em>propuesto</em>. This is the single highest-value thing in today's lesson: <strong>eight forms, memorised once, cover a large open-ended set of verbs.</strong> Note the one small spelling wrinkle: <em>satisfacer</em> gives <em>satisfecho</em>, with <em>f</em> rather than <em>h</em>.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the commonest one in the language</div>
+            <div class="widget-question">«¿Qué ___ esta semana para prepararte?» (hacer, tú)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«has hacido» applies the regular rule. Hacer is irregular: hecho.">has hacido</button>
+                <button data-correct="true" data-fb="«has hecho» - and «¿qué has hecho?» is worth learning as a whole phrase; you will hear it constantly.">has hecho</button>
+                <button data-correct="false" data-fb="«has hizo» mixes the preterite «hizo» with haber. The participle is «hecho».">has hizo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; predict the compound</div>
+            <div class="widget-question">If <em>poner</em> gives <em>puesto</em>, what does <em>proponer</em> give?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«propuesto» - the compound inherits the base participle. You did not have to look it up.">propuesto</button>
+                <button data-correct="false" data-fb="«proponido» regularises it, but compounds inherit their base's irregularity: pro + puesto.">proponido</button>
+                <button data-correct="false" data-fb="«proponesto» keeps too much of the infinitive. The pattern is prefix + the base participle: pro-puesto.">proponesto</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the pair stays together</div>
+            <div class="widget-question">«Todavía ___ los resultados del examen.» (ver, nosotros — negative)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«hemos no visto» splits haber from the participle - Module 1's first iron rule still holds with irregular participles.">hemos no visto</button>
+                <button data-correct="true" data-fb="«no hemos visto» - «no» in front of the pair, and «visto» not «veído».">no hemos visto</button>
+                <button data-correct="false" data-fb="«no hemos veído» regularises ver. Its participle is «visto».">no hemos veído</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; no agreement in the perfect</div>
+            <div class="widget-question">«Las profesoras han ___ las cartas de recomendación.» (escribir)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«escritas» makes the participle agree, which never happens in the perfect - even with irregular participles. Module 1, rule 3.">escritas</button>
+                <button data-correct="true" data-fb="«escrito» - fixed in -o. Haber carries the plural; the participle never changes here.">escrito</button>
+                <button data-correct="false" data-fb="«escribido» regularises escribir. Its participle is «escrito».">escribido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: say <strong>four</strong> things about this school year using four <em>different</em> irregular participles. Say them aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Este año he hecho mucho más trabajo del que esperaba. He escrito tres ensayos en español. Mis profesores me han dicho que he mejorado bastante. Y he vuelto a intentar el examen oral, aunque la primera vez no salió bien.</strong><br><br>Check yours: participles fixed in <em>-o</em> with no agreement · <em>no</em> and pronouns in front of <em>haber</em> · and four <em>different</em> irregulars, not <em>hecho</em> four times.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Correo al comité de becas</strong><br><br>
+        Buenos días. Escribo para confirmar que <strong>he puesto</strong> toda la documentación en el sistema. <strong>He escrito</strong> la carta de motivación, <strong>he descubierto</strong> que faltaba una firma y ya la <strong>he conseguido</strong>. También <strong>he devuelto</strong> el formulario B que ustedes me mandaron.<br><br>Sé que <strong>han abierto</strong> las inscripciones esta semana y que muchos estudiantes <strong>han propuesto</strong> proyectos parecidos al mío. Todavía no <strong>he visto</strong> la lista de requisitos actualizada. ¿Me la pueden enviar?<br><br>Mis profesores me <strong>han dicho</strong> que el proceso es competitivo, pero no <strong>he perdido</strong> la esperanza. <strong>He vuelto</strong> a revisar cada documento tres veces.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Count the irregular participles: there are <strong>nine</strong>, including two compounds (<em>descubierto</em>, <em>propuesto</em>) that you could have predicted without looking them up. Find the two regular ones hiding among them (<em>conseguido</em>, <em>perdido</em>) and note that nothing marks them out — regular and irregular participles behave identically once formed. Only the forming differs.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COSTA RICA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>La beca como camino</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The email in Part 5 is a realistic document in Costa Rica, where public university is heavily subsidised and a state scholarship system (<em>becas</em>) is a normal route for students from rural areas. The <strong>Universidad de Costa Rica</strong>, founded in 1940, is public and highly regarded across Central America.<br><br>That matters for how the vocabulary lands. In much of Latin America <em>«he conseguido una beca»</em> is not a modest achievement mentioned in passing — it can be the sentence that changes a family's trajectory. When you write it in this module, write it as something that carries weight.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PERSEVERANCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The writer of that email checked every document three times. Not dramatic, not admirable-looking, and exactly what gets a scholarship application accepted. <em>La perseverancia</em> mostly consists of unremarkable repetition that nobody witnesses. So does memorising eight participles. <em>Tres veces revisado no es desconfianza: es cuidado.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 2.04 &mdash; Los participios en acción</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you use all eleven in real sentences — and meet their second job, as adjectives, where they <strong>do</strong> agree: <em>la puerta abierta</em>, <em>los ojos abiertos</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write the eight core participles from memory, infinitive → participle. Check them. Any you missed, write five times — this is a closed list, so the work ends.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Eleven participles, three sound families, and a rule that turns eight memorised forms into dozens of usable verbs. The exceptions are now finished — there is no longer list waiting for you later. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.03 &middot; Los participios irregulares</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

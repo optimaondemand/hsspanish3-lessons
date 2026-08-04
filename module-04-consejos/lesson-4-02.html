@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 4.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 4</div>
+        <div style="font-size: 12px; color: #666;">Consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Problemas y soluciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Consejos entre amigos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Problemas y soluciones — cómo se arregla algo</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Advice is easy when nothing is wrong. This is the vocabulary for when something is.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned to offer advice. Today you learn the words for the situations that actually need it: a misunderstanding, an argument, an apology, a repair.<br><br>Plus a four-part shape for the conversation itself — because in any language, the difference between fixing something and making it worse is largely a matter of order.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten words for problems, disagreement and repair.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>disculparse</em> and <em>perdonar</em> correctly, and explain who does what in each.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the four moves of a repair conversation.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">One word English speakers reliably get wrong</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong><em>Discutir</em> does not mean &ldquo;to discuss.&rdquo;</strong> It means <em>to argue</em>. If you tell a Spanish speaker <em>«discutí con mi profesora»</em>, you have said you had an argument with her — not that you talked something over.<br><br>For a calm conversation you want <em>hablar de</em>, <em>comentar</em> or <em>tratar</em>. Retire &ldquo;discutir = discuss&rdquo; today; it causes real misunderstandings, which is fitting for a lesson about misunderstandings.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Had you assumed <em>discutir</em> meant &ldquo;to discuss&rdquo;?</div>
+            <div class="widget-options">
+                <button data-response="Almost everyone does - it is one of the most reliable false friends in the language. Now you know, and you will hear it correctly from here on.">Yes, I would have used it that way</button>
+                <button data-response="Then you are ahead. Worth noticing that it is not always a shouting match either - «discutir» covers everything from a disagreement to a row.">No, I knew it meant argue</button>
+                <button data-response="Fair - context does soften it sometimes. But the safe default is: if you mean a calm conversation, do not reach for «discutir».">I had a vague feeling it was stronger</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL PROBLEMA Y EL ARREGLO <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud. The last two are phrases — learn them whole.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-problema.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el problema</span><span class="v-en">problem</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-solucion.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la solución</span><span class="v-en">solution</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-malentendido.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el malentendido</span><span class="v-en">misunderstanding</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/discutir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">discutir</span><span class="v-en"><strong>to argue</strong> (not &ldquo;discuss&rdquo;)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/resolver.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">resolver</span><span class="v-en">to resolve, solve</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/disculparse.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">disculparse</span><span class="v-en">to apologise</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/perdonar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">perdonar</span><span class="v-en">to forgive</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/tener-razon.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">tener razón</span><span class="v-en">to be right</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/estar-de-acuerdo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">estar de acuerdo</span><span class="v-en">to agree</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/hacer-las-paces.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">hacer las paces</span><span class="v-en">to make up, make peace</span></li>
+        </ul>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><strong><em>El problema</em> is masculine</strong> despite ending in <em>-a</em> — it comes from Greek, like <em>el tema</em>, <em>el sistema</em>, <em>el programa</em>. So <em>un problema grave</em>, never «una problema».<br><br>And note <strong><em>tener razón</em></strong>: Spanish says you <em>have</em> reason rather than <em>are</em> right. <em>Tienes razón</em> = you're right. «Eres correcto» is not how this is said.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; QUIÉN HACE QUÉ <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Apologising and forgiving are opposite jobs</h3>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>Who does it</th><th>Structure</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td><strong>disculparse</strong></td><td>The person at fault</td><td>Reflexive + <em>con</em> + person</td><td>Me <span class="pron">disculpé</span> con ella.</td></tr>
+                <tr><td><strong>perdonar</strong></td><td>The person wronged</td><td>Takes a direct object</td><td>Ella me <span class="pron">perdonó</span>.</td></tr>
+                <tr><td><strong>pedir perdón</strong></td><td>The person at fault</td><td>+ <em>a</em> + person</td><td>Le <span class="pron">pedí perdón</span> a mi hermano.</td></tr>
+                <tr><td><strong>hacer las paces</strong></td><td><strong>Both</strong> — mutual</td><td>Often + <em>con</em></td><td><span class="pron">Hicimos las paces</span> el viernes.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">The error to avoid: «te disculpo» does not mean &ldquo;I apologise to you.&rdquo; <em>Disculparse</em> is reflexive — the person apologising is the subject <em>and</em> the pronoun: <em>me disculpo</em>. If you want to say you forgive someone, that is <em>te perdono</em>.</p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128172; LOS CUATRO MOVIMIENTOS DE UN ARREGLO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">
+            <strong>1. Nombrar el problema</strong> — say what happened, without blame. <em>Creo que hubo un malentendido.</em><br>
+            <strong>2. Escuchar</strong> — ask, then stop talking. <em>¿Cómo lo viste tú?</em><br>
+            <strong>3. Reconocer</strong> — concede what is true. <em>Tienes razón en eso.</em><br>
+            <strong>4. Proponer</strong> — offer a way forward. <em>¿Hacemos las paces?</em><br><br>
+            Move 3 is the one people skip, and skipping it is why step 4 fails. Conceding one true thing costs almost nothing and changes the whole conversation.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the false friend</div>
+            <div class="widget-question">You want to say &ldquo;I talked it over with my teacher.&rdquo; Which is right?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Lo discutí con mi profesora» says you ARGUED with her. Not what you meant.">Lo discutí con mi profesora</button>
+                <button data-correct="true" data-fb="«Lo hablé con mi profesora» - a calm conversation. «Hablar de» or «comentar» are your safe choices.">Lo hablé con mi profesora</button>
+                <button data-correct="false" data-fb="«Lo discutimos» has the same problem - discutir means to argue regardless of who is doing it.">Lo discutimos juntas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; who does what</div>
+            <div class="widget-question">You were in the wrong and you went to say so. Which sentence describes what you did?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Me disculpé con él.» Reflexive, because you are the one apologising, plus «con» for the person.">Me disculpé con él</button>
+                <button data-correct="false" data-fb="«Lo perdoné» means YOU forgave HIM - the opposite role. Perdonar belongs to the person who was wronged.">Lo perdoné</button>
+                <button data-correct="false" data-fb="«Le disculpé» is not how this works - disculparse is reflexive: me disculpé.">Le disculpé</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; gender trap</div>
+            <div class="widget-question">Which is correct?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Es un problema grave.» «Problema» is masculine despite the -a, like tema, sistema and programa.">Es un problema grave</button>
+                <button data-correct="false" data-fb="«Una problema» - the -a ending is misleading. It is Greek in origin and masculine: el problema.">Es una problema grave</button>
+                <button data-correct="false" data-fb="Both the article and the adjective are wrong here. It is «un problema grave».">Es una problema grava</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: write a four-line repair conversation, one line per move from Part 3. Say it aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Creo que hubo un malentendido con lo del sábado.<br>&mdash;¿Cómo lo viste tú?<br>&mdash;Tienes razón en que no te avisé a tiempo. Eso fue mi culpa y me disculpo.<br>&mdash;Está bien. ¿Hacemos las paces y lo dejamos ahí?</strong><br><br>Check yours: <em>un</em> malentendido (masculine) · <em>tener razón</em> rather than «ser correcto» · <em>me disculpo</em> reflexive · and no <em>discutir</em> anywhere, because nobody is arguing.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El grupo de la presentación</strong><br><br>
+        Marcos y yo <em>discutimos</em> el martes. Él <em>había hecho</em> toda la parte de las diapositivas sin avisarme, y yo <em>había escrito</em> el guion de la misma sección. Perdimos dos días de trabajo.<br><br>El miércoles no nos hablamos. El jueves le escribí: <em>«Creo que hubo un malentendido y prefiero hablarlo antes de la presentación»</em>. Me contestó en dos minutos.<br><br>Resulta que la profesora le <em>había dicho</em> una cosa y a mí otra. <em>Tenía razón</em> en que él no lo sabía; yo <em>tenía razón</em> en que debíamos habernos escrito antes. Nos <em>disculpamos</em> los dos, <em>hicimos las paces</em> y rehicimos la sección en una tarde. La presentación salió bien.<br><br>Ahora, antes de empezar cualquier trabajo en grupo, mandamos un mensaje que dice quién hace qué. Es la <em>solución</em> más aburrida del mundo y funciona.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Find the four moves from Part 3. Then notice the module-2 grammar doing real work: three past perfects (<em>había hecho</em>, <em>había escrito</em>, <em>había dicho</em>) all establishing what had happened <em>before</em> the argument — which is precisely why the argument happened. Remove them and the story stops making sense.<br><br>And notice <em>discutimos</em> in line 1 is used correctly: they really did argue.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; REPÚBLICA DOMINICANA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Directo no es descortés</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Dominican conversational style is noticeably <strong>direct and loud</strong> by US standards — overlapping speech, raised voices, strong opinions stated plainly. Visitors regularly misread an ordinary lively exchange as an argument.<br><br>It is worth knowing for this module specifically. In a Dominican context, saying <em>«no estoy de acuerdo»</em> flatly is not aggressive, and volume is not anger. Conversely, the very indirect Anglo style — hedging, softening, never quite saying the thing — can read as evasive rather than polite.<br><br>So the four moves in Part 3 are not a script for being gentle. They are a script for being <em>clear</em>, which in most of the Spanish-speaking world is the more courteous option.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; EL SERVICIO</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The most serviceable act in that reading is the least dramatic one: the message on Thursday. Somebody had to write first, and writing first costs pride. <em>El servicio</em> often means absorbing a small loss so that a shared thing can work — and then, as the last line shows, building the boring system that stops it happening again. <em>Servir es escribir primero, sin esperar tu turno.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 4.03 &mdash; Los mandatos afirmativos con <em>tú</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's grammar starts: <em>habla, come, escribe</em> — and eight short irregulars (<em>di, haz, ve, pon, sal, sé, ten, ven</em>) that carry most real advice between friends.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say the four moves aloud in order, in Spanish, without looking at the box.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Twenty words for advice and repair, one false friend retired, and a four-move shape for the hardest kind of conversation there is. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.02 &middot; Problemas y soluciones</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

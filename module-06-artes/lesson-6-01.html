@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.01 &middot; Day 1 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Las artes — el vocabulario de mirar despacio</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The average museum visitor looks at a painting for about seventeen seconds. This module asks you for three minutes.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Módulo 5 was about the natural world and how we look after it. Módulo 6 is about the made world: <strong>las artes</strong>, and one museum in particular — el <strong>Museo del Prado</strong> in Madrid.<br><br>The module's virtue is <strong>la atención</strong>, and art is where that virtue is easiest to practise and hardest to fake. You cannot skim a painting. Either you looked, or you did not.<br><br>Today: ten words for works of art and the people who make them. No new grammar — the module's grammar arrives on Day 3, and it is the single most useful thing this course will give your writing.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name ten kinds of artwork and artist with their correct articles.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> distinguish <em>la obra</em>, <em>el cuadro</em> and <em>el lienzo</em>, which English mostly collapses into one word.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what a work is, who made it, and where it is, in Spanish I already have.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Seventeen seconds</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Museum researchers have measured how long people actually stand in front of a painting. The numbers vary by study, but they are all short — a matter of seconds, often fewer than thirty. Long enough to read the label. Not long enough to see anything.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">That is not a failure of taste. It is a failure of <strong>attention</strong>, and attention is trainable. So is the vocabulary that makes it possible: you cannot notice <em>la sombra</em> or <em>el marco</em> or <em>la mirada</em> until you have words to hold them in. This module gives you twenty of those words and then a grammar that lets you say two things about one of them at once.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Be honest: when you are in a museum, or scrolling past an image, what usually happens?</div>
+            <div class="widget-options">
+                <button data-response="That is the ordinary case, and it is what the module is designed against. Attention is not a personality trait you either have or lack - it is a habit built by having something specific to look for. Part 2 starts handing you those specifics.">I look for a few seconds and move on</button>
+                <button data-response="Reading the label first is extremely common - and it quietly replaces looking with reading. Try the opposite order this module: look for a full minute, then read. You will find the label tells you less than you expected.">I read the label and then look</button>
+                <button data-response="Then you already have the habit this module trains, and the work here is verbal rather than perceptual: putting Spanish words on what you already see. That is a good position to start from.">I can look at one thing for a long time</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; LAS OBRAS Y QUIEN LAS HACE <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud, <strong>with the article</strong>. Two of these ten carry a written accent, and you will be typing them in a graded item on Day 7.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-obra.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la obra</span><span class="v-en">work (of art)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-cuadro.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el cuadro</span><span class="v-en">painting (the object)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-retrato.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el retrato</span><span class="v-en">portrait</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-paisaje.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el paisaje</span><span class="v-en">landscape</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-escultura.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la escultura</span><span class="v-en">sculpture</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-pintor.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el pintor</span><span class="v-en">painter</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-lienzo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el lienzo</span><span class="v-en">canvas</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-exposicion.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la exposición</span><span class="v-en">exhibition</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-marco.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el marco</span><span class="v-en">frame</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-mirada.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la mirada</span><span class="v-en">gaze, look</span></li>
+        </ul>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; ESCRIBIR CON TILDES &middot; you will be graded on this</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Two words this module needs the tilde: <strong><em>la exposición</em></strong> today and <strong><em>la época</em></strong> tomorrow. In this course <strong>accents are graded</strong>, including in typed short answers — <em>exposicion</em> will be marked wrong, because it is not a Spanish word.<br><br>If you are not yet fast at typing <em>ó í ñ ¿ ¡</em>, fix that now rather than in the middle of a quiz: <a href="../../../02_Design/component-typing-spanish-accents.html"><strong>Cómo escribir las tildes y la ñ</strong></a> — Windows, Mac, phone and Chromebook, with the shortcuts worth memorising.</div>
+        </div>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">English says &ldquo;painting&rdquo; for three different things; Spanish separates them, and the separation is genuinely useful.<br><br><strong><em>La obra</em></strong> is the widest word — any work of art, of any kind, and also an artist's whole output: <em>la obra de Velázquez</em>. <strong><em>El cuadro</em></strong> is the physical framed thing hanging on the wall. <strong><em>El lienzo</em></strong> is the canvas itself, the woven cloth stretched on a frame — so a painter can stand <em>frente al lienzo</em> before there is any picture at all. And <em>la pintura</em> is either the paint in the tube or painting as an art form.<br><br>Two more. <strong><em>El marco</em></strong> also means &ldquo;framework&rdquo; in the abstract sense — <em>el marco legal</em>, the legal framework. And <strong><em>la mirada</em></strong> has no single English equivalent: it is the noun of <em>mirar</em>, so it covers a look, a gaze, an expression in the eyes. <em>Una mirada triste</em>, <em>la mirada del pintor</em>. Keep it; you will need it on Day 8.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; QUÉ ES, DE QUIÉN ES, DÓNDE ESTÁ <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three facts, no new grammar</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Before you can say anything interesting about a work, you have to be able to say the dull things about it. These five frames use only Spanish you have had since the first year.</p>
+        <table class="gtable">
+            <thead><tr><th>To say&hellip;</th><th>Frame</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td>what kind of work it is</td><td><strong>ser</strong> + kind</td><td><em>Las meninas</em> <span class="pron">es un cuadro</span>, no una escultura.</td></tr>
+                <tr><td>who made it</td><td><strong>ser de</strong> + painter</td><td>El cuadro <span class="pron">es de</span> Velázquez.</td></tr>
+                <tr><td>who it shows</td><td><strong>un retrato de</strong> + person</td><td>Es <span class="pron">un retrato de</span> la infanta Margarita.</td></tr>
+                <tr><td>where it is</td><td><strong>estar en</strong> + museum</td><td><span class="pron">Está en</span> el Museo del Prado.</td></tr>
+                <tr><td>when it is from</td><td><strong>ser de</strong> + date or century</td><td><span class="pron">Es de</span> 1656, del siglo XVII.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Note that <em>ser de</em> is doing two jobs — authorship and date — and context separates them without difficulty, exactly as it does with origin (<em>es de Sevilla</em>).</p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128260; REPASO DEL MÓDULO 5 &middot; por y para</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">Art writing is full of <em>por</em> and <em>para</em>, and Módulo 5 gave you the contrast, so use it here rather than avoiding it:<br><br>
+            <em>Velázquez trabajó <strong>para</strong> el rey Felipe IV.</em> &mdash; <strong>para</strong>: the person you work for<br>
+            <em>Pintó el cuadro <strong>para</strong> el palacio.</em> &mdash; <strong>para</strong>: destination, purpose<br>
+            <em>Es famoso <strong>por</strong> su uso de la luz.</em> &mdash; <strong>por</strong>: the reason, the cause<br>
+            <em>Pasó <strong>por</strong> Italia dos veces.</em> &mdash; <strong>por</strong>: movement through<br><br>
+            One pair worth holding onto: <em>trabajar <strong>para</strong> alguien</em> (you are their employee) against <em>trabajar <strong>por</strong> alguien</em> (you are covering their shift). Velázquez did the first for thirty-seven years.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; obra, cuadro or lienzo?</div>
+            <div class="widget-question">A painter is standing in front of a blank stretched canvas. What is in front of him?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Un cuadro» is the finished framed object on a wall. There is no picture yet, so it is not a cuadro.">Un cuadro</button>
+                <button data-correct="true" data-fb="«Un lienzo» - the woven cloth stretched on a frame. It is a lienzo before anything is painted and it stays a lienzo underneath afterwards.">Un lienzo</button>
+                <button data-correct="false" data-fb="«Una obra» is a work of art. An empty canvas is not yet a work of anything - obra is the widest word, but it still needs the art to exist.">Una obra</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the frame for authorship</div>
+            <div class="widget-question">How does a Spanish museum label say who painted something?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«El cuadro está de Velázquez» mixes the two verbs. Estar handles location - «está en el Prado» - not authorship.">El cuadro está de Velázquez</button>
+                <button data-correct="false" data-fb="«El cuadro tiene Velázquez» says the painting possesses Velázquez, which is the wrong way round and not idiomatic in any case.">El cuadro tiene Velázquez</button>
+                <button data-correct="true" data-fb="«El cuadro es de Velázquez» - ser de for authorship, the same frame you already use for origin («es de Sevilla»).">El cuadro es de Velázquez</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; por or para</div>
+            <div class="widget-question">«Velázquez trabajó ___ el rey durante casi cuarenta años.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«para el rey» - the king was his employer, and para marks the person you work for. This is the Módulo 5 contrast doing real work.">para</button>
+                <button data-correct="false" data-fb="«Trabajó por el rey» means he covered for the king, doing the king's shift in his place. A splendid image, and not what happened.">por</button>
+                <button data-correct="false" data-fb="«Trabajó a el rey» is not Spanish, and «a el» would contract to «al» in any case. Trabajar takes para for the employer.">a</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: pick any image you can see right now — a poster, an album cover, a photograph on your wall — and say <strong>four</strong> things about it using four different frames from Part 3. Say them aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Es un retrato de mi abuela. Es de un fotógrafo de mi ciudad. Está en el pasillo, en un marco de madera oscura. Es de los años setenta, más o menos.</strong><br><br>Check yours: <em>es</em> for what it is and who made it · <em>está</em> for where it hangs · the right articles — <em>el</em> marco, <em>el</em> retrato, <em>la</em> obra.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Una tarde en el Prado</strong><br><br>
+        El Museo del Prado abrió sus puertas en <strong>1819</strong>, en Madrid. El edificio no nació como museo: Juan de Villanueva lo diseñó para ser un gabinete de historia natural, y solo después se llenó de cuadros.<br><br>Hoy el Prado guarda más de ocho mil obras, pero solo una parte está en las salas. El resto espera en los depósitos, y las <strong>exposiciones</strong> temporales van sacando unas cuantas cada año.<br><br>Si tienes una sola tarde, no intentes verlo todo. La gente entra con un mapa, camina cuatro kilómetros y sale con dolor de pies y ningún recuerdo claro. Escoge cinco <strong>cuadros</strong>. Siéntate delante de cada uno cinco minutos. Mira el <strong>marco</strong>, las manos, la <strong>mirada</strong>, el fondo. Después lee la etiqueta, no antes.<br><br>Es un plan que parece pobre y funciona mucho mejor. Cinco obras vistas de verdad valen más que trescientas vistas de paso.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Find the four words from today's list in the passage — <em>obras</em>, <em>exposiciones</em>, <em>cuadros</em>, <em>marco</em>, <em>mirada</em> — and notice that the paragraph gives its advice in <em>tú</em> commands (<em>escoge, siéntate, mira, lee</em>) and one negative (<em>no intentes</em>). Those are Módulo 4 forms; you own them.<br><br>Then notice <em>«no se construyó para ser un museo»</em> — <em>para</em> + infinitive for purpose, from Módulo 5.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El Prado, y el pintor del rey</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module's country is <strong>España</strong>, and its two anchors are one museum and one painter.<br><br>The <strong>Museo del Prado</strong> opened to the public in <strong>1819</strong> under Fernando VII, built out of the Spanish royal collection — which is why it is unusually deep in a few painters rather than broad across all of them. It holds the great Spanish trio: <strong>El Greco</strong> (1541&ndash;1614), who worked in Toledo; <strong>Francisco de Goya</strong> (1746&ndash;1828); and <strong>Diego Velázquez</strong>.<br><br><strong>Velázquez</strong> (<strong>1599&ndash;1660</strong>) was born in Seville and spent most of his working life as court painter to <strong>Felipe IV</strong>, whom he served for roughly thirty-seven years. He was not only a painter at court: by 1652 he had been given the post of <em>aposentador mayor del palacio</em>, an administrative job involving royal lodgings and furniture. Some of his time went on that instead of on painting, which is one reason his surviving output is relatively small.<br><br>The Prado holds close to fifty of his works — the largest gathering of Velázquez anywhere — including <em>Las meninas</em>, finished in <strong>1656</strong>. You will spend Day 4 and Day 8 with that painting, and it will repay every minute.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This module's virtue is <strong>la atención</strong> — attentiveness. It is the least dramatic virtue on the list and the one the rest depend on: you cannot be just, or courteous, or careful about a text you have not actually looked at.<br><br>Today's version of it is small and concrete. Ten words, said aloud with their articles, slowly enough that you notice which ones you do not really know yet. Skimming a vocabulary list is the same failure as walking past a painting in seventeen seconds. <em>Nadie quiere de verdad lo que no ha mirado despacio.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.02 &mdash; Describir una obra</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow: ten more words, this time the ones you need to say what a painting is <em>doing</em> — <em>la luz</em>, <em>la sombra</em>, <em>el detalle</em>, <em>el significado</em> — plus a four-step shape for describing any work at all. Still no new grammar; that arrives on <strong>Day 3</strong>. Graded work opens on <strong>Day 7</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then do the small version of today's virtue: say the ten words aloud with their articles, and mark the two or three you had to think about. Those are the ones the Day 7 listening check will find.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ten words, three distinctions English does not make, and a museum you now know something real about. Next time you are in front of a painting, try five minutes instead of seventeen seconds. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.01 &middot; Las artes</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

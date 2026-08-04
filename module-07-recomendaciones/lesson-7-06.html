@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 7.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 7</div>
+        <div style="font-size: 12px; color: #666;">Recomendaciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Un párrafo de consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Recomendaciones y deseos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Un párrafo de consejos — de principio a fin, con cuatro instrumentos</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Four instruments, one paragraph, and every choice made on purpose.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last full practice day. You now have <strong>four</strong> ways to move somebody — the command, <em>quiero que</em>, <em>te recomiendo que</em>, and the impersonal frame — and today you hold all of them across six to eight connected sentences aimed at one real person about one real situation. That is the Honors standard, and it is exactly what tomorrow's <em>Lengua en acción</em> asks for.<br><br>There is one error that appears only at paragraph length, and it will very likely appear in your first attempt: <strong>over-applying the subjunctive.</strong> After three days of drilling <em>que</em> clauses, the clause starts to feel like the right answer everywhere, and you find yourself writing «quiero que yo llegue temprano» — two subjects where there is only one of you. The paragraph that shows you have understood this module is the one that<em>drops back</em> to the infinitive at the right moment.<br><br>The reading is the road that ran an empire of four thousand kilometres without a wheel or a horse.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a 6&ndash;8 sentence paragraph of advice to a named person, using at least three different triggers.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> justify every choice — command, infinitive, <em>que</em> + subjunctive, impersonal frame — by naming the reason.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what the Qhapaq Ñan was and how the <em>chasquis</em> worked.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Cuatro instrumentos, en una página</h3>
+        <table class="gtable">
+            <thead><tr><th>Instrumento</th><th>Módulo</th><th>Ejemplo</th><th>Su trabajo en un párrafo</th></tr></thead>
+            <tbody>
+                <tr><td>el mandato</td><td>M3 &middot; M4</td><td><em>No cargues tanto peso.</em></td><td>The blunt one. Best for a single sharp instruction.</td></tr>
+                <tr><td><em>querer / preferir que</em></td><td>M7</td><td><em>Quiero que lleves dos pares.</em></td><td>Your own stake in it. Warm, and personal.</td></tr>
+                <tr><td><em>pedir / recomendar que</em></td><td>M7</td><td><em>Te recomiendo que camines detrás.</em></td><td>Advice with a reason behind it.</td></tr>
+                <tr><td>el marco impersonal</td><td>M7</td><td><em>Es imprescindible que duermas allí.</em></td><td>The non-negotiable one, stated without ego.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:6px 0 0;">A paragraph that uses only one of these reads like a list. A paragraph that uses all four reads like a person talking — and each switch tells the reader something about how much the item matters.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">When you give a friend advice in English, which instrument do you reach for by default?</div>
+            <div class="widget-options">
+                <button data-response="English leans hard on «you should», which has no single Spanish equivalent - it lands somewhere between «te recomiendo que» and «es mejor que». That is genuinely useful to know: when you feel «you should» coming, you have a choice to make in Spanish, and the choice carries meaning English does not.">Something like &ldquo;you should&hellip;&rdquo;</button>
+                <button data-response="The bare imperative - «bring two pairs» - and Spanish is comfortable with that between friends. Keep it in the paragraph, but not for everything: eight commands in a row read as a checklist rather than advice, and the reader stops ranking them.">A plain command</button>
+                <button data-response="&ldquo;I want you to&hellip;&rdquo; - which is the structure that gave you the most trouble on Día 3, because Spanish will not copy it. It is also the most honest one: it admits the advice is yours. «Quiero que» is its exact equivalent, and now you can build it.">&ldquo;I want you to&hellip;&rdquo;</button>
+                <button data-response="Impersonal by instinct - «it's best to», «you have to» - which means the Spanish frame will feel natural to you. Watch the opposite risk: advice with nobody behind it can read as cold, so let at least one sentence in the paragraph be yours.">Something impersonal — &ldquo;it's best to&hellip;&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA ARQUITECTURA <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A shape for a paragraph of advice</h3>
+        <table class="gtable">
+            <thead><tr><th>Oración</th><th>Su trabajo</th><th>Instrumento</th><th>Cómo empieza</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>The situation — no advice yet</td><td><span class="pron">indicativo</span></td><td>Sé que&hellip; / El lunes sales&hellip;</td></tr>
+                <tr><td>2</td><td><strong>The one thing that cannot be fixed later</strong></td><td><span class="pron">marco impersonal</span></td><td>Antes de nada, es imprescindible que&hellip;</td></tr>
+                <tr><td>3</td><td>Your own stake in it</td><td><span class="pron">querer / preferir que</span></td><td>Quiero que&hellip; / Prefiero que&hellip;</td></tr>
+                <tr><td>4</td><td>Advice with its reason</td><td><span class="pron">recomendar / pedir que</span></td><td>Te recomiendo que&hellip; porque&hellip;</td></tr>
+                <tr><td>5</td><td>One sharp warning</td><td><span class="pron">mandato negativo</span></td><td>No&hellip; (tú)</td></tr>
+                <tr><td>6</td><td>The gentlest item</td><td><span class="pron">es mejor que</span></td><td>Es mejor que no&hellip;</td></tr>
+                <tr><td>7</td><td><strong>Something about yourself</strong></td><td><span class="pron">infinitivo</span></td><td>Yo espero&hellip; / Quiero&hellip;</td></tr>
+                <tr><td>8</td><td>Your judgement, reported</td><td>indicativo</td><td>Todos los que&hellip; dicen&hellip;</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:6px 0 0;"><strong>Sentence 7 is the one that marks a writer who has understood the module.</strong> Everything before it changed subject, so everything before it needed a clause. Sentence 7 does not — you are talking about yourself — so it takes an infinitive, and putting a subjunctive there is the day-6 error. It is also the sentence most students get wrong, precisely because by sentence 7 the clause has become a habit.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LA REGLA DE LOS CONECTORES &middot; still in force</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">No connector twice. For a paragraph of advice you have: <em>antes de nada &middot; primero &middot; sobre todo &middot; además &middot; por eso &middot; sin embargo &middot; aun así &middot; al final</em>. Eight, and eight sentences need at most five.<br><br>And one more piece of order: the reason goes <strong>after</strong> the advice, not before it. <em>«Te recomiendo que camines detrás del guía, porque el paso que él marca parece lento y no lo es»</em> — advice first, justification second. Reversing them buries the instruction.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; MODELO ANOTADO <span class="pill-time">10 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Written to one person, about one situation: Marcos leaves on Monday to walk three days of an Inca road with his school group.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.8;">
+        <strong>Para Marcos, antes del lunes</strong><br><br>
+        <sup>1</sup> Sé que sales el lunes con el grupo y que caminan tres días por un tramo del Qhapaq Ñan. <sup>2</sup> Antes de nada, es imprescindible <em>que duermas</em> dos noches a esa altura: lo demás tiene solución, la altura no. <sup>3</sup> Quiero <em>que lleves</em> dos pares de medias de lana y <em>que las cambies</em> todos los días, porque los pies deciden si el tercer día es bueno o malo. <sup>4</sup> Te recomiendo <em>que camines</em> detrás del guía las primeras horas; el paso que él marca parece lento y no lo es. <sup>5</sup> Sobre todo, <strong>no cargues</strong> la mochila con comida que no vas a comer: cada kilo pesa el doble después de veinte kilómetros. <sup>6</sup> Es mejor <em>que no bebas</em> agua de los arroyos sin pastillas; el agua clara también engaña. <sup>7</sup> Yo espero <em>verte</em> el jueves con las piernas destrozadas y una sonrisa. <sup>8</sup> Al final, todos los que han hecho ese camino dicen lo mismo: cansa el cuerpo y despierta la cabeza.</p>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Trace the instruments: <sup>1</sup> <strong>indicativo</strong> (situation, and two reporting <em>que</em>s) &rarr; <sup>2</sup> <strong>marco impersonal</strong> (the non-negotiable) &rarr; <sup>3</sup> <strong>querer que</strong>, one trigger governing two clause verbs, with <em>las</em> in the pronoun slot &rarr; <sup>4</sup> <strong>recomendar que</strong> plus its reason &rarr; <sup>5</sup> <strong>negative <em>tú</em> command</strong> from Módulo 4 &rarr; <sup>6</sup> <strong>es mejor que</strong>, the gentlest &rarr; <sup>7</sup> <strong>infinitivo</strong>, because yo hope and yo see &rarr; <sup>8</sup> judgement, reported.<br><br>Four connectors, none repeated (<em>antes de nada, sobre todo, al final</em>, plus <em>porque</em> twice as a reason marker rather than a connector). Five subjunctive clauses, one infinitive, one command, three reporting <em>que</em>s. Spirals: <em>«el paso que él marca»</em> and <em>«todos los que han hecho»</em> (M6 relatives), <em>«han hecho»</em> (M1 present perfect with an irregular participle), <em>«por un tramo»</em> (M5's <em>por</em> of route).</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; el error del día 6</div>
+            <div class="widget-question">Complete it: <em>«Quiero ___ temprano al campamento.»</em> (llegar, yo)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«que llegue» opens a clause with no second person in it. Whom would it be about? The sentence would need somebody else to arrive.">que llegue</button>
+                <button data-correct="true" data-fb="«Quiero llegar temprano al campamento.» One subject - yo want, yo arrive - so the infinitive. After three days of clauses this is the answer that feels wrong and is right.">llegar</button>
+                <button data-correct="false" data-fb="Naming yourself inside the clause does not create a second subject: «quiero que yo llegue» has «yo» on both sides of «que». This is the classic over-application error - the clause has become a habit, and habits are not grammar.">que yo llegue</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; busca la desviación</div>
+            <div class="widget-question">Three consecutive sentences. <em>«Te recomiendo que lleves botas altas. Quiero que no cargues comida de más. Es mejor que bebes solo agua tratada.»</em></div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Te recomiendo que lleves» is correct: two subjects, clause, subjunctive form built off «llevo». Nothing wrong here.">La primera</button>
+                <button data-correct="false" data-fb="«Quiero que no cargues» is correct, and the placement of «no» is deliberate - inside the clause it means «I want you NOT to», which is heavier than «no quiero que cargues». Both are legal; this one is emphatic.">La segunda</button>
+                <button data-correct="true" data-fb="«Es mejor que bebes» drifts back to the indicative. The impersonal frame pushes, so the clause verb shifts: «es mejor que bebas». This is the commonest slip at paragraph length - the first two clauses go in correctly and the third relaxes.">La tercera</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; el instrumento para cada lector</div>
+            <div class="widget-question">You are writing to the trip leader, whom you have met once, to suggest leaving an hour earlier. Which instrument?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Es mejor que salgamos una hora antes» - the impersonal frame. It puts the timetable on the table instead of your preference, which is what you want with somebody you barely know and who is in charge.">Es mejor que salgamos una hora antes.</button>
+                <button data-correct="false" data-fb="«Salga una hora antes» is a formal Ud. command - correct Spanish, and the wrong direction. You do not instruct the person leading the trip, however politely the form is built.">Salga una hora antes.</button>
+                <button data-correct="false" data-fb="«Quiero que salgamos» is clear but centres your own wish in somebody else's decision. Save «quiero que» for people who have reason to care what you want.">Quiero que salgamos una hora antes.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú — tomorrow's graded task, rehearsed. Write a <strong>6&ndash;8 sentence</strong> paragraph of advice to <strong>one named person</strong> about <strong>one specific situation</strong> — a trip, an audition, a first job, a difficult conversation — following Part 2's shape. Keep it; tomorrow you will revise it rather than start again.</p>
+            <button class="reveal-btn">Reveal a checklist</button>
+            <div class="reveal-body"><strong>Before you call it finished:</strong><br>&bull; One named person, one concrete situation. Generic advice to nobody scores badly and reads worse.<br>&bull; <strong>At least three different triggers</strong>, drawn from at least two of Día 2's families (deseo &middot; petición &middot; permiso).<br>&bull; At least one <strong>impersonal frame</strong> — <em>es necesario / importante / mejor / imprescindible que</em>.<br>&bull; <strong>At least one infinitive where the subject does not change</strong> — sentence 7's job. Do not skip it, and do not let it become «quiero que yo&hellip;».<br>&bull; At least one <em>que</em> with the <strong>indicative</strong>, reporting rather than pushing.<br>&bull; Every trigger verb left in the indicative: <em>quiero</em>, <em>te recomiendo</em>, <em>espero</em>.<br>&bull; Pronouns before the conjugated verb inside the clause: <em>que me escribas</em>, <em>que las cambies</em>.<br>&bull; Every piece of advice that could sound arbitrary carries its reason, and the reason comes second.<br>&bull; Accents checked, including <em>dé</em> and <em>esté</em> if you used them, and every <em>-ción</em> noun.<br>&bull; Four or more different connectors, none repeated.<br>&bull; At least three words from this module's twenty.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El camino y los chasquis</strong><br><br>
+        Los incas no tenían rueda ni caballos, y aun así gobernaron un territorio de más de cuatro mil kilómetros de largo. Lo hicieron a pie, por el <strong>Qhapaq Ñan</strong>: una red de caminos empedrados que subía a pasos de más de cuatro mil metros, cruzaba desiertos de arena y bajaba hasta el borde de la selva, con escaleras talladas en la roca y puentes colgantes donde no había otra forma de pasar. Hoy quedan tramos en seis países &mdash;Argentina, Bolivia, Chile, Colombia, Ecuador y Perú&mdash; y la UNESCO los inscribió en conjunto en 2014.<br><br>
+        Por ese camino corrían los <strong>chasquis</strong>, mensajeros jóvenes que trabajaban en relevos. Cada uno cubría un tramo corto a toda velocidad y entregaba el mensaje &mdash;a veces un <em>quipu</em>, un manojo de cuerdas anudadas que guardaba cifras y cuentas&mdash; al siguiente, que ya esperaba en un puesto junto al camino. Los cronistas escribieron que así una noticia recorría en pocos días distancias que a un jinete le costaban semanas. Ninguno corría mucho; todos corrían rápido.<br><br>
+        Y hay una parte del sistema que todavía existe. Sobre el cañón del río Apurímac, cuatro comunidades tejen cada año el puente de <strong>Q'eswachaka</strong> con paja trenzada a mano, igual que hace cinco siglos. No lo reparan: lo hacen entero de nuevo, cada junio, y el puente viejo lo dejan caer al río. Un guía de la zona lo resume así para los que van a caminar el tramo: <em>«Te recomiendo que camines despacio y que mires atrás de vez en cuando. Mucha gente sube mirando solo el suelo y no ve por dónde ha venido.»</em></p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">The guide's two sentences are today's grammar in miniature. <em>«Te recomiendo que camines&hellip; y que mires&hellip;»</em> — one trigger governing two clause verbs, exactly Día 4 Part 3 — and then <em>«mucha gente sube&hellip; y no ve&hellip;»</em>, which pushes nobody and stays firmly in the indicative. He advises in one sentence and reports in the next, and the mood changes with the job.<br><br>Then count the spirals, because this passage is dense with them: <em>escribieron, recorría, costaban, corrían</em> (preterite against imperfect, Módulo 0), <em>«ha venido»</em> (Módulo 1's present perfect), <em>«que subía&hellip; cruzaba&hellip; bajaba»</em> and <em>«el siguiente, que ya esperaba»</em> and <em>«los que van a caminar»</em> (Módulo 6's relatives), and two uses of <em>por</em> — <em>«por ese camino»</em>, route, and <em>«por dónde ha venido»</em>, also route (Módulo 5).<br><br>One line to sit with: <em>«Ninguno corría mucho; todos corrían rápido.»</em> That is the whole design of a relay in nine words, and it is also a reasonable description of how a language gets learned.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; PERÚ</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Caral: una ciudad tan antigua como las pirámides</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The Inca empire that built the Qhapaq Ñan lasted about a century. Peruvian urban life is roughly <strong>five thousand years</strong> old.<br><br>In the Supe valley, a couple of hours north of Lima in a dry coastal landscape, stands <strong>Caral</strong> — occupied from around <strong>2600 BCE</strong>, which makes it contemporary with the building of the Egyptian pyramids and with the cities of Sumer, and one of the <strong>oldest urban centres in the Americas</strong>. Six stepped pyramidal platforms, sunken circular plazas, residential quarters of different sizes, an irrigated agricultural hinterland. It was excavated from 1994 under the Peruvian archaeologist <strong>Ruth Shady Solís</strong>, and inscribed by UNESCO in 2009.<br><br>Two finds are worth knowing. Thirty-two flutes made from the wing bones of condors and pelicans were recovered from one of the temples — the city had music before it had writing. And a knotted cord of the <em>quipu</em> type was found there, which pushes that recording technology back some four thousand years before the Inca clerks who are usually credited with it.<br><br>One claim you will meet often, stated carefully: <strong>no fortifications, weapons or mutilated remains have been found at Caral so far</strong>, which has led archaeologists to argue that it was organised around trade, agriculture and ritual rather than warfare. That is an argument from absence, and absence can be overturned by the next season's excavation. It is a strong reading of the current evidence, not a settled fact — and the difference between those two things is worth more to you than the headline.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The four communities on the Apurímac do not wait for the bridge to fail. They weave a new one every June, while the old one is still standing, and then let the old one go. Nobody crosses on a bridge that has been tested by breaking.<br><br>That is the version of <strong>la prudencia</strong> this whole module has been building toward: prudence exercised <em>on someone else's behalf</em>, in advance, and at the right strength. Your paragraph today did the same work in eight sentences — the unfixable thing first, the reason attached to every instruction, one sharp warning and no more, and the softest instrument reserved for the smallest item. Advice is not prudent because it is complete. It is prudent because somebody thought about the crossing before the person got to the river. <em>Prudente no es quien nunca cruza el río, sino quien teje el puente cada año.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.07 &mdash; Integración &middot; graded work opens</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the <strong>Vocabulary Check</strong> (15 pts, listening, one attempt) and <strong>Lengua en acción</strong> (20 pts) open, and the lesson carries a self-check that tells you exactly which day to reopen if something is still loose. The paragraph you just wrote is what <em>Lengua</em> asks for — bring it and revise it rather than starting again.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Keep your paragraph, and check one thing in it specifically: <strong>the sentence about yourself uses an infinitive.</strong> If you wrote «quiero que yo&hellip;» anywhere, fix it now — it is the single most likely place for three days of correct practice to go wrong.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Four instruments held across eight sentences, each one chosen for the reader rather than for the grammar — and an empire's worth of road that worked because nobody ran far and everybody ran fast. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.06 &middot; Un párrafo de consejos</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

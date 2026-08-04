@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 2.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 2</div>
+        <div style="font-size: 12px; color: #666;">Logros</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.04 &middot; Day 4 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Los participios en acción</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Experiencias y logros</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Los participios en acción — el segundo trabajo</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">One word, two jobs — and the test for which is simply: is <em>haber</em> there?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You met this in Module 1 through a real text: <em>«territorio entendido&hellip;»</em>, where the participle agreed because it was working as an adjective. Today you own it properly, with the eleven irregular participles you learned yesterday.<br><br>It matters more than it sounds. Get this wrong and you write <em>«la puerta ha abierta»</em> or <em>«las inscripciones están abierto»</em> — two errors that mark a writer as uncertain about something basic.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply the <em>haber</em> test to decide whether a participle agrees.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>estar</em> + participle to describe a resulting state.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use all eleven irregular participles in both jobs.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The action and the result</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.8;margin:0 0 10px 0;">
+        «Alguien <strong>ha abierto</strong> la ventana.» — the <em>action</em><br>
+        «La ventana <strong>está abierta</strong>.» — the <em>result</em></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same participle, two completely different jobs. The first reports something that happened; the second describes how things are now. And notice the agreement: <em>abierto</em> in the first (fixed), <em>abierta</em> in the second (agreeing with <em>ventana</em>).</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which pair of sentences would you be more likely to need in a real conversation?</div>
+            <div class="widget-options">
+                <button data-response="The action, most likely - reporting what has happened is the bread and butter of conversation. But the state form is what you need for «la tienda está cerrada», which you will use more than you expect.">The action — «alguien ha abierto»</button>
+                <button data-response="Good instinct: «está abierto / está cerrado» is enormously frequent in daily life - shops, offices, applications. Part 3 is built on exactly that.">The state — «está abierta»</button>
+                <button data-response="Honest, and that is the situation this lesson fixes. The haber test in Part 2 gives you a decision procedure rather than a feeling.">I would probably confuse them</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA PRUEBA DE HABER <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">One question decides it every time</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>¿Hay <em>haber</em>?</strong> If yes, the participle is frozen in <em>-o</em>. If no, it is an adjective and must agree.</p>
+        <table class="gtable">
+            <thead><tr><th></th><th>With <em>haber</em> — the action</th><th>Without <em>haber</em> — the state</th></tr></thead>
+            <tbody>
+                <tr><td>Agreement</td><td><strong>Never</strong> — always <em>-o</em></td><td><strong>Always</strong> — matches the noun</td></tr>
+                <tr><td>abrir</td><td>Han <span class="pron">abierto</span> las inscripciones.</td><td>Las inscripciones están <span class="pron">abiertas</span>.</td></tr>
+                <tr><td>escribir</td><td>Ha <span class="pron">escrito</span> las cartas.</td><td>Las cartas ya están <span class="pron">escritas</span>.</td></tr>
+                <tr><td>resolver</td><td>Hemos <span class="pron">resuelto</span> el problema.</td><td>El problema está <span class="pron">resuelto</span>.</td></tr>
+                <tr><td>romper</td><td>Alguien ha <span class="pron">roto</span> las sillas.</td><td>Las sillas están <span class="pron">rotas</span>.</td></tr>
+                <tr><td>hacer</td><td>He <span class="pron">hecho</span> la tarea.</td><td>La tarea está <span class="pron">hecha</span>.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Read down the right-hand column and hear how ordinary those sentences are — <em>está cerrado, está hecha, está resuelto</em>. This is not an advanced flourish; it is everyday Spanish, and it is the half of the participle that English handles with the same word (&ldquo;the door is closed&rdquo;) so it rarely gets taught explicitly.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; UNA TERCERA POSICIÓN &middot; the bare adjective</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Participles also sit directly on a noun with no verb at all — exactly what the Module 1 text did with <em>«territorio entendido»</em>:<br><br><em>una oportunidad <strong>perdida</strong></em> &middot; <em>un proyecto <strong>propuesto</strong></em> &middot; <em>las metas <strong>alcanzadas</strong></em> &middot; <em>un premio <strong>merecido</strong></em><br><br>No <em>haber</em>, so they agree. Same rule, no new test needed.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; ESTAR + PARTICIPIO <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Describing where things stand</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">This construction is how Spanish reports the <strong>current state of a process</strong> — enormously useful when you are describing progress, which is this module's whole theme.</p>
+        <table class="gtable">
+            <thead><tr><th>What you want to say</th><th>Spanish</th></tr></thead>
+            <tbody>
+                <tr><td>The application is finished</td><td>La solicitud está <span class="pron">terminada</span>.</td></tr>
+                <tr><td>Registration is open / closed</td><td>La inscripción está <span class="pron">abierta</span> / <span class="pron">cerrada</span>.</td></tr>
+                <tr><td>The essays are written</td><td>Los ensayos están <span class="pron">escritos</span>.</td></tr>
+                <tr><td>The problem is solved</td><td>El problema está <span class="pron">resuelto</span>.</td></tr>
+                <tr><td>I am tired / I am sitting</td><td>Estoy <span class="pron">cansado/a</span> / <span class="pron">sentado/a</span>.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Note the last row: <em>cansado</em> and <em>sentado</em> are participles too, and you have been agreeing them correctly since Spanish 1 without knowing what they were. You already do this — today you find out why.</p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; NO CONFUNDIR</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">
+            <strong>«La tienda ha cerrado»</strong> = the shop has closed (an action, maybe permanently — it went out of business).<br>
+            <strong>«La tienda está cerrada»</strong> = the shop is closed (a state — come back tomorrow).<br><br>
+            Getting these two mixed up genuinely changes the message. This is one of the few places in the module where the wrong choice is not merely untidy but misleading.
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; apply the haber test</div>
+            <div class="widget-question">«Las inscripciones ya están ___ .» (abrir)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«abierto» does not agree, but there is no haber here - «están» means the participle is an adjective and must match «las inscripciones».">abierto</button>
+                <button data-correct="true" data-fb="«abiertas» - no haber, so it agrees: feminine plural, like «las inscripciones».">abiertas</button>
+                <button data-correct="false" data-fb="«han abierto» would report the action. The sentence already has «están», which needs a state.">han abierto</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; haber is there</div>
+            <div class="widget-question">«Mis profesoras han ___ las cartas.» (escribir)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«escrito» - haber is present, so the participle is frozen in -o no matter who or how many.">escrito</button>
+                <button data-correct="false" data-fb="«escritas» agrees, but haber forbids agreement. The plural is already carried by «han».">escritas</button>
+                <button data-correct="false" data-fb="«escritos» also agrees. With haber, the answer is always the bare -o form.">escritos</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; action or state?</div>
+            <div class="widget-question">You arrive at the office at 8 p.m. and the door will not open. What do you tell your friend?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Está cerrada.» A state - it will be open tomorrow. This is what you mean.">La oficina está cerrada</button>
+                <button data-correct="false" data-fb="«Ha cerrado» suggests it closed down - shut permanently. Your friend would think the office no longer exists.">La oficina ha cerrado</button>
+                <button data-correct="false" data-fb="«Está cerrado» does not agree with «la oficina», which is feminine. Without haber the participle must match.">La oficina está cerrado</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; bare adjective on a noun</div>
+            <div class="widget-question">«Fue una oportunidad ___ .» (perder — a lost opportunity)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«perdido» does not match «oportunidad», which is feminine. No haber means it agrees.">perdido</button>
+                <button data-correct="true" data-fb="«perdida» - sitting directly on the noun with no verb at all, so it behaves as a plain adjective.">perdida</button>
+                <button data-correct="false" data-fb="«ha perdido» would need a subject doing the losing. Here the participle just describes the opportunity.">ha perdido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: describe the state of <strong>four</strong> things around you using <em>estar</em> + participle, and make at least two of them use an irregular participle from 2.03.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>La puerta está abierta. Mi tarea de matemáticas ya está hecha, pero el ensayo de historia no está terminado. Dos ventanas están rotas en el gimnasio. Y estoy sentado en la biblioteca porque estoy muy cansado.</strong><br><br>Check every agreement against its noun: <em>puerta abierta</em> (f.s.) · <em>tarea hecha</em> (f.s.) · <em>ensayo terminado</em> (m.s.) · <em>ventanas rotas</em> (f.pl.) · <em>sentado, cansado</em> (matching the speaker).</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Estado de la solicitud</strong><br><br>
+        <em>Portal de becas — resumen de tu expediente</em><br><br>
+        Formulario principal: <strong>completado</strong>.<br>
+        Carta de motivación: <strong>recibida</strong> el 14 de marzo.<br>
+        Cartas de recomendación: dos <strong>recibidas</strong>, una <strong>pendiente</strong>.<br>
+        Certificado de notas: no <strong>entregado</strong>.<br>
+        Inscripción: <strong>abierta</strong> hasta el 30 de marzo.<br><br>
+        <em>Nota del comité:</em> Hemos <strong>revisado</strong> tu expediente y hemos <strong>visto</strong> que falta un documento. El plazo no está <strong>cerrado</strong> todavía, así que puedes subirlo. Varios estudiantes han <strong>propuesto</strong> proyectos similares, pero tu carta está muy bien <strong>escrita</strong>.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Sort every bolded word into the two jobs. The list items are all <strong>states</strong> and every one agrees with its noun — <em>carta recibida</em>, <em>cartas recibidas</em>, <em>certificado entregado</em>, <em>inscripción abierta</em>. The committee's note switches to <strong>actions</strong> with <em>haber</em>, and there every participle is frozen: <em>revisado, visto, propuesto</em>. Then find the one that goes back to a state: <em>tu carta está muy bien escrita</em>.<br><br>A real portal page, doing both jobs in eight lines. This is why the distinction is worth ten minutes.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COSTA RICA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>El lenguaje de los trámites</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The word for bureaucratic paperwork across the Spanish-speaking world is <strong><em>los trámites</em></strong>, and it is a word with feeling attached — <em>«estoy haciendo trámites»</em> carries a sigh with it. Costa Rica has invested heavily in moving <em>trámites</em> online, and a scholarship portal like the one above is a genuine document type you would meet.<br><br>The reason it is worth reading in this module is grammatical as much as cultural: <em>trámites</em> language runs almost entirely on participles, because its whole job is reporting the <strong>state</strong> of things — <em>recibido, entregado, pendiente, aprobado, rechazado</em>. If you can read a status page in Spanish, you can handle a large share of institutional life.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PERSEVERANCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The status page says one document is missing and the deadline is not closed yet. That is the ordinary shape of perseverance: not a dramatic setback, just one more thing to upload before the thirtieth. Most persistence is administrative. <em>Lo que falta todavía se puede entregar; eso es perseverar.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 2.05 &mdash; El pluscuamperfecto</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's second grammar point, and it uses everything you now have: <em>había hablado</em> — a past behind a past. Same two-piece machine, with <em>haber</em> in the imperfect.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then look around the room and say five states aloud — <em>está abierta, está roto, está hecha</em> — checking each agreement against its noun.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One test — <em>¿hay haber?</em> — settling a distinction that trips up students for years. And you can now read a bureaucratic status page in Spanish, which is a stranger and more useful skill than it sounds. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.04 &middot; Los participios en acción</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

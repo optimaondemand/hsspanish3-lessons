@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 0.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 0</div>
+        <div style="font-size: 12px; color: #666;">Repaso</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El pretérito, a fondo</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Repaso · Contar lo que pasó</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El pretérito — la máquina de los hechos</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">One job: a completed event. One tense for it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today is machinery. The <strong>pretérito</strong> reports events that happened and finished — the <em>complicación</em> and <em>resolución</em> of yesterday's map. You built this in Spanish 2; today we rebuild it to the point of automaticity, because from Module 1 onward it becomes the base you conjugate <em>other</em> things from. No new vocabulary today — all of your attention goes on form.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> conjugate regular <em>-ar</em>, <em>-er</em> and <em>-ir</em> verbs in the preterite, with correct accents.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce the strong (irregular) preterites — <em>tuve, pude, puse, vine, dije, traje</em> — and explain why they carry no accents.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spell <em>yo</em> forms like <em>busqué, llegué</em> and <em>empecé</em> correctly.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Where the accent falls changes who is speaking</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Say these two aloud and hear the difference: <em>hablo</em> (I speak, now) versus <em>habló</em> (he spoke, finished). Same five letters. The accent is not decoration — it is the entire tense, and in writing it is the only thing distinguishing present from past.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of these do you most expect to lose points on this year?</div>
+            <div class="widget-options">
+                <button data-response="Very common, and fixable in one lesson: the accent lives on the LAST syllable in «hablé» and «habló». Part 2 drills exactly this.">Forgetting written accents</button>
+                <button data-response="Honest and useful. The strong preterites in Part 3 are a closed list - about a dozen verbs. Learn the list once and the problem disappears.">The irregular verbs</button>
+                <button data-response="That is Day 5's whole job. Today we make the preterite automatic so that on Day 5 you can spend your attention on choosing rather than conjugating.">Choosing preterite vs. imperfect</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LAS FORMAS REGULARES <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two sets of endings, not three</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Good news you may have forgotten: in the preterite, <strong>-er</strong> and <strong>-ir</strong> verbs share one set of endings. So there are only two patterns to hold.</p>
+        <table class="gtable">
+            <thead><tr><th>Subject</th><th>-ar &middot; hablar</th><th>-er &middot; comer</th><th>-ir &middot; vivir</th></tr></thead>
+            <tbody>
+                <tr><td>yo</td><td><span class="pron">hablé</span></td><td><span class="pron">comí</span></td><td><span class="pron">viví</span></td></tr>
+                <tr><td>tú</td><td>hablaste</td><td>comiste</td><td>viviste</td></tr>
+                <tr><td>usted / él / ella</td><td><span class="pron">habló</span></td><td><span class="pron">comió</span></td><td><span class="pron">vivió</span></td></tr>
+                <tr><td>nosotros/as</td><td>hablamos</td><td>comimos</td><td>vivimos</td></tr>
+                <tr><td>ustedes / ellos / ellas</td><td>hablaron</td><td>comieron</td><td>vivieron</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>The four accented forms are the whole battle:</strong> <em>hablé, habló, comí, comió</em>. Every accent sits on the final syllable. Note also that <em>hablamos</em> and <em>vivimos</em> are identical in the present and the preterite — context alone tells you which, exactly as in English &ldquo;we cut&rdquo;.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; ORTOGRAFÍA &middot; the <em>yo</em> forms that change spelling</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Three <em>-ar</em> families change spelling in <em>yo</em> only, to protect the sound: <strong>buscar &rarr; busqué</strong> (c&rarr;qu), <strong>llegar &rarr; llegué</strong> (g&rarr;gu), <strong>empezar &rarr; empecé</strong> (z&rarr;c). The verb has not become irregular — the sound stayed the same and the spelling moved to keep up.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS PRETÉRITOS FUERTES <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A closed list, and a rule that makes it easy</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">These are called <strong>fuertes</strong> (strong) because the stress falls on the <em>stem</em>, not the ending. That single fact explains why they carry <strong>no written accents at all</strong> — the accent you would expect on <em>yo</em> and <em>él</em> simply is not there.</p>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>New stem</th><th>yo</th><th>él / ella</th></tr></thead>
+            <tbody>
+                <tr><td>tener</td><td>tuv-</td><td><span class="pron">tuve</span></td><td>tuvo</td></tr>
+                <tr><td>poder</td><td>pud-</td><td><span class="pron">pude</span></td><td>pudo</td></tr>
+                <tr><td>poner</td><td>pus-</td><td><span class="pron">puse</span></td><td>puso</td></tr>
+                <tr><td>saber</td><td>sup-</td><td><span class="pron">supe</span></td><td>supo</td></tr>
+                <tr><td>venir</td><td>vin-</td><td><span class="pron">vine</span></td><td>vino</td></tr>
+                <tr><td>querer</td><td>quis-</td><td><span class="pron">quise</span></td><td>quiso</td></tr>
+                <tr><td>decir</td><td>dij-</td><td><span class="pron">dije</span></td><td>dijo</td></tr>
+                <tr><td>traer</td><td>traj-</td><td><span class="pron">traje</span></td><td>trajo</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">All eight take the same endings: <strong>-e, -iste, -o, -imos, -ieron</strong>. Two footnotes worth having: stems ending in <strong>j</strong> (<em>dij-, traj-</em>) drop the <em>i</em> in the <em>ellos</em> form — <em>dijeron</em>, not «dijieron». And <em>saber</em> in the preterite means <em>found out</em>: <em>Supe la verdad ayer</em> = I found out the truth yesterday.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the accent decides the subject</div>
+            <div class="widget-question">«Ayer mi hermana ___ con el profesor.» (spoke)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«hablé» is yo. The subject is «mi hermana».">hablé</button>
+                <button data-correct="true" data-fb="«habló» - él/ella, accent on the final o. Without that accent it would read «hablo», I speak.">habló</button>
+                <button data-correct="false" data-fb="«hablo» with no accent is the PRESENT: I speak. The accent is the tense.">hablo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; spelling that protects sound</div>
+            <div class="widget-question">«Anoche yo ___ mis llaves por toda la casa.» (buscar)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«busqué» - c becomes qu before é so the hard /k/ survives.">busqué</button>
+                <button data-correct="false" data-fb="«buscé» would be pronounced with a soft c. Spanish writes qu to keep the sound: busqué.">buscé</button>
+                <button data-correct="false" data-fb="«buscaste» is tú. The subject here is yo.">buscaste</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; strong preterite, no accent</div>
+            <div class="widget-question">«Yo no ___ ir a la fiesta porque tenía que trabajar.» (poder)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«podí» does not exist. Poder is a strong preterite: the stem changes to pud-.">podí</button>
+                <button data-correct="false" data-fb="Right stem, wrong accent - strong preterites carry NO written accent, because the stress is already on the stem.">pudé</button>
+                <button data-correct="true" data-fb="«pude» - new stem pud-, ending -e, and no accent anywhere.">pude</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the j-stem rule</div>
+            <div class="widget-question">«Mis primos ___ que llegarían tarde.» (decir)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«dijieron» is the classic overcorrection. A j-stem swallows the i.">dijieron</button>
+                <button data-correct="true" data-fb="«dijeron» - stems ending in j drop the i of -ieron.">dijeron</button>
+                <button data-correct="false" data-fb="«decieron» keeps the original stem, but decir builds its preterite on dij-.">decieron</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: say four things you did yesterday, and make at least two of them use strong preterites from Part 3.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Ayer tuve un examen de matemáticas. Puse el despertador a las seis y llegué temprano. No pude terminar la última pregunta, pero le dije al profesor que estudié mucho.</strong><br><br>Four strong preterites (<em>tuve, puse, pude, dije</em>), one spelling-change <em>yo</em> (<em>llegué</em>), one regular (<em>estudié</em>). Not one written accent on the strong forms.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El concierto</strong><br><br>
+        El sábado <strong>tuvimos</strong> suerte. Mi hermano <strong>consiguió</strong> dos entradas y me <strong>dijo</strong> que fuéramos temprano. <strong>Llegamos</strong> a las siete y <strong>nos pusimos</strong> cerca del escenario. La banda <strong>empezó</strong> tarde, pero cuando <strong>salieron</strong>, todo el mundo <strong>se levantó</strong>. Yo no <strong>pude</strong> escuchar bien al final porque <strong>grité</strong> demasiado. Al salir <strong>supimos</strong> que <strong>fue</strong> su último concierto de la gira.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Every bolded verb is a preterite. Sort them into two piles: strong stems with no accent (<em>tuvimos, dijo, nos pusimos, pude, supimos</em>) and regular forms (<em>llegamos, empezó, salieron, se levantó, grité</em>). Notice the whole paragraph is events — no scene-painting at all. That is what a pure preterite text feels like, and tomorrow you will see its opposite.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; EL MUNDO HISPANO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Un idioma con academia</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The reason <em>busqué</em> is spelled with <em>qu</em> and not <em>c</em> is not an accident of history — it is a decision, published. Spanish is governed collaboratively by the <strong>Real Academia Española</strong> together with twenty-two sister academies across the Americas, Africa and Asia, which agree on spelling as a group.<br><br>That is unusual. English has no such body; its spelling was settled by printers and dictionaries. When you write <em>empecé</em> correctly you are following a rule that Mexico, Argentina, Colombia and Spain all voted on — one more sign that this language belongs to many countries rather than one.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA DILIGENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Today's diligence is unglamorous and decisive: writing the accent every single time, including in rough drafts and notes nobody will read. Accents you skip in practice are accents you will skip on the Grammar Quiz. <em>Se escribe bien cuando nadie mira, o no se escribe bien.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 0.04 &mdash; El imperfecto</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow, the other past tense — the one that paints instead of reporting. It has only <strong>three</strong> irregular verbs in the entire language, which makes it the easiest tense in Spanish to conjugate and the hardest to know when to use.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write the eight strong preterites from Part 3 from memory, <em>yo</em> form only. Check your list. Any you missed, write five times.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two sets of regular endings, three spelling-change families, eight strong stems with no accents. That is the entire preterite — a closed system you can finish learning, which is not true of most things in a language. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.03 &middot; El pretérito, a fondo</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

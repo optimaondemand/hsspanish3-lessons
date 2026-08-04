@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.10</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.10 &middot; Day 10 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Repaso y Grammar Quiz</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.10</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Repaso del módulo — y el Grammar Quiz</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two words, more than a dozen jobs between them, and no list will save you on the quiz.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last day of Módulo 5. Work the review, then take the <strong>Grammar Quiz</strong> (20 pts, <strong>two attempts</strong>, includes a listening item).<br><br>Fair warning about the quiz, since it is the same warning every year: <strong>several items have no signal word in them at all.</strong> Both prepositions are grammatical and only the meaning differs, so a student who has memorised trigger words will hit those items and stop. The way through is the two questions from 5.06: is this an arrow pointing forward, or the ground behind the action?</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose between <em>por</em> and <em>para</em> in a sentence that gives me no signal word.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what each of this module's twenty words means, by ear, with its accents.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what Módulo 6 adds, and where I have already met one of its constructions.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; REPASO COMPLETO <span class="pill-time">8 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Área</th><th>What to have solid</th><th>Reopen if shaky</th></tr></thead>
+            <tbody>
+                <tr><td>Vocabulario A</td><td>Ten words <strong>with articles</strong> &middot; <em>la contaminación</em> accented</td><td>5.01</td></tr>
+                <tr><td>Vocabulario B</td><td><em>ahorrar</em> vs <em>desperdiciar</em> &middot; <em>dañar</em> with the <em>ñ</em> &middot; <em>la huella</em></td><td>5.02</td></tr>
+                <tr><td><em>Por</em> &mdash; los seis trabajos</td><td>causa &middot; motivo &middot; duración &middot; recorrido &middot; intercambio &middot; medio &middot; en lugar de alguien</td><td>5.03</td></tr>
+                <tr><td><em>Por</em> &mdash; el agente</td><td><em>consideradas por expertos</em>, <em>pintado por</em> alguien &mdash; la persona o la cosa que hace la acción</td><td>5.08 Part 4</td></tr>
+                <tr><td><em>Para</em> &mdash; los siete trabajos</td><td>destino &middot; propósito &middot; plazo &middot; destinatario &middot; empleador &middot; opinión &middot; comparación</td><td>5.04</td></tr>
+                <tr><td>El propósito</td><td>Always <em>para</em> + <strong>infinitivo</strong>: <em>para reducir la basura</em></td><td>5.04 &amp; 5.06</td></tr>
+                <tr><td>Los pares mínimos</td><td>Both grammatical &rarr; <strong>the meaning decides</strong>: <em>por ti</em> ≠ <em>para ti</em></td><td>5.05</td></tr>
+                <tr><td>Expresiones fijas</td><td><em>por eso &middot; por lo menos &middot; por ciento &middot; por supuesto &middot; para siempre</em></td><td>5.05</td></tr>
+                <tr><td>El párrafo</td><td>Every preposition nameable; the real-reason sentence present</td><td>5.06 Parts 2&ndash;3</td></tr>
+                <tr><td>Las cifras en español</td><td>Coma decimal &middot; espacio antes del <em>%</em> &middot; <em>un 97 %</em> with the article</td><td>5.08 Part 4</td></tr>
+                <tr><td>El participio que concuerda</td><td><em>las islas consideradas</em> &mdash; agrees; after <em>haber</em> &mdash; never</td><td>5.08 Part 4</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 2 &middot; EL GRAMMAR QUIZ <span class="pill-time">6 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Points</th><th>Attempts</th><th>Format</th><th>Includes</th></tr></thead>
+            <tbody>
+                <tr><td>20</td><td><strong>Two</strong> &mdash; highest counts</td><td>Auto-graded</td><td>Both prepositions in context, fixed expressions, <strong>minimal pairs with no signal words</strong>, one listening item</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:8px 0 0;">Two things about its design, so nothing is a surprise. <strong>Every item is a sentence, not a list</strong> &mdash; there is no question anywhere that asks you to recite what <em>por</em> means. And the <strong>listening item</strong> is a pair of short sentences that differ in exactly one word, the preposition; you choose which meaning you heard. That is why Part 4 of yesterday's lesson spent eleven minutes on two syllables.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; CÓMO USAR DOS INTENTOS</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Take attempt 1 seriously &mdash; its value is telling you which of the eleven rows above is weak &mdash; then <strong>reopen that lesson</strong> before attempt 2. Students who take both attempts back to back usually score about the same twice, having learned nothing in between.<br><br>For this module specifically: if you lost points on the signal-free items, do not reread the lists. Reread 5.05's minimal pairs and Part 3 below, because the problem is not what the words mean, it is deciding what <em>you</em> mean before you choose.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PRÁCTICA FINAL <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Five mixed items in quiz format, two of them minimal pairs with no signal word. Ungraded &mdash; if you miss one, reopen the lesson named in the feedback.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 1 &middot; dos huecos, dos trabajos</div>
+            <div class="widget-question">«Cerraron el sendero ___ dos meses ___ recuperar la vegetación.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Duración primero, propósito después. «Por dos meses» cubre el tiempo que pasó; «para recuperar» apunta al resultado. Ver 5.03 y 5.04.">por &hellip; para</button>
+                <button data-correct="false" data-fb="Los dos trabajos quedan invertidos: «para dos meses» convertiría el plazo en una fecha, y «por recuperar» diría «a causa de haber recuperado». Ver 5.06 Parte 4.">para &hellip; por</button>
+                <button data-correct="false" data-fb="El primero está bien. El segundo pone una causa donde hace falta una finalidad: cerraron el sendero con un objetivo, y el objetivo va con para + infinitivo. Ver 5.04.">por &hellip; por</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 2 &middot; par mínimo, sin pistas</div>
+            <div class="widget-question">«Compré esta botella reutilizable ___ mi hermano.» Quieres decir que <strong>él fue la razón</strong>: te habló del plástico y te convenció.</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Para mi hermano» dice que la botella va destinada a él, que se la vas a dar. Correcto en español, y no es lo que querías decir. Ver 5.05.">para mi hermano</button>
+                <button data-correct="true" data-fb="Sí: «por mi hermano» lo pone como causa, el motivo que está detrás de la compra. Fíjate en que ninguna palabra de la oración te lo señalaba — solo el sentido.">por mi hermano</button>
+                <button data-correct="false" data-fb="Las dos son correctas, pero no significan lo mismo: una lo hace destinatario y la otra causa. Eso es exactamente un par mínimo. Ver 5.05.">las dos significan lo mismo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 3 &middot; el par mínimo más útil</div>
+            <div class="widget-question">«Trabajo ___ la fundación.» Eres empleado: la fundación te paga.</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Trabajo por la fundación» dice que trabajas en su nombre, o en lugar de alguien, o a favor de la causa que defiende. No dice que te paguen. Ver 5.05.">Trabajo por la fundación.</button>
+                <button data-correct="false" data-fb="No dicen lo mismo: una describe a tu empleador, la otra tu motivo o a quién sustituyes. Es el par mínimo más útil del módulo, porque aparece en cualquier conversación sobre trabajo.">Las dos dicen lo mismo.</button>
+                <button data-correct="true" data-fb="Correcto: con un empleador se usa para — la fundación es el destino de tu trabajo. «Trabajo para Optima» es la forma normal de decir dónde trabajas. Ver 5.04.">Trabajo para la fundación.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 4 &middot; intercambio</div>
+            <div class="widget-question">«Cambié las botellas de plástico ___ una de metal.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Intercambio: esto a cambio de aquello. El mismo por de «te doy cinco dólares por el libro». Ver 5.03.">por una de metal</button>
+                <button data-correct="false" data-fb="«Para» apuntaría a un destinatario o a una finalidad, y una botella no es ninguna de las dos cosas. Aquí hay un trueque, y el trueque es por. Ver 5.03.">para una de metal</button>
+                <button data-correct="false" data-fb="«Cambiar a» existe, pero significa pasar a otro sistema o estado — «cambiar al sistema métrico». Un objeto a cambio de otro lleva por.">a una de metal</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 5 &middot; el plazo</div>
+            <div class="widget-question">«___ el viernes tenemos que entregar el informe sobre el reciclaje.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Por el viernes» suena a un momento aproximado, no a un límite. El plazo en español lo marca para. Ver 5.04.">Por</button>
+                <button data-correct="true" data-fb="El plazo: la flecha apunta al viernes como punto final, y todo lo demás tiene que estar hecho antes. Ver 5.04.">Para</button>
+                <button data-correct="false" data-fb="«En el viernes» no se dice — los días llevan solo el artículo, «el viernes entregamos». Y eso indicaría cuándo pasa la entrega, no el plazo que tienes.">En</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; ÚLTIMO REPASO AUDITIVO <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The quiz includes a listening item, and the module's vocabulary is fair game inside its sentences. Play each, say the meaning aloud <strong>before</strong> you read the English.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-medio-ambiente.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el medio ambiente</span><span class="v-en">the environment</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-especie.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la especie</span><span class="v-en">species &mdash; same form singular and plural</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/amenazado.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">amenazado</span><span class="v-en">threatened &mdash; and it agrees: <em>especies amenazadas</em></span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-recurso.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el recurso</span><span class="v-en">resource</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/desperdiciar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">desperdiciar</span><span class="v-en">to waste &mdash; the opposite of <em>ahorrar</em></span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/sostenible.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">sostenible</span><span class="v-en">sustainable</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Then reopen 5.01 and 5.02 and play the remaining fourteen. Notice <em>amenazado</em> while you are there: it is a participle used as an adjective, so it agrees &mdash; <em>una especie amenazada</em>, <em>los bosques amenazados</em>. That is Módulo 2 still paying rent inside Módulo 5's vocabulary list.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#10145;&#65039; PART 5 &middot; LO QUE VIENE <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Módulo 6 &mdash; del medio ambiente a las artes</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Módulo 6</strong> changes almost everything on the surface. The theme becomes <em>las artes y la cultura</em>, the country becomes <strong>España</strong>, the painter is <strong>Diego Velázquez</strong>, and the virtue is <em>la atención</em> &mdash; attentiveness, which is exactly the right virtue for a module about looking at a painting properly.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The grammar is the family of small words that <strong>join one clause to another</strong>: <em>que</em>, <em>quien</em>, <em>lo que</em>, <em>cuyo</em>. You have been using plain <em>que</em> since Spanish 1 without thinking about it &mdash; <em>«el parque que abarca casi ocho mil kilómetros cuadrados»</em> &mdash; and Módulo 6 teaches the rest of the family, which is what lets you describe something complicated in one sentence instead of four short ones. Describing art is where that pays off immediately, because a painting cannot be described without constantly saying <em>which</em> figure, <em>whose</em> hand, <em>what</em> the light is doing.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; Y LO QUE NO CAMBIA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">This module does not close. <em>Por</em> and <em>para</em> now belong to you and Módulo 6 will use them constantly, because writing about art runs on purpose and cause just as much as writing about conservation does.<br><br>And you have already met the single most common <em>por</em> in the whole of art writing. In 5.08 you worked out why the encyclopedia said <em>consideradas <strong>por</strong> expertos y científicos</em> &mdash; the agent, whoever performs the action. That is the same <em>por</em> as <em>«Las meninas, pintado <strong>por</strong> Velázquez en 1656»</em>. Every museum label in Spanish is built on it, and you did not learn it from a list. You worked it out from the idea that <em>por</em> covers the ground behind the action.<br><br>Módulo 6's reading is the Spanish encyclopedia entry on <em>Las meninas</em>. Velázquez died in 1660, so the painting is fully in the public domain &mdash; which means that for the first time this semester you will be looking at the artwork itself, not a description of it.</div>
+        </div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; CIERRE DEL MÓDULO &middot; no wrong answer</div>
+            <div class="widget-question">Looking back at these ten days &mdash; what changed most?</div>
+            <div class="widget-options">
+                <button data-response="That is the real win, and it is bigger than it sounds. Por and para are among the twenty most frequent words in Spanish; getting them right raises the accuracy of every paragraph you write for the rest of your life in the language.">I stopped guessing between them</button>
+                <button data-response="Then the module did its job. Once you stop asking «which one means for?» and start asking «forward or behind?», the six jobs of por stop being a list to memorise and become one idea with six faces.">The two-question test replaced the lists</button>
+                <button data-response="Worth noticing, because it is the Honors difference: you found an agent construction in an authentic text that no lesson had taught you, and you worked out why it was there. That is what reading strands are for.">Working out the «por» in the encyclopedia text</button>
+                <button data-response="Say which day, and reopen it this week rather than in December. Módulo 6 uses these prepositions constantly without re-teaching them, so a gap here quietly costs you points in a module about something else.">Something still feels shaky</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que te llevas de este módulo</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Four things from Ecuador worth keeping. <strong>1959</strong>: the Parque Nacional Galápagos, the country's first, created in the centenary year of <em>El origen de las especies</em>, and today covering <strong>97 % of the archipelago's land area</strong>. <strong>2008</strong>: the first constitution in the world to grant rights to nature, which is why any citizen may go to court <em>por</em> an ecosystem &mdash; and the <strong>Los Cedros</strong> ruling of 2021, which finally gave those articles force.<br><br><strong>The population figure that explains the policy</strong>: Galápagos is a province of about 33 000 people, in a country of some 18 million, receiving over 250 000 visitors a year. Residency is restricted, the fishery is reserved for locals, and the park entrance fee doubled in 2024. None of that is ordinary tourism management; it is a place run on the assumption that it can be used up.<br><br>And <strong>the sixty-year programme</strong> at the Charles Darwin Station: Lonesome George, who ran out of time, and Diego, who did not. Ecuador is also mainland &mdash; Quito's colonial centre, the Amazon, the Andes &mdash; and Galápagos is one of its four regions, not the whole country. But it is the one where the argument between using a place and keeping it is most visible, which is why this module lives there.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Ten days on two prepositions, in a module whose virtue is stewardship &mdash; which is less of a coincidence than it looks. <em>Por</em> and <em>para</em> are the words a language uses to ask <em>why</em> and <em>what for</em>, and responsibility is almost entirely a matter of being able to answer those two questions about your own behaviour. A habit you cannot explain is not yet a commitment; a rule imposed without a purpose is not yet stewardship. Everything this module asked you to write &mdash; the real-reason sentence, the closing command spoken on somebody else's behalf &mdash; was practice at answering. Next module the virtue becomes <em>la atención</em>, and the first thing attention asks of you is to look before you judge. <em>Responder por algo empieza por saber para qué lo haces.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Módulo 6 &mdash; Las artes y la cultura</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The words that join clauses together &mdash; <em>que, quien, lo que, cuyo</em> &mdash; with <strong>España</strong> and <strong>Velázquez</strong> as the featured culture and <em>la atención</em> as the virtue. The reading is the Spanish entry on <em>Las meninas</em>, and the painting is public domain, so you will see it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then take the <strong>Grammar Quiz</strong>. <strong>Review between your two attempts</strong> rather than taking them back to back. Then check that all five items for this module show as submitted.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡TERMINASTE EL MÓDULO 5!</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety points, twenty words, two prepositions, ten jobs, one decimal comma and an agent construction you found for yourself in a real encyclopedia. <em>Ya sabes decir por qué haces algo y para qué sirve &mdash; que es casi todo lo que hace falta para defender una idea.</em> &mdash; <em>¡Nos vemos en el Módulo 6!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.10 &middot; Repaso y Grammar Quiz</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

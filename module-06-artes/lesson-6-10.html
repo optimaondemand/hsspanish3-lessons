@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.10</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.10 &middot; Day 10 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Repaso y Grammar Quiz</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.10</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Repaso del módulo — y el Grammar Quiz</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Ten days spent learning to say two things at once. Today you prove it, and then you find out what it was for.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last day of Módulo 6. Work the review, take the <strong>Grammar Quiz</strong> (20 pts, <strong>two attempts</strong>, includes listening), and read Part 5 properly &mdash; because Módulo 7 is the module this entire semester has been arranged around, and you are better prepared for it than you probably think.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> combine any two sentences about one noun into a single sentence, choosing the right relative pronoun without hesitating.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make every <em>cuyo</em>-form agree with the thing possessed, under time pressure.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what Módulo 7 asks of me and why I already own most of what it needs.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; REPASO COMPLETO <span class="pill-time">8 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Area</th><th>What to have solid</th><th>Reopen if shaky</th></tr></thead>
+            <tbody>
+                <tr><td>Las artes &middot; A</td><td>Ten nouns <strong>with their articles</strong></td><td>6.01 Part 2</td></tr>
+                <tr><td>Las artes &middot; B</td><td>The verbs and the abstractions</td><td>6.02 Part 2</td></tr>
+                <tr><td><em>que</em></td><td><strong>Never</strong> omitted, however English sounds</td><td>6.03 Part 2</td></tr>
+                <tr><td><em>quien &middot; quienes</em></td><td>People, after a preposition or between commas</td><td>6.03 Part 3</td></tr>
+                <tr><td><em>que</em> describiendo</td><td>One fact <strong>inside</strong> another, not beside it</td><td>6.04 Part 2</td></tr>
+                <tr><td><em>lo que</em></td><td>A whole idea &mdash; no noun to point at</td><td>6.05 Part 2</td></tr>
+                <tr><td><em>cuyo &middot; cuya &middot; cuyos &middot; cuyas</em></td><td>Agrees with the thing <strong>possessed</strong></td><td>6.05 Part 3</td></tr>
+                <tr><td>Las comas</td><td>Between commas adds &middot; without commas sorts</td><td>6.04 Part 3</td></tr>
+                <tr><td>El párrafo</td><td>Three relative clauses, one of each kind</td><td>6.06 Part 5</td></tr>
+                <tr><td>Un texto real</td><td>Paréntesis &middot; <em>el de&hellip;</em> &middot; participio + <em>por</em></td><td>6.08 Part 4</td></tr>
+                <tr><td>Vocabulario</td><td>All twenty, <strong>by ear</strong>, with the accents</td><td>6.01 &amp; 6.02 Part 2</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 2 &middot; EL GRAMMAR QUIZ <span class="pill-time">6 min</span></div>
+        <table class="gtable">
+            <thead><tr><th>Points</th><th>Attempts</th><th>Format</th><th>Includes</th></tr></thead>
+            <tbody>
+                <tr><td>20</td><td><strong>Two</strong> &mdash; highest counts</td><td>Auto-graded</td><td>Combining two sentences into one, choosing between <em>que / quien / lo que / cuyo</em>, <em>cuyo</em> agreement, the comma contrast, <strong>listening</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:10px 0 0;">Two things worth knowing before you start. Several items give you two sentences and ask you to <strong>write</strong> the combined version, not to pick it &mdash; recognising a relative clause is much easier than building one, and this module is assessed on building. And at least one item has <strong>no signal word at all</strong>: both options are perfectly grammatical and only the meaning differs. If you have been passing this module by matching cues, that item is where it shows.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; CÓMO USAR DOS INTENTOS</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Take attempt 1 seriously &mdash; its value is telling you which of the eleven areas above is weak &mdash; then <strong>reopen that lesson</strong> before attempt 2. Students who take both attempts back to back usually score about the same twice, having learned nothing in between. Reviewing between attempts is the entire reason there are two.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PRÁCTICA FINAL <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Five mixed items in quiz format. Ungraded &mdash; if you miss one, reopen the lesson named in the feedback <em>before</em> you take the quiz.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 1 &middot; combinar dos en una</div>
+            <div class="widget-question">Une en una sola oración: <em>«El cuadro está en la sala 12. El cuadro mide más de tres metros.»</em></div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«El cuadro que está en la sala 12 mide más de tres metros.» Una sola oración, un solo cuadro, y «que» hace el trabajo de las dos. Eso es la herramienta del módulo.">El cuadro que está en la sala 12 mide más de tres metros</button>
+                <button data-correct="false" data-fb="Es correcto, pero no es combinar: es una lista unida con «y». Una relativa mete una información DENTRO de la otra en vez de ponerla al lado. Reopen 6.04 Part 2.">El cuadro está en la sala 12 y mide más de tres metros</button>
+                <button data-correct="false" data-fb="Las comas no sustituyen al pronombre relativo. Sin «que» la oración se rompe: quedan dos verbos y nada los conecta. Reopen 6.03 Part 2.">El cuadro, está en la sala 12, mide más de tres metros</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 2 &middot; tras preposición</div>
+            <div class="widget-question"><em>«Palomino es el biógrafo de ___ viene la fecha de 1656.»</em></div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«De que» no funciona aquí: hablamos de una persona detrás de una preposición, y ahí el español pide «quien». Reopen 6.03 Part 3.">que</button>
+                <button data-correct="false" data-fb="«Cuyo» va seguido inmediatamente del sustantivo poseído: «el biógrafo cuya fecha aceptamos». Aquí hay una preposición, no una posesión. Reopen 6.05 Part 3.">cuyo</button>
+                <button data-correct="true" data-fb="«De quien» - persona, detrás de preposición. Ese es el terreno propio de «quien», y es donde el español lo prefiere con claridad.">quien</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 3 &middot; ¿hay un sustantivo detrás?</div>
+            <div class="widget-question"><em>«Velázquez se pintó a sí mismo dentro del cuadro, ___ todavía sorprende a los visitantes.»</em></div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Que» se agarraría a «cuadro», el sustantivo más cercano - y no es el cuadro lo que sorprende, sino el gesto del pintor. Reopen 6.05 Part 2.">que</button>
+                <button data-correct="true" data-fb="«Lo que» - la relativa se refiere a la acción entera, no a ningún sustantivo. Prueba a señalar el sustantivo: no existe. Ese es el uso propio de «lo que».">lo que</button>
+                <button data-correct="false" data-fb="«Quien» es para personas, y aquí lo sorprendente es un hecho, no alguien. Reopen 6.05 Part 2.">quien</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 4 &middot; concordancia de cuyo</div>
+            <div class="widget-question"><em>«Es un pintor ___ obras están casi todas en un solo museo.»</em></div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Cuyo» es masculino singular, y probablemente lo elegiste por «pintor». El poseedor nunca decide. Reopen 6.05 Part 3.">cuyo</button>
+                <button data-correct="false" data-fb="«Cuya» es femenino singular. El género acierta, el número no: «obras» es plural. Reopen 6.05 Part 3.">cuya</button>
+                <button data-correct="true" data-fb="«Cuyas obras» - concuerda con «obras», femenino plural, que es lo poseído. «Pintor» es masculino singular y no interviene en nada.">cuyas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; PRÁCTICA 5 &middot; sin palabra pista</div>
+            <div class="widget-question">Las dos son correctas: <em>«Los cuadros que compró Felipe IV están en el Prado»</em> y <em>«Los cuadros, que compró Felipe IV, están en el Prado»</em>. ¿Cuál dice que Felipe IV compró <strong>solo algunos</strong> de los cuadros de los que hablamos?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="La primera. Sin comas, la relativa SELECCIONA: distingue los cuadros comprados por Felipe IV de los demás. Aquí no hay ninguna palabra pista - solo la puntuación.">La primera, sin comas</button>
+                <button data-correct="false" data-fb="Entre comas la relativa AÑADE un dato sobre todos los cuadros mencionados, no separa unos de otros. Dice que Felipe IV los compró todos. Reopen 6.04 Part 3.">La segunda, con comas</button>
+                <button data-correct="false" data-fb="No dicen lo mismo, y ahí está el interés: mismo pronombre, misma gramática, dos significados distintos. Las comas son lo único que cambia. Reopen 6.04 Part 3.">Las dos dicen lo mismo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128266; PART 4 &middot; ÚLTIMO REPASO AUDITIVO <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The quiz includes listening. Play each one, say the meaning aloud <strong>before</strong> reading the English, and then write the word from memory with its accent.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-exposicion.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la exposición</span><span class="v-en">exhibition — accent on the final syllable</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-epoca.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la época</span><span class="v-en">period, era — accent on the first</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-lienzo.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el lienzo</span><span class="v-en">canvas — no accent, and -nzo</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-escultura.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la escultura</span><span class="v-en">sculpture</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-significado.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el significado</span><span class="v-en">meaning — five syllables, no accent</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/apreciar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">apreciar</span><span class="v-en">to appreciate, to value</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Then reopen 6.01 and 6.02 and play the remaining fourteen. Two of the three dictation answers on the Vocabulary Check carried a written accent and one did not &mdash; the same trap is in this quiz.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#10145;&#65039; PART 5 &middot; LO QUE VIENE <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Módulo 7 is the one this semester was built for</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Módulo 7 is <em>Recomendaciones y deseos</em>:</strong> recommending, requesting, saying what you want someone else to do. The culture is <strong>Perú</strong>, in more depth than any country has had so far, and the reading comes from Ricardo Palma's <em>Tradiciones peruanas</em> &mdash; a nineteenth-century Peruvian writer who collected the stories Lima told about itself. The virtue is <strong><em>la prudencia</em></strong>, which is the right virtue for a module about advising other people.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; Y AHORA LO IMPORTANTE</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">In 3.10 this course told you something and then left it alone for three months: <strong>the command forms you learned in Módulo 3 and Módulo 4 are also used for something else.</strong> Módulo 7 is where that comes due.<br><br>What it means in practice is that <strong>Módulo 7 adds no new endings.</strong> The forms are the ones you already produce automatically for Ud. commands and for negative <em>tú</em> commands. You are not going to be handed a new conjugation table &mdash; you are going to be shown a second job for a set of forms you have owned since October. That is why the command modules came first, and it is the single best piece of news about the hardest thing in Spanish grammar.<br><br>What <em>is</em> new is <strong>when</strong> and <strong>why</strong> &mdash; which is a question about meaning rather than about morphology, and one trigger will be introduced at a time.</div>
+        </div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 10px 0;"><strong>And one warning that belongs to this module specifically.</strong> Módulo 7 is full of the word <em>que</em>. It is <strong>not</strong> the <em>que</em> you have spent ten days on. This module's <em>que</em> is a relative pronoun: it points back at a noun and puts a second fact about it into the same sentence. Módulo 7's <em>que</em> points back at nothing &mdash; it simply opens a clause after certain verbs. Telling the two apart is real work, and you are in a far better position to do it than a student who arrived at Módulo 7 having never looked closely at a relative clause. That is not a coincidence either.</p>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; CIERRE DEL MÓDULO &middot; no wrong answer</div>
+            <div class="widget-question">Looking back at these ten days — what changed most?</div>
+            <div class="widget-options">
+                <button data-response="That is the Honors payoff stated exactly. A paragraph made of sentences that each carry two facts reads like an adult wrote it, and it is the difference between Intermediate Low and Intermediate Mid writing more than any tense is.">My sentences hold more than one fact</button>
+                <button data-response="Then the reading strand did its job. Dense Spanish stops being a wall once you know that parentheses are skippable, that «el de» is a noun you already read, and that the clause belongs to the noun in front of it.">I can get through a hard authentic sentence</button>
+                <button data-response="The most underrated answer here. Looking for a full minute is a trained act, and it is the one skill from this module that transfers to everything - a painting, a poem, a lab result, another person.">I actually look at things for longer</button>
+                <button data-response="Then name which day and reopen it this week rather than in Módulo 8. «Cuyo» and «lo que» come back in every module that describes anything, and a gap here quietly costs points later.">Something still feels shaky</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Lo que te llevas de este módulo</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Six things from Spain worth keeping, in the order you met them.<br><br><strong>The Prado is a family's taste, not a survey</strong> &mdash; opened 1819 out of the royal collection, which explains both its ferocious strengths and its systematic gaps. <strong>Velázquez (1599&ndash;1660) was a palace official</strong> as much as a painter, and his output is small partly because of it. <strong>His paint got looser as he got older</strong>, and you can watch it happen by walking the rooms in order.<br><br><strong>Two things about that room are unsettled or gone.</strong> Specialists still disagree about what the mirror at the back reflects, and say so openly rather than picking a side. And the room itself burned with the Alcázar in <strong>1734</strong>; the canvas was carried out, and the inventory of the survivors gave the painting its second name.<br><br><strong>And almost everything we know rests on very little</strong>: one biography by Antonio Palomino, written some sixty years later by a man born the year before the painting was finished, plus a series of royal furniture lists. That is why the Spanish encyclopedia writes <em>«según Palomino»</em> and <em>«aceptada por la crítica»</em> instead of simply stating the date.<br><br>Ten days on one museum, one painter and one painting &mdash; which is the opposite of how courses usually do culture, and the whole argument of this module. Breadth gives you facts. Depth gives you the ability to tell knowledge from repetition.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Ten days on the grammar of qualifying what you have just named, in a module whose virtue is attentiveness &mdash; and the two turned out to be the same skill in different materials. A relative clause is a demand to keep looking at a noun. A parenthetical is a demand to hold a sentence open. A minute in front of a painting is a demand to stop moving. In every case the work is the refusal to move on at the first available moment, and in every case what it buys is something you would otherwise never have seen. Next module the virtue becomes <em>la prudencia</em>, and it needs this one first: nobody advises well who has not looked carefully. <em>La atención es el único regalo que se puede dar sin perderlo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Módulo 7 &mdash; Recomendaciones y deseos</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Recommending and requesting, with <strong>Perú</strong> as the featured culture, Ricardo Palma's <em>Tradiciones peruanas</em> as the reading, and <em>la prudencia</em> as the virtue. No new endings to learn &mdash; the forms are already yours from Módulos 3 and 4. What is new is where they go and why.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then take the <strong>Grammar Quiz</strong>. Review between your two attempts rather than taking them back to back. Then check that all five items for this module show as submitted.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡TERMINASTE EL MÓDULO 6&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ninety points, twenty words, four relative pronouns, two sentences of real encyclopedic Spanish taken apart and put back together &mdash; and one painting you will now recognise for the rest of your life. <em>Ya sabes decir dos cosas de una sola cosa, en una sola frase.</em> &mdash; <em>¡Nos vemos en el Módulo 7!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.10 &middot; Repaso y Grammar Quiz</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 1.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 1</div>
+        <div style="font-size: 12px; color: #666;">La salud</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El presente perfecto</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La salud y el cuerpo</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El presente perfecto — lo que ha pasado hasta ahora</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A third past tense — and this one keeps one foot in the present.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You have <em>hablé</em> (finished event) and <em>hablaba</em> (scene or habit). Today you add <strong>he hablado</strong> — <em>I have spoken</em> — which reports what has happened <strong>up to now</strong>, in a stretch of time that is not yet closed.<br><br>It is built from two pieces and neither is difficult. The care today goes into the <em>participio</em> and its accents, because the participle is the piece the whole rest of the module is built on.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> conjugate <em>haber</em> in the present and form regular participles in <em>-ado</em> and <em>-ido</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> keep <em>haber</em> and the participle together, and place <em>no</em> and pronouns correctly.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write <em>leído</em>, <em>oído</em> and <em>caído</em> with their required accents and explain why.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why a doctor asks it this way</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Yesterday's doctor asked <em>¿Ha tenido fiebre?</em> — not <em>¿Tuvo fiebre?</em> The difference is real. <em>¿Tuvo fiebre?</em> asks about a closed episode: <em>did you have a fever</em> (then, that time). <em>¿Ha tenido fiebre?</em> asks about a stretch of time that is <strong>still open</strong> — since this illness began, right up to this moment.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">That is the whole meaning of the tense: <strong>the window is not closed yet</strong>.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">In English, do you feel a difference between &ldquo;Did you eat?&rdquo; and &ldquo;Have you eaten?&rdquo;</div>
+            <div class="widget-options">
+                <button data-response="Good - then you already have the concept and only need the Spanish forms. «Have you eaten?» is about now; «Did you eat?» is about a finished occasion.">Yes, clearly</button>
+                <button data-response="Honest, and worth knowing: the difference is real but subtle in English, and some regions use them interchangeably. In Spanish the split is sharper, so today builds the distinction rather than assuming it.">A little, but I could not explain it</button>
+                <button data-response="Then treat it as new. Anchor on the doctor's question: «¿Ha tenido fiebre?» means «at any point in this illness, up to right now». That framing carries you through the module.">Not really</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; HABER + PARTICIPIO <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two pieces, and the first one has five forms</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>haber</strong> is the helper. It carries the person; it carries no meaning of its own. Learn these five as a block:</p>
+        <table class="gtable">
+            <thead><tr><th>Subject</th><th>haber</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td>yo</td><td><span class="pron">he</span></td><td>He <span class="pron">tomado</span> la medicina.</td></tr>
+                <tr><td>tú</td><td><span class="pron">has</span></td><td>¿Has <span class="pron">dormido</span> bien?</td></tr>
+                <tr><td>usted / él / ella</td><td><span class="pron">ha</span></td><td>¿Ha <span class="pron">tenido</span> fiebre?</td></tr>
+                <tr><td>nosotros/as</td><td><span class="pron">hemos</span></td><td>Hemos <span class="pron">llamado</span> al consultorio.</td></tr>
+                <tr><td>ustedes / ellos / ellas</td><td><span class="pron">han</span></td><td>Han <span class="pron">pedido</span> una cita.</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; TRES REGLAS DE HIERRO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">
+            <strong>1. Nothing separates <em>haber</em> from the participle.</strong> Not <em>no</em>, not a pronoun, not an adverb. <em>No he comido</em> ✔ &middot; «he no comido» ✘<br>
+            <strong>2. Pronouns go <u>before</u> <em>haber</em>.</strong> <em>Me he lastimado el tobillo</em> ✔ &middot; «he me lastimado» ✘<br>
+            <strong>3. The participle never changes for gender or number here.</strong> <em>Ana ha llegado</em>, <em>ellos han llegado</em> — always <em>-o</em>. (It <em>does</em> agree when used as an adjective: <em>la puerta está cerrada</em>. Different job.)
+            </div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; EL PARTICIPIO REGULAR <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two endings — and one accent rule</h3>
+        <table class="gtable">
+            <thead><tr><th>Infinitive ends in</th><th>Drop it, add</th><th>Examples</th></tr></thead>
+            <tbody>
+                <tr><td><strong>-ar</strong></td><td><span class="pron">-ado</span></td><td>tomar → tom<span class="pron">ado</span> &middot; descansar → descans<span class="pron">ado</span> &middot; llamar → llam<span class="pron">ado</span></td></tr>
+                <tr><td><strong>-er</strong></td><td><span class="pron">-ido</span></td><td>comer → com<span class="pron">ido</span> &middot; toser → tos<span class="pron">ido</span> &middot; beber → beb<span class="pron">ido</span></td></tr>
+                <tr><td><strong>-ir</strong></td><td><span class="pron">-ido</span></td><td>dormir → dorm<span class="pron">ido</span> &middot; pedir → ped<span class="pron">ido</span> &middot; sufrir → sufr<span class="pron">ido</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">As in the preterite, <strong>-er</strong> and <strong>-ir</strong> share one ending. So there are two patterns, not three.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; LA REGLA DEL ACENTO &middot; this module grades accents</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">When the stem ends in a <strong>vowel</strong>, the <em>i</em> of <em>-ido</em> takes a written accent:<br><br>
+            <strong>leer → le<span class="pron">í</span>do</strong> &middot; <strong>oír → o<span class="pron">í</span>do</strong> &middot; <strong>caer → ca<span class="pron">í</span>do</strong> &middot; <strong>traer → tra<span class="pron">í</span>do</strong> &middot; <strong>creer → cre<span class="pron">í</span>do</strong><br><br>
+            <em>Why:</em> without the tilde, the two vowels would merge into one syllable (<em>lei-do</em>, two syllables). The accent forces them apart into <em>le-í-do</em>, three syllables — which is how the word is actually said. The tilde is not decoration; it is the pronunciation.<br><br>
+            And notice <em>oído</em> — the same word as the body part you learned on Day 1, and it needs the accent for the same reason.</div>
+        </div>
+        <p style="font-size:15px;color:#6b7a99;margin:12px 0 0;">A handful of verbs build their participle irregularly — <em>hacer</em>, <em>decir</em>, <em>ver</em> and about six others. <strong>Those belong to Module 2</strong>, which is built around them. Today, regular participles only.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; nothing comes between them</div>
+            <div class="widget-question">«Todavía ___ la medicina.» (I have not taken)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«he no tomado» splits haber from the participle. Nothing may sit between them - the «no» goes in front of both.">he no tomado</button>
+                <button data-correct="true" data-fb="«no he tomado» - «no» goes before haber, and haber stays glued to the participle.">no he tomado</button>
+                <button data-correct="false" data-fb="«no tomado he» reverses the pair. Haber always comes first.">no tomado he</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the accent rule</div>
+            <div class="widget-question">«___ el artículo tres veces y todavía no lo entiendo.» (leer, yo)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«He leido» is missing the tilde. The stem «le-» ends in a vowel, so the i must be accented: leído.">He leido</button>
+                <button data-correct="true" data-fb="«He leído» - stem ends in a vowel, so the i takes the accent and the word has three syllables: le-í-do.">He leído</button>
+                <button data-correct="false" data-fb="«He léido» puts the accent on the wrong vowel. The tilde belongs on the i of the ending.">He léido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pronoun placement</div>
+            <div class="widget-question">«___ el tobillo jugando al fútbol.» (lastimarse, yo)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«He me lastimado» puts the pronoun inside the pair. Pronouns go BEFORE haber.">He me lastimado</button>
+                <button data-correct="true" data-fb="«Me he lastimado» - pronoun first, then haber, then the participle. And note «el tobillo», not «mi tobillo».">Me he lastimado</button>
+                <button data-correct="false" data-fb="«He lastimado me» attaches the pronoun to the end, which only happens with infinitives and gerunds - not with a conjugated haber.">He lastimado me</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the participle does not agree</div>
+            <div class="widget-question">«Mis hermanas ___ al consultorio.» (llamar)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«han llamadas» - the participle never agrees for gender or number in the perfect. It stays -o.">han llamadas</button>
+                <button data-correct="true" data-fb="«han llamado». Haber carries the plural; the participle never changes here.">han llamado</button>
+                <button data-correct="false" data-fb="«ha llamado» is singular. «Mis hermanas» is plural, so haber must be «han».">ha llamado</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: answer these three as a patient, in the present perfect — <em>¿Ha tomado algo? ¿Ha dormido bien? ¿Ha tenido fiebre?</em></p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Sí, he tomado un té con miel, pero no he tomado ninguna medicina.<br>&mdash;No he dormido bien; me he despertado tres veces por la tos.<br>&mdash;He tenido fiebre solamente una noche.</strong><br><br>Check three things in yours: <em>no</em> in front of <em>he</em> (never between) · the pronoun before <em>haber</em> in <em>me he despertado</em> · and every participle ending in <em>-ado</em> or <em>-ido</em> with no gender agreement.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Mensaje a la doctora</strong><br><br>
+        Buenos días, doctora. Le escribo porque no <strong>he mejorado</strong> mucho esta semana. <strong>He descansado</strong> tres días, <strong>he bebido</strong> mucha agua y <strong>he tomado</strong> el jarabe que usted me dio. La tos <strong>ha bajado</strong> un poco, pero todavía no <strong>he dormido</strong> una noche completa. Esta mañana <strong>me he despertado</strong> con dolor de garganta otra vez. Mi madre <strong>ha llamado</strong> al consultorio dos veces, pero no <strong>hemos podido</strong> conseguir una cita antes del viernes. ¿Debo esperar?</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Nine present perfects, and every one of them means the same thing: <em>this stretch of time is still open</em>. The illness is not over, which is exactly why the writer is not using the preterite. Find the two negatives and check where <em>no</em> sits; find <em>me he despertado</em> and check where the pronoun sits.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; MÉXICO Y ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>«¿Comiste?» o «¿Has comido?»</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Here is something you need to know before you meet it in the wild. In much of <strong>Spain</strong>, the present perfect covers ground that <strong>Mexican</strong> Spanish gives to the preterite. For lunch eaten an hour ago, a speaker in Madrid is likely to say <em>¿Has comido?</em> while a speaker in Mexico City says <em>¿Comiste?</em> — same afternoon, same lunch, different tense.<br><br>Neither is an error. This course teaches the Latin-American preference because that is the Spanish most of you will hear and use, and because the distinction you are learning today — <em>open window</em> versus <em>closed episode</em> — is the one that holds across the whole language. But when you meet a Spaniard using the perfect where you expected the preterite, they are not making a mistake. Recognising that instead of correcting it is part of what Intermediate proficiency means.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA TEMPLANZA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The patient in today's reading has done the temperate things — rested, drunk water, taken the syrup — and is now asking rather than either panicking or ignoring it. Temperance is not endurance; it is proportion. Doing the moderate thing steadily, then asking for help at the right moment, is harder than either extreme. <em>Ni alarmarse ni aguantar por orgullo: pedir ayuda a tiempo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 1.04 &mdash; El perfecto en uso</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you put it to work: the present perfect against the preterite, and the moment you need each. Same distinction as today, but now you have to <em>choose</em> — which is where Module 0's habit of asking a question before conjugating pays off again.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write out five participles from memory — one <em>-ar</em>, two <em>-er/-ir</em>, and two that need the accent (<em>leído</em>, <em>oído</em>). Check every tilde.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Five forms of <em>haber</em>, two participle endings, three iron rules, and an accent rule that explains itself once you hear the syllables. You now have all three Spanish pasts. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.03 &middot; El presente perfecto</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

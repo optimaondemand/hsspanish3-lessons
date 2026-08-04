@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 7.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 7</div>
+        <div style="font-size: 12px; color: #666;">Recomendaciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El marco impersonal</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Recomendaciones y deseos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> El marco impersonal — es necesario que, es importante que, es mejor que</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Advice with nobody's name on it. The clause stays; the wanter disappears.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Every trigger you have used so far has an owner. <em>Quiero</em> — I want. <em>Te recomiendo</em> — I advise. Somebody is pushing, and that somebody is you.<br><br>Today the first half of the sentence stops naming anyone: <strong><em>es necesario que</em></strong>, <strong><em>es importante que</em></strong>, <strong><em>es mejor que</em></strong>. The push is still there, but it comes from the situation rather than from a person — and that turns out to be the most useful register in the module, because it lets you advise a stranger, a teacher or an employer without putting your own will on the table.<br><br>The rule from Día 3 survives intact. What needs a second version is the <em>question</em>, and the second version is just as quick.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>es necesario / es importante / es mejor / es imprescindible</em> with a <em>que</em> clause in the subjunctive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose between the frame + infinitive (true for everybody) and the frame + <em>que</em> + subjunctive (aimed at one person).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what changes socially when the advice stops belonging to me.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Un consejo sin dueño</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Four ways to tell somebody to rest a day. Same advice, four different amounts of <em>you</em> in it:<br><br><em>«<strong>Descansa</strong> un día.»</em> &nbsp;&rarr;&nbsp; a command. The push is mine and it lands on you. (Módulo 4)<br><em>«<strong>Quiero que</strong> descanses un día.»</em> &nbsp;&rarr;&nbsp; my wish, with my name on it.<br><em>«<strong>Te recomiendo que</strong> descanses un día.»</em> &nbsp;&rarr;&nbsp; my judgement, offered rather than imposed.<br><em>«<strong>Es mejor que</strong> descanses un día.»</em> &nbsp;&rarr;&nbsp; nobody's wish. The altitude's verdict.<br><br>Notice what vanished on the last rung: <strong>me.</strong> The verb form after <em>que</em> never changed — <em>descanses</em> throughout — but the sentence stopped being about what I want. That is the whole of today, and it is more social than grammatical.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of those four would you rather be given by somebody you had just met?</div>
+            <div class="widget-options">
+                <button data-response="Most people say the last one, and there is a real reason: «es mejor que» makes the advice checkable. If it is the situation talking, you can disagree with the situation without disagreeing with the person. That is exactly what makes the frame useful in an email to a teacher.">The impersonal one — <em>es mejor que</em></button>
+                <button data-response="Defensible, and in some relationships it is warmer. «Quiero que descanses» says the speaker is invested in you, which the impersonal frame deliberately does not say. Between friends that is a feature; with a stranger it can be presumptuous. Both are correct Spanish - the choice is the skill.">The personal one — <em>quiero que</em></button>
+                <button data-response="Then you may be surprised how normal the plain command is in Spanish between people who know each other. «Descansa» is not rude; it is efficient. The reason to learn the other three is that you cannot use a command upwards - to a teacher, a host, an employer - and Spanish gives you three ladders for exactly that.">The command — it is the clearest</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; EL MARCO IMPERSONAL <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A frame with a slot in it</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><em>Es</em> + adjective + <em>que</em>. The adjective is the slot, and this fortnight you fill it with four words — three from today plus <em>imprescindible</em>, which you already learned on Día 1.</p>
+        <table class="gtable">
+            <thead><tr><th>El marco</th><th>Para todo el mundo &middot; infinitivo</th><th>Para una persona &middot; <em>que</em> + subjuntivo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>es necesario</strong></td><td>Es necesario <span class="pron">reservar</span> con antelación.</td><td>Es necesario <span class="pron">que reserves</span> con antelación.</td></tr>
+                <tr><td><strong>es importante</strong></td><td>Es importante <span class="pron">beber</span> mucha agua.</td><td>Es importante <span class="pron">que bebas</span> mucha agua.</td></tr>
+                <tr><td><strong>es mejor</strong></td><td>Es mejor no <span class="pron">subir</span> el mismo día.</td><td>Es mejor <span class="pron">que no subas</span> el mismo día.</td></tr>
+                <tr><td><strong>es imprescindible</strong></td><td>Es imprescindible <span class="pron">llevar</span> el pasaporte.</td><td>Es imprescindible <span class="pron">que lleves</span> el pasaporte.</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/es-necesario-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Es necesario que llegues temprano.</span><span class="v-en">the frame, aimed at one person</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/quiero-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Quiero que estudies.</span><span class="v-en">compare: here the wanter is named</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/recomiendo-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Recomiendo que lo intentes.</span><span class="v-en">the middle rung of Part 1's ladder</span></li>
+        </ul>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; LA PREGUNTA, SEGUNDA VERSIÓN</div>
+            <div style="font-size:17px;color:#1a2340;line-height:1.8;">Día 3 gave you the test: <em>is the person who wants also the person who acts?</em> In this frame there <strong>is</strong> no person who wants, so that question has nothing to bite on. Ask this instead:<br><br><strong>¿Va dirigido a alguien en concreto?</strong> — <em>Is this aimed at somebody in particular?</em><br>&bull; <strong>No</strong>, it is true for anybody → <em>Es necesario <span style="color:#AA1E2D">reservar</span> con antelación.</em><br>&bull; <strong>Sí</strong>, there is a named or implied person → <em>Es necesario <span style="color:#AA1E2D">que reserves</span> con antelación.</em><br><br>And the original rule still holds if you count honestly: the impersonal frame has <strong>zero</strong> subjects in the first half, so any person named in the second half is automatically a different subject from nobody. Two subjects, one of them absent. Same rule, same clause.</div>
+        </div>
+        <p style="font-size:15px;color:#6b7a99;margin:10px 0 0;">Both columns are correct Spanish. The difference is not accuracy, it is <strong>scope</strong> — a rule for everyone versus an instruction for you. Signs, laws and recipes live in the left column. Conversations live in the right.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; DOS FRONTERAS <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Where the frame stops, and what it buys you</h3>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; FRONTERA 1 &middot; NO TODO «ES&hellip; QUE» EMPUJA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Put a different kind of adjective in the slot and the sentence stops pushing and starts <strong>reporting</strong> — so it takes the indicative, exactly like Día 1's <em>«la ventaja es que&hellip;»</em>:<br><br><em>«Es verdad que Puno <strong>está</strong> a más de tres mil ochocientos metros.»</em><br><em>«Está claro que el sol de la sierra <strong>quema</strong> más de lo que parece.»</em><br><br>Neither of those is trying to move anybody; both are claims about the world. The test is the one from Día 1 and it has not changed: <strong>¿informo o empujo?</strong> <em>Necesario, importante, mejor, imprescindible</em> push — they say something ought to happen. <em>Verdad</em> and <em>claro</em> report.<br><br>This is the same lesson in a new costume: <em>que</em> triggers nothing. What is in front of it decides.</div>
+        </div>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128073; FRONTERA 2 &middot; LA ESCALERA COMPLETA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">You now hold four instruments for the same act, and they differ in one dimension: <strong>how visible the speaker is.</strong></div>
+            <table class="gtable">
+                <thead><tr><th>Instrumento</th><th>¿Quién empuja?</th><th>Cuándo conviene</th></tr></thead>
+                <tbody>
+                    <tr><td><em>Descansa hoy.</em></td><td>yo, directamente</td><td>Urgency, or people who know each other well</td></tr>
+                    <tr><td><em>Quiero que descanses hoy.</em></td><td>yo, con mi nombre puesto</td><td>When the relationship can carry your will</td></tr>
+                    <tr><td><em>Te recomiendo que descanses hoy.</em></td><td>yo, ofreciendo</td><td>Advice with a reason behind it</td></tr>
+                    <tr><td><em>Es mejor que descanses hoy.</em></td><td>nadie; la situación</td><td>Distance, courtesy, rules, advice upwards</td></tr>
+                </tbody>
+            </table>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;margin-top:10px;">And note that <em>es mejor que</em> plus <em>no</em> is the gentlest way in the language to tell somebody not to do something: <em>«Es mejor que no subas hoy»</em> against <em>«no subas hoy»</em>. Identical verb form — <em>subas</em>, which you first wrote as a negative <em>tú</em> command in Módulo 4 — and a completely different social act. The forms have not moved all fortnight. Only their address keeps changing.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; ¿a quién va dirigido?</div>
+            <div class="widget-question">A printed notice at a boat dock, addressed to every passenger. How is it written?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Es necesario que uses chaleco» is perfectly good Spanish, but it aims the rule at one person - «tú». A printed notice does not know who is reading it, so it does not name anybody.">Es necesario que uses chaleco salvavidas.</button>
+                <button data-correct="true" data-fb="«Es necesario usar chaleco salvavidas.» The notice speaks to everybody, so nobody is named and the frame takes an infinitive. Both columns of the Part 2 table are correct - the audience decides which one you want.">Es necesario usar chaleco salvavidas.</button>
+                <button data-correct="false" data-fb="«Que usar» is not a structure in Spanish. «Que» opens a clause, and a clause needs a conjugated verb; if you want the infinitive, drop the «que» entirely.">Es necesario que usar chaleco salvavidas.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; la forma</div>
+            <div class="widget-question">Complete it: <em>«Es mejor que ustedes ___ mañana temprano.»</em> (ir)</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«van» is the indicative - it reports that they are going. «Es mejor que» is not reporting; it is saying which option is better, so the verb shifts mood.">van</button>
+                <button data-correct="false" data-fb="«ir» would be right with nobody named - «es mejor ir mañana temprano». But «ustedes» is right there in the sentence, so the clause needs a conjugated verb.">ir</button>
+                <button data-correct="true" data-fb="«vayan» - one of the six forms that come from nowhere, and one you have been producing as an Uds. command since Módulo 3: «no vayan».">vayan</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; informar o empujar</div>
+            <div class="widget-question">Which of these is <strong>reporting</strong>, and therefore takes the indicative?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Right: «Es verdad que el lago está a más de tres mil ochocientos metros.» A claim about the world - so the indicative «está». Nothing is being asked of anybody.">Es verdad que el lago ___ a más de 3.800 metros.</button>
+                <button data-correct="false" data-fb="«Es importante que bebas agua» pushes: it says something ought to happen. The frame takes the subjunctive.">Es importante que ___ mucha agua.</button>
+                <button data-correct="false" data-fb="«Es mejor que descanses hoy» also pushes - it recommends one option over another, which is the softest kind of push but a push all the same.">Es mejor que ___ hoy.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; el instrumento correcto</div>
+            <div class="widget-question">You barely know a classmate and you want to suggest that the group meet earlier. Which lands best?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Exijo que nos reunamos» is grammatically flawless and socially a disaster. «Exigir» is a demand; between classmates it says something about the relationship that you did not mean to say.">Exijo que nos reunamos más temprano.</button>
+                <button data-correct="false" data-fb="«Quiero que nos reunamos» is fine and clear, but it puts your preference at the centre of a decision that belongs to the group. With someone you barely know, that is the thing worth removing.">Quiero que nos reunamos más temprano.</button>
+                <button data-correct="true" data-fb="«Es mejor que nos reunamos más temprano.» The frame takes you out of the sentence, so what is on the table is the timetable rather than your will - and the other person can disagree without contradicting you.">Es mejor que nos reunamos más temprano.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: here are three instructions from a sign, written for everybody. Rewrite each one <strong>aimed at one person</strong>, using a different frame each time — and then take one wish of your own, <em>«quiero que&hellip;»</em>, and soften it into the impersonal frame.</p>
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;"><em>No dejar basura.</em> &middot;&middot;&middot; <em>Prohibido nadar aquí.</em> &middot;&middot;&middot; <em>Llevar chaleco salvavidas.</em></p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Es importante que no dejes basura; aquí no pasa ningún camión. Es mejor que no nades en esta parte, porque el agua está a diez grados. Y es imprescindible que lleves chaleco durante toda la travesía.<br><br>&mdash;Quiero que descanses hoy. &rarr; Es mejor que descanses hoy.</strong><br><br>Check yours: three different adjectives in the slot, three subjunctive clauses (<em>dejes, nades, lleves</em>), and each one carries a reason. The frame is impersonal, not empty — <em>«es mejor que no nades»</em> without <em>«porque el agua está a diez grados»</em> sounds like an arbitrary rule.<br><br>Then read the last pair aloud, one after the other, and listen to what changed. The verb did not. <em>Descanses</em> in both. What moved was who is responsible for the advice.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>En el muelle de Puno</strong><br><br>
+        <em>Aviso en la caseta de venta:</em><br>
+        Es necesario <strong>presentar</strong> el boleto antes de subir a la lancha. Es obligatorio <strong>usar</strong> chaleco salvavidas durante toda la travesía. Es importante no <strong>ponerse</strong> de pie cuando la lancha está en movimiento.<br><br>
+        <em>Y el lanchero, ya en el muelle:</em><br>
+        &mdash;Ustedes dos, atrás. Es mejor <strong>que se sienten</strong> en la parte cubierta; a esta hora el sol quema y el aire engaña.<br>
+        &mdash;¿Cuánto dura?<br>
+        &mdash;Media hora hasta las islas. Es importante <strong>que lleven</strong> algo en la cabeza; a tres mil ochocientos metros el sol no perdona.<br>
+        &mdash;¿Y podemos caminar por la isla?<br>
+        &mdash;Sí, pero es necesario <strong>que pisen</strong> donde pisa la familia que los recibe. El suelo es totora viva; en algunas partes cede. Yo prefiero <strong>avisar</strong> primero, porque arreglar después sale más caro.<br>
+        &mdash;¿Se puede comprar algo allá?<br>
+        &mdash;Claro. Y les pido una cosa: si compran, compren a la familia que los invitó a su isla, no en la tienda del muelle. Es mejor <strong>que el dinero llegue</strong> donde está el trabajo.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Read the notice and the boatman one after the other and the lesson is complete without further explanation.<br><br>The <strong>notice</strong> uses the same four frames you learned today, and every single one is followed by an <strong>infinitive</strong> — <em>presentar, usar, ponerse</em>. It is printed for whoever turns up; it cannot name anybody.<br><br>The <strong>boatman</strong> uses the same frames and every one opens a <strong>clause</strong> — <em>que se sienten, que lleven, que pisen, que el dinero llegue</em>. He is looking at four specific people. Same four words, two audiences, two constructions.<br><br>Three details worth keeping. <em>«Que se sienten»</em> puts the reflexive pronoun before the verb, in the clause slot from Día 4. <em>«Yo prefiero avisar primero»</em> drops back to an infinitive because the subject stops changing — he warns, he warns. And the last line names a subject that is not a person at all: <em>«es mejor que el dinero llegue&hellip;»</em>. The clause needs a different subject from the frame, not necessarily a human one.<br><br>One spiral: <em>«la familia que los recibe»</em> and <em>«la familia que los invitó»</em> are Módulo 6's relative <em>que</em> — and neither takes the subjunctive, because neither is pushing anything. Módulo 6's <em>que</em> and Módulo 7's <em>que</em> are different words doing different jobs, and this passage has both in one sentence.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; PERÚ</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Las islas que hay que volver a construir</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><strong>El lago Titicaca</strong> sits at about <strong>3,810 metres</strong> on the border between Peru and Bolivia — the largest lake in South America by volume, and high enough that visitors arriving from the coast feel it within the hour. In the bay near Puno live the <strong>Uros</strong>, on islands they build themselves out of <em>totora</em>, the tall reed that grows in the shallows.<br><br>The engineering is the interesting part. A floating island is a raft of cut reed laid over blocks of the root mass, anchored to the lake bed with stakes — and the bottom layer is permanently rotting. So new reed has to be laid on top, over and over, for as long as anyone wants to keep living there. Nobody repairs an Uros island once it fails; the work is continuous, and a floor that is allowed to thin will simply let a foot through. The same reed is used for the boats, for the houses, and, peeled, is eaten.<br><br>Two honest notes, because this course does not sell you a postcard. The Uros' island-building almost certainly began as a way of staying out of reach of stronger neighbours, including the Inca — mobility as defence. And today most families in the bay live substantially on tourism, receiving visitors in rotation on islands maintained partly for that purpose. That is not a fake; it is a real place with a real economy, and it is worth knowing which is which before you photograph it.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The boatman never once tells anybody what he wants. He says <em>es mejor</em>, <em>es importante</em>, <em>es necesario</em> — and every instruction has a reason attached to it. Four strangers get told where to sit, what to wear and where to walk, and nobody has been ordered about.<br><br>That is what the impersonal frame is for, and it is <strong>la prudencia</strong> in a grammatical structure: it leaves the other person room to weigh the advice instead of having to weigh you. Prudence here is not softness. The advice is firm — the floor really does give way — and it is aimed at the situation rather than at the person's judgement. Like the reed, it is laid down before the failure, not after. <em>Es mejor avisar a tiempo que tener razón después.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.06 &mdash; Un párrafo de consejos</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Last full practice day. You will put all four instruments into a single connected paragraph of six to eight sentences — the Honors standard, and exactly what <em>Lengua en acción</em> asks for on <strong>Día 7</strong>. There is also a reading about a road system that ran an empire without wheels.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say the same piece of advice four times, climbing Part 1's ladder — command, <em>quiero que</em>, <em>te recomiendo que</em>, <em>es mejor que</em> — and listen to yourself disappear from the sentence. Use your own example, not <em>descansar</em>.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A frame with a slot in it, a second version of the question, and a boundary worth knowing: <em>es verdad que</em> reports, <em>es mejor que</em> pushes. You can now advise upwards in Spanish, which is the register most courses never teach. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.05 &middot; El marco impersonal</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

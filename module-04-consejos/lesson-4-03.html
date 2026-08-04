@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 4.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 4</div>
+        <div style="font-size: 12px; color: #666;">Consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Mandatos afirmativos con tú</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Consejos entre amigos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Mandatos afirmativos con tú — y ocho cortos</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The easiest command form in Spanish — you already know it without knowing it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In Módulo 3 you built formal commands from scratch: <em>tome, visite, no lleve</em>. The <em>tú</em> affirmative command is far simpler, and Spanish 2 gave you a first pass at it.<br><br>The rule is one line: <strong>take the <em>él/ella</em> form of the present tense.</strong> <em>Habla. Come. Escribe.</em> That is it.<br><br>Then there are <strong>eight short irregulars</strong> — and because they are the eight most useful verbs in the language, they carry most of the advice friends actually give each other.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the affirmative <em>tú</em> command of any regular verb from its <em>él/ella</em> present form.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce the eight irregulars — <em>di, haz, ve, pon, sal, sé, ten, ven</em> — from memory.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>sé</em> carries an accent when the others do not.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">You have been reading these all module</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.8;margin:0 0 10px 0;">
+        «<strong>Escúchame</strong> un segundo.»<br>
+        «<strong>Confía</strong> en tu preparación.»<br>
+        «<strong>Dime</strong> a ver.»</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">All three appeared in Lesson 4.01, and all three are affirmative <em>tú</em> commands. You understood them without being taught them — which tells you the form is close to something you already own.<br><br>It is: the <em>él/ella</em> present tense. <em>Él confía</em> → <em>¡Confía!</em> Same word, different job.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Predict: if <em>él come</em> is &ldquo;he eats,&rdquo; how do you tell a friend to eat?</div>
+            <div class="widget-options">
+                <button data-response="Correct - «¡Come!». The él/ella form does double duty. You just derived the rule rather than being told it.">¡Come!</button>
+                <button data-response="A reasonable guess from the formal commands in Module 3 - «coma» is the Ud. form. For a friend it is «come», borrowed straight from él/ella.">¡Coma!</button>
+                <button data-response="«Comes» is the tú present - «you eat», a statement. The command drops the s: come.">¡Comes!</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA REGLA <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Take the <em>él/ella</em> form. Stop.</h3>
+        <table class="gtable">
+            <thead><tr><th>Infinitive</th><th><em>él/ella</em> present</th><th>Mandato <em>tú</em></th><th>In use</th></tr></thead>
+            <tbody>
+                <tr><td>hablar</td><td>habla</td><td><span class="pron">habla</span></td><td><span class="pron">Habla</span> con ella hoy.</td></tr>
+                <tr><td>comer</td><td>come</td><td><span class="pron">come</span></td><td><span class="pron">Come</span> algo antes de salir.</td></tr>
+                <tr><td>escribir</td><td>escribe</td><td><span class="pron">escribe</span></td><td><span class="pron">Escribe</span>le un mensaje.</td></tr>
+                <tr><td>pensar (e→ie)</td><td>piensa</td><td><span class="pron">piensa</span></td><td><span class="pron">Piensa</span> antes de contestar.</td></tr>
+                <tr><td>dormir (o→ue)</td><td>duerme</td><td><span class="pron">duerme</span></td><td><span class="pron">Duerme</span> bien esta noche.</td></tr>
+                <tr><td>pedir (e→i)</td><td>pide</td><td><span class="pron">pide</span></td><td><span class="pron">Pide</span> ayuda si la necesitas.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Stem changes come along for free.</strong> Because the command <em>is</em> the <em>él/ella</em> form, <em>piensa</em>, <em>duerme</em> and <em>pide</em> need no extra rule — if you can say <em>él duerme</em>, you can say <em>¡duerme!</em> There is nothing to memorise beyond the present tense you already have.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPARA CON EL MÓDULO 3</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Two registers, side by side:<br><br>
+            To a stranger: <em>«<strong>Hable</strong> con la recepcionista.»</em> — the Ud. command from Module 3<br>
+            To a friend: <em>«<strong>Habla</strong> con ella hoy.»</em> — the tú command from today<br><br>
+            One letter apart, and the whole relationship changes. Note which direction the vowel moves: the Ud. form takes the &ldquo;opposite&rdquo; vowel (<em>-ar</em> verb → <em>e</em>), while the tú form keeps its own (<em>-ar</em> verb → <em>a</em>).</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS OCHO IRREGULARES <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Short, closed, and the most useful eight in the language</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click the <strong>&#128266;</strong> to hear all eight, then read the table aloud twice. Every one is a single syllable.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/mandatos-irregulares-tu.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">di, haz, ve, pon, sal, sé, ten, ven</span><span class="v-en">the eight, in order</span></li>
+        </ul>
+        <table class="gtable">
+            <thead><tr><th>Infinitive</th><th>Mandato</th><th>In use</th></tr></thead>
+            <tbody>
+                <tr><td>decir</td><td><span class="pron">di</span></td><td><span class="pron">Di</span>le la verdad.</td></tr>
+                <tr><td>hacer</td><td><span class="pron">haz</span></td><td><span class="pron">Haz</span> una lista.</td></tr>
+                <tr><td>ir</td><td><span class="pron">ve</span></td><td><span class="pron">Ve</span> a hablar con él.</td></tr>
+                <tr><td>poner</td><td><span class="pron">pon</span></td><td><span class="pron">Pon</span> el teléfono lejos.</td></tr>
+                <tr><td>salir</td><td><span class="pron">sal</span></td><td><span class="pron">Sal</span> a caminar un rato.</td></tr>
+                <tr><td>ser</td><td><span class="pron">sé</span></td><td><span class="pron">Sé</span> sincero con ella.</td></tr>
+                <tr><td>tener</td><td><span class="pron">ten</span></td><td><span class="pron">Ten</span> paciencia.</td></tr>
+                <tr><td>venir</td><td><span class="pron">ven</span></td><td><span class="pron">Ven</span> el sábado.</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; EL ACENTO DE <em>SÉ</em> &middot; this module grades accents</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Only one of the eight carries a written accent, and it is doing a job: <strong><em>sé</em></strong> (be!) must be distinguished from <strong><em>se</em></strong>, the pronoun in <em>se llama</em>, <em>se fue</em>.<br><br>This is a <em>tilde diacrítica</em> — an accent used purely to separate two identical-looking words. You already know others: <em>tú</em> (you) vs <em>tu</em> (your) · <em>mí</em> (me) vs <em>mi</em> (my) · <em>él</em> (he) vs <em>el</em> (the).<br><br>So <em>«Sé sincero»</em> means <em>be sincere</em>. Without the accent it is a different word entirely.</div>
+        </div>
+        <p style="font-size:15px;color:#6b7a99;margin:10px 0 0;">One more thing worth noticing: <em>ve</em> is the command of <strong>ir</strong> (go), and it is also the <em>él/ella</em> form of <strong>ver</strong> (he sees). Context separates them without trouble — <em>«ve al médico»</em> can only mean <em>go</em>.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">10 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the rule</div>
+            <div class="widget-question">Tell a friend to sleep: «___ bien esta noche.» (dormir)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Duerme» - the él/ella form, stem change included, no extra rule needed.">Duerme</button>
+                <button data-correct="false" data-fb="«Duerma» is the Ud. command from Module 3 - correct for a stranger, too formal for a friend.">Duerma</button>
+                <button data-correct="false" data-fb="«Duermes» is the tú present: «you sleep». The command drops the s.">Duermes</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; an irregular</div>
+            <div class="widget-question">«___ la verdad, aunque cuesta.» (decir)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Di» - one syllable, no accent. One of the eight.">Di</button>
+                <button data-correct="false" data-fb="«Dice» is «he says». Decir is one of the eight irregulars: di.">Dice</button>
+                <button data-correct="false" data-fb="«Diga» is the Ud. command. For a friend it is «di».">Diga</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the accent that carries meaning</div>
+            <div class="widget-question">«___ paciente con él.» (ser — be patient)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Sé» - with the tilde, which separates it from the pronoun «se». A tilde diacrítica, like tú/tu and mí/mi.">Sé</button>
+                <button data-correct="false" data-fb="«Se» without the accent is a pronoun, not a command. The tilde is the whole difference.">Se</button>
+                <button data-correct="false" data-fb="«Sea» is the Ud. command. For a friend, «sé».">Sea</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; register check</div>
+            <div class="widget-question">A nurse tells you to sit down. Which would she say?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Siéntate» is the tú command - too familiar from a nurse to a patient she does not know.">Siéntate</button>
+                <button data-correct="true" data-fb="«Siéntese» - the Ud. command from Module 3. Professional settings use usted.">Siéntese</button>
+                <button data-correct="false" data-fb="«Te sientas» is a statement: «you sit down». Not a command at all.">Te sientas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: give a nervous friend <strong>four</strong> pieces of advice as commands, using at least <strong>three</strong> of the eight irregulars.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Ten paciencia contigo mismo. Haz una lista de lo que ya sabes. Sal a caminar veinte minutos antes de estudiar. Y sé sincero con la profesora si necesitas más tiempo.</strong><br><br>Check yours: single-syllable irregulars (<em>ten, haz, sal, sé</em>) · the accent on <em>sé</em> and on nothing else · and <em>tú</em> forms throughout, since this is a friend.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Nota en la puerta del refrigerador</strong><br><br>
+        Hermanito:<br><br>
+        Me fui temprano. Unas cosas:<br><br>
+        <strong>Desayuna</strong> algo de verdad, no solo café. <strong>Pon</strong> los platos en el lavaplatos, no en el fregadero. Si mamá llama, <strong>dile</strong> que llego a las seis. <strong>Ve</strong> a la farmacia antes de las cinco y <strong>trae</strong> el jarabe de la receta.<br><br>Y una cosa más: <strong>ten</strong> paciencia con el profesor de mates. <strong>Sé</strong> amable aunque no te gusta mucho. <strong>Habla</strong> con él después de clase y <strong>pide</strong> ayuda con el tema cinco &mdash; te va a ir mejor de lo que crees.<br><br>Nos vemos.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Eleven commands in a note on a fridge — this is what the form is actually <em>for</em>. Sort them: which come straight from the <em>él/ella</em> present (<em>desayuna, trae, habla, pide</em>) and which are from the eight irregulars (<em>pon, di, ve, ten, sé</em>)?<br><br>Then find <em>dile</em> and notice the pronoun stuck onto the end. That is Day 6's lesson, and it is already happening naturally in front of you.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; REPÚBLICA DOMINICANA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Mandar no es mandonear</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">English speakers often feel that giving a bare command sounds bossy, and soften everything into questions: <em>could you maybe&hellip;?</em> In Spanish, and markedly in the Caribbean, the plain imperative between people who know each other is <strong>normal and friendly</strong> — <em>«dime»</em>, <em>«ven acá»</em>, <em>«pásame eso»</em>.<br><br>Dominicans in particular use the imperative constantly as an expression of closeness, not authority. Over-softening can actually create distance: hedging with someone who considers you a friend can read as oddly formal.<br><br>What <em>does</em> soften a command everywhere is the same thing as in English — a name, a <em>por favor</em>, or a reason attached: <em>«Ve a la farmacia, que cierran a las cinco»</em>. Note how the fridge note does exactly that in its last line.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; EL SERVICIO</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Read the fridge note again and notice what kind of document it is: an older sibling leaving early, thinking about somebody else's breakfast, prescription and difficult maths teacher. Eleven commands, every one of them in the reader's interest. <em>El servicio</em> is frequently indistinguishable from ordinary household instructions — which is what makes it easy to miss and hard to fake. <em>Servir se parece mucho a una nota en el refrigerador.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 4.04 &mdash; Los mandatos en uso</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you put them to work in real advice, and learn how to soften a command without abandoning it. Then Day 5 brings the genuinely new piece: the <strong>negative</strong> <em>tú</em> command, which is built differently.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write the eight irregulars from memory — infinitive → command. Check the accent on <em>sé</em>, and check you did <em>not</em> put one on the other seven.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One rule — take the <em>él/ella</em> form — plus eight single-syllable irregulars, and you can now tell a friend to do almost anything. Tomorrow the harder half: telling them <em>not</em> to. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.03 &middot; Mandatos afirmativos con tú</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

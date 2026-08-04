@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.08</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.08 &middot; Day 8 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Lectura interpretativa · Gabriela Mistral</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.08</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Lectura interpretativa — «La oración de la maestra», y dos trabajos para una misma palabra</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A Chilean village schoolteacher wrote this about her own job. Its first sentence contains the whole semester.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The last reading day of Semester 1, and the strongest text in it. <strong>Gabriela Mistral</strong> published <em>Desolación</em> in 1922; twenty-three years later she became the first Latin American to win the Nobel Prize in Literature.<br><br>«La oración de la maestra» is a <strong>sustained petition</strong> — one long act of asking — which means it runs on Módulo 8's grammar from the first line to the last. And in its opening sentence the word <em>que</em> appears twice, inches apart, doing two <strong>completely different jobs</strong>. That contrast is what you are here for.<br><br>The graded <strong>Lectura interpretativa</strong> (15 pts) opens today.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what a 1922 Chilean teacher asks for, and what she asks not to feel.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>enseñe</em> is subjunctive and <em>llevaste</em> is indicative after the same word.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find four earlier modules of this course operating inside a poem from 1922.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; ANTES DE LEER <span class="pill-time">7 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Quién escribe, y por qué eso importa</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Lucila Godoy Alcayaga</strong> was born in 1889 in Vicuña, in the Elqui valley — a narrow strip of green between bare mountains in the north of Chile, on the edge of the desert you read about in 8.06. She began working as a teacher <strong>while she was still a teenager</strong>, in rural schools, without a university degree, and she went on teaching for decades. She published under the name <strong>Gabriela Mistral</strong>.<br><br>In 1945 she became the <strong>first Latin American writer of any kind to win the Nobel Prize in Literature</strong>.<br><br>Hold on to the first fact while you read the second. This is not a poet imagining what a teacher's inner life might be like. It is a working country schoolteacher writing about her own job — the classroom she actually stood in, the pupils who actually forgot her — and asking, in the form her culture gave her for asking, to be made better at it.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong>Why this text sits in Módulo 8.</strong> A prayer is grammatically a <em>petition</em>: somebody asks somebody else to do something. That is precisely the structure this module owns. Every request in the poem is built out of the machinery you have spent two weeks on — which is why the reading day of the module about advising and requesting is a poem, and not a news article.</p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;"><strong>Busca estas tres cosas.</strong> No dictionary on the first pass:</p>
+        <ol style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 0 1.4rem;">
+            <li>¿Qué pide para sí misma, y qué pide <em>no</em> sentir?</li>
+            <li>En la primera frase, <em>que</em> aparece dos veces. ¿Son iguales los dos verbos que la siguen?</li>
+            <li>¿Cuántos mandatos dirigidos a Dios puedes encontrar?</li>
+        </ol>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; EL TEXTO <span class="pill-time">10 min</span></div>
+        <div class="lectura-box">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:10px;">&#128214; LECTURA AUTÉNTICA &middot; DOMINIO PÚBLICO &middot; 1922</div>
+            <div style="font-size:19px;color:#0e1c42;line-height:1.85;">
+            ¡Señor! Tú que enseñaste, perdona que yo enseñe; que lleve el nombre de maestra, que tú llevaste por la Tierra.<br><br>
+            Dame el amor único de mi escuela; que ni la quemadura de la belleza sea capaz de robarle mi ternura de todos los instantes.<br><br>
+            Maestro, hazme perdurable el fervor y pasajero el desencanto. Arranca de mí este impuro deseo de justicia que aún me turba, la mezquina insinuación de protesta que sube de mí cuando me hieren. No me duela la incomprensión ni me entristezca el olvido de las que enseñé.
+            <div style="text-align:center;margin:14px 0;color:#6b7a99;">[&hellip;]</div>
+            Dame sencillez y dame profundidad; líbrame de ser complicada o banal, en mi lección cotidiana.
+            </div>
+            <div class="src">Gabriela Mistral, «La oración de la maestra», <em>Desolación</em>, 1922. Dominio público.</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Sobre el texto.</strong> The first three paragraphs run continuously in the 1922 edition. The final paragraph comes from later in the same prayer, so <strong>material has been omitted</strong> — that is what the centred <strong>[&hellip;]</strong> marks. Nothing inside the four paragraphs has been altered, cut or modernised; the spelling, the punctuation and the capital <em>T</em> in <em>por la Tierra</em> are Mistral's.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128216; GLOSARIO &middot; español de 1922 &middot; read this before your second pass</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;"><em>la quemadura</em> = a burn, a burning &middot; <em>la ternura</em> = tenderness &middot; <em>perdurable</em> = lasting, enduring &middot; <em>pasajero</em> = passing, short-lived (as an adjective; as a noun it is a passenger) &middot; <em>el desencanto</em> = disenchantment, the loss of illusions &middot; <em>el fervor</em> = fervour, ardour &middot; <em>arrancar</em> = to tear out, to pull up by the roots &middot; <em>turbar</em> = to disturb, to trouble, to unsettle &middot; <em>mezquino</em> = mean, petty, small-minded &middot; <em>la insinuación</em> = a hint, an insinuation &middot; <em>la protesta</em> = protest, complaint &middot; <em>herir</em> = to wound, to hurt &middot; <em>la incomprensión</em> = being misunderstood &middot; <em>el olvido</em> = forgetting, oblivion &middot; <em>la sencillez</em> = simplicity, plainness &middot; <em>la profundidad</em> = depth &middot; <em>banal</em> = banal, trivial, empty &middot; <em>cotidiano</em> = daily, everyday.<br><br><strong>Two that decide whole sentences.</strong> <em>La quemadura de la belleza</em> is beauty as something that scorches — Mistral is asking not to be so taken by beautiful things that she has nothing tender left for the children in front of her. And <em>las que enseñé</em> is feminine plural: <strong>the girls she taught.</strong> She is asking not to be saddened when they forget her, which they will.</div>
+        </div>
+        <p style="font-size:16px;color:#6b7a99;line-height:1.6;margin:12px 0 0;"><strong>Three forms are not yours yet</strong> — <em>sea capaz</em>, <em>no me duela</em>, <em>ni me entristezca</em>. They are subjunctives, but they are not the kind this module taught you: two of them have no visible trigger word in front of them at all. Read them as wishes — &ldquo;may it not be able to&hellip;&rdquo;, &ldquo;may it not hurt me&hellip;&rdquo; — and move on. <strong>This is recognition only.</strong> Nothing on this page or in the graded item asks you to produce them, and the rest of that system — the subjunctive after emotion and after doubt — is Semester 2's work.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; COMPRENSIÓN <span class="pill-time">9 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Practice first — ungraded. The graded item asks the same four kinds of question, and you are expected to <strong>reread the text</strong> while answering both.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; IDEA GENERAL &middot; gist</div>
+            <div class="widget-question">¿Cuál es la petición central del poema?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Al contrario: pide perdón por enseñar, no por haber dejado de enseñar. «Perdona que yo enseñe» - la humildad está en atreverse a hacer el oficio que hizo Cristo, no en abandonarlo.">Pide perdón por haber abandonado la enseñanza</button>
+                <button data-correct="true" data-fb="Exacto. Pide cualidades para hacer bien su trabajo - amor, ternura, fervor duradero, sencillez y profundidad - y pide que le quiten lo que se lo estorba. Es una petición sobre su carácter, no sobre sus circunstancias.">Pide las cualidades que necesita para enseñar bien</button>
+                <button data-correct="false" data-fb="Pide justo lo contrario: «no me entristezca el olvido de las que enseñé». Acepta de antemano que sus alumnas la van a olvidar y pide no sufrir por eso. Es la línea más dura del texto.">Pide que sus alumnas la recuerden siempre</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; DETALLE &middot; detail</div>
+            <div class="widget-question">Según la tercera estrofa, ¿qué debe durar y qué debe pasar?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Hazme perdurable el fervor y pasajero el desencanto» - que el entusiasmo dure y que la decepción se vaya rápido. El orden de las palabras es difícil: el adjetivo va antes del sustantivo en las dos mitades.">Que dure el fervor y que pase el desencanto</button>
+                <button data-correct="false" data-fb="Es exactamente al revés, y es un error fácil porque «perdurable» y «pasajero» están delante de sus sustantivos. Lee otra vez: «perdurable el fervor», «pasajero el desencanto».">Que dure el desencanto y que pase el fervor</button>
+                <button data-correct="false" data-fb="No pide que desaparezcan las dos cosas. Pide una distinta para cada una - y esa asimetría es el sentido de la frase: sabe que las dos van a venir.">Que las dos cosas desaparezcan del todo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; GRAMÁTICA EN EL TEXTO &middot; the Honors item</div>
+            <div class="widget-question">«Perdona que yo <strong>enseñe</strong>» &mdash; subjuntivo. «El nombre de maestra, que tú <strong>llevaste</strong>» &mdash; indicativo. Misma palabra <em>que</em>, a cinco palabras de distancia. ¿Por qué?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="El cambio de sujeto es necesario pero no suficiente, y esta es la trampa más común del módulo. «Sé que tú llevaste el nombre» también cambia de sujeto y sigue en indicativo. Lo que decide es el VERBO que va delante de «que», no quién lo hace.">Porque el sujeto cambia: primero <em>yo</em>, después <em>tú</em></button>
+                <button data-correct="false" data-fb="Falso como razón: el subjuntivo tiene formas de pasado, y de todos modos el tiempo no decide el modo. Un pretérito puede aparecer en una cláusula de influencia igual que un presente.">Porque el pretérito no tiene forma de subjuntivo</button>
+                <button data-correct="true" data-fb="Esto es todo el módulo en una frase. «Perdona» es un verbo de petición, así que su cláusula toma subjuntivo: «que yo enseñe». El segundo «que» no depende de ningún verbo de influencia - es un relativo que describe «el nombre de maestra» y afirma un hecho del pasado, así que va en indicativo.">Porque el primer <em>que</em> depende de un verbo de petición y el segundo solo describe un sustantivo</button>
+                <button data-correct="false" data-fb="Los dos se dirigen a la misma persona y en la misma forma - «Tú que enseñaste», «perdona», «tú llevaste» son todos de tú. El registro no cambia en ningún punto del poema.">Porque el poema cambia de tratamiento entre las dos mitades</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; INFERENCIA &middot; inference</div>
+            <div class="widget-question">Pide sencillez y profundidad, y pide que la libren de ser «complicada o banal». ¿Por qué esas dos palabras juntas?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="No las considera incompatibles: las pide en la misma frase, una detrás de otra, y nadie pide a la vez dos cosas que se excluyen.">Porque cree que la sencillez y la profundidad no pueden coexistir</button>
+                <button data-correct="true" data-fb="Son las dos maneras opuestas de fallar en lo mismo. «Complicada» es enredar lo que era sencillo; «banal» es vaciar lo que era profundo. Pide las dos virtudes porque cada una la protege de un error distinto - y las dos ocurren en el aula, no en la teoría.">Porque son los dos fracasos opuestos de una misma clase</button>
+                <button data-correct="false" data-fb="Dice lo contrario: pide todo esto «en mi lección cotidiana». La clase de cada día es precisamente donde quiere que ocurra, no un detalle menor frente a la vocación.">Porque le importa más la vocación que la clase de cada día</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128269; PART 4 &middot; CUATRO MÓDULOS EN UN POEMA <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Everything you built since October, in nine lines of 1922</h3>
+        <table class="gtable">
+            <thead><tr><th>En el texto</th><th>Qué es</th><th>Módulo</th></tr></thead>
+            <tbody>
+                <tr><td><em>perdona que yo <strong>enseñe</strong></em></td><td>Verb of petition + <em>que</em> + <strong>subjuntivo</strong></td><td><strong>M7&ndash;M8</strong></td></tr>
+                <tr><td><em>que tú <strong>llevaste</strong></em></td><td><em>Que</em> relativo + <strong>indicativo</strong> (pretérito): a fact about the past</td><td>M6</td></tr>
+                <tr><td><em><strong>Dame</strong> &middot; <strong>hazme</strong> &middot; <strong>líbrame</strong></em></td><td>Affirmative <em>tú</em> commands with the pronoun <strong>attached</strong>, tilde and all</td><td>M4</td></tr>
+                <tr><td><em><strong>Arranca</strong> de mí</em></td><td>Affirmative <em>tú</em> command, no pronoun attached</td><td>M4</td></tr>
+                <tr><td><em>las <strong>que</strong> enseñé</em></td><td><em>Las que</em> = the ones (feminine) whom&hellip;</td><td>M6</td></tr>
+                <tr><td><em>que aún me turba</em> &middot; <em>que sube de mí</em></td><td>Two more relative clauses, both indicative</td><td>M6</td></tr>
+                <tr><td><em><strong>por</strong> la Tierra</em></td><td><em>Por</em> of movement through and across a place</td><td>M5</td></tr>
+                <tr><td><em>cuando me <strong>hieren</strong></em></td><td><em>Cuando</em> + <strong>indicativo</strong>, because it is habitual</td><td>&mdash;</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 12px;">On that last row: <em>cuando me hieren</em> is indicative and it is correct — she is not talking about one occasion but about what happens whenever it happens. <em>Cuando</em> can also take the subjunctive, in a use this semester does not teach; that belongs to Semester 2. Here the indicative is right, and now you know why.</p>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; DOS TEXTOS, LA MISMA LECCIÓN &middot; look back at 7.08</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Reopen Módulo 7's reading day for a moment. Ricardo Palma's pedlar says <em>«le pido y ruego que me <strong>preste</strong> esa puchuela»</em> — request, so subjunctive — and in the very same speech, <em>«que si él lo <strong>quiere</strong>»</em> — indicative, because it reports a condition rather than asking for anything.<br><br>Mistral, a completely different writer, in a completely different century, in a completely different kind of text, does <strong>exactly the same thing in her opening sentence</strong>: <em>que yo enseñe</em> against <em>que tú llevaste</em>.<br><br>That is not a coincidence and it is not a rule invented by a textbook. Two authentic texts, twenty-six years and one border apart — Lima in 1896, Chile in 1922 — make the same point because it is how the language works: <strong><em>que</em> triggers nothing.</strong> The verb in front of it decides everything. A student who can say that sentence out loud has finished Semester 1's grammar, whatever the Grammar Quiz says on Día 10.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127908; PART 5 &middot; PUENTE A LA PRODUCCIÓN <span class="pill-time">6 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Mistral asks for one thing at a time, gives a reason for most of them, and never asks twice. Tomorrow's <strong>Tarea oral</strong> asks you to do the same in sixty to ninety seconds — but out loud, and to a person with a problem rather than to God.</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.7;margin:0 0 10px 0;"><em>Alguien te plantea un problema real. Dale tu consejo.</em></p>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Choose now, so tomorrow is rehearsal rather than invention. Three dilemmas are offered on the next page; if you already know whose problem you want to answer, better still.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">How did a poem from 1922 go, honestly?</div>
+            <div class="widget-options">
+                <button data-response="Then the glossary did its job, which is what it is for - this is 1922 register and it is not meant to be read cold. Notice what you just did: you read an unadapted literary text in Spanish and identified the mood of every verb in its first sentence.">Hard at first, then it opened up</button>
+                <button data-response="Honest, and common with this text. Go back and read ONLY the four commands - Dame, hazme, Arranca, líbrame - and what follows each one. The poem is a list of requests; the difficulty is the vocabulary around them, not the structure underneath.">I am still not sure I followed all of it</button>
+                <button data-response="Then hold on to that, because it is the reason this text is in the course rather than a news article. She is praying about the job she actually had, in a village school in a valley on the edge of a desert - and the thing she most fears is being forgotten by the children she taught.">It landed - she is talking about her own classroom</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Dos Premios Nobel de Literatura</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Chile has around twenty million people and <strong>two Nobel laureates in literature</strong>: <strong>Gabriela Mistral in 1945</strong> and <strong>Pablo Neruda in 1971</strong>. Very few countries of any size have two. Both were poets, both spent much of their lives representing Chile abroad in consular and diplomatic posts, and both are read across the Spanish-speaking world rather than only at home.<br><br>Mistral's route there was the unlikelier one. No university degree, a rural teaching career begun in her teens, and a first book published in 1922 <em>in New York</em> rather than Santiago — it was the Instituto de las Españas at Columbia University that brought out <em>Desolación</em>. She later worked on rural-education reform in <strong>Mexico</strong> at the invitation of its government, which is a thread back to Módulo 1's culture, and she died in New York in 1957.<br><br>She is on the <strong>5,000-peso note</strong>. A country that puts a village schoolteacher on its currency is telling you something about what it thinks it is, and «La oración de la maestra» is the text where that idea is at its plainest: not a poem about teaching as a metaphor, but a working teacher asking to be made adequate to Monday morning.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA (MÓDULO 7)</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Módulo 7's virtue was <em>la prudencia</em> — not caution, but judging well what a particular situation asks for. This poem is an extended exercise in it, and the exercise is: <strong>what is actually worth asking for?</strong><br><br>Notice what Mistral does <em>not</em> request. Nothing about recognition, nothing about better pupils, nothing about being treated fairly — and this is the startling line, she asks to have her own <em>«impuro deseo de justicia»</em> torn out by the roots. She has looked at her situation and concluded that the thing most likely to spoil her teaching is not her circumstances but a movement in herself that feels, from the inside, like a virtue. Knowing which of your own impulses to distrust is about as far as prudence goes.<br><br>And every request is for something that gets spent on somebody else: tenderness that does not run out, fervour that lasts, plainness and depth in Monday's lesson. She is not asking for tools. She is asking to be made into the kind of person the job needs, which is a far more accurate diagnosis than most of us manage about our own work. <em>La prudencia empieza por saber qué vale la pena pedir.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 8.09 &mdash; Tarea oral</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Sixty to ninety seconds of spoken advice on a real dilemma — 20 points, the most heavily weighted component of the course, and the last one of the semester. Unlimited takes; you submit your best.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas, then complete the graded <strong>Lectura interpretativa</strong> (15 pts, two attempts). <strong>Keep this page open while you answer</strong> — you are expected to reread Mistral, not remember her.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A village schoolteacher from the Elqui valley, a Nobel Prize, four of your own modules operating inside nine lines of 1922 — and one word doing two jobs five words apart. <em>El verbo que va delante decide todo.</em> <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.08 &middot; Lectura interpretativa · Gabriela Mistral</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 7.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 7</div>
+        <div style="font-size: 12px; color: #666;">Recomendaciones</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">La regla de los dos sujetos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Recomendaciones y deseos</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> La regla de los dos sujetos — un infinitivo o «que» + subjuntivo</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Count the subjects. One means an infinitive. Two mean <em>que</em> plus the subjunctive.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today has exactly one new idea in it, and you have already been given everything else it needs.<br><br>You own the <strong>forms</strong> — since Módulo 3, as commands. You own the <strong>triggers</strong> — since yesterday, as vocabulary. What is left is knowing <em>when</em> a sentence needs them, and Spanish answers that with a question you can ask in about a second: <strong>how many people are in this sentence?</strong><br><br><em>«Quiero salir.»</em> — one person. I want, I leave. Infinitive.<br><em>«Quiero que salgas.»</em> — two people. I want, <em>you</em> leave. <em>Que</em> plus the subjunctive.<br><br>That is the rule. The rest of the lesson is practice at applying it fast, plus a look at the forms you already have — this time under their real name.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decide, in one step, whether a sentence needs an infinitive or <em>que</em> + subjunctive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build present subjunctive forms from the <em>yo</em> form of the present tense.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write sentences with <em>querer que</em>, <em>recomendar que</em> and <em>es necesario que</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Where English gives up</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">English has one way to say both of these, and it is the reason this structure feels foreign:<br><br><em>I want to leave.</em> &nbsp;&rarr;&nbsp; <em>«Quiero <strong>salir</strong>.»</em><br><em>I want <u>you</u> to leave.</em> &nbsp;&rarr;&nbsp; <em>«Quiero <strong>que salgas</strong>.»</em><br><br>English keeps the infinitive both times and simply drops a person in front of it — <em>want <u>you</u> to leave</em>. <strong>Spanish cannot do that.</strong> There is no such structure; «quiero tú salir» is not a sentence. The moment a second person appears, Spanish opens a new clause with <em>que</em> and conjugates the verb inside it.<br><br>So the error to watch for is not choosing the wrong ending. It is writing an infinitive where Spanish needs a whole clause — carrying the English structure across intact.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Read <em>«Quiero que salgas»</em> aloud. What does it feel like?</div>
+            <div class="widget-options">
+                <button data-response="That is the useful reaction. It IS longer than English - two clauses where English has one - and it will feel effortful for about a week. Then it becomes the natural way to say it, and English starts to look like the language taking the shortcut.">Longer than it needs to be</button>
+                <button data-response="Good - because you have said «no salgas» many times since Módulo 4, and «salgas» is that same form. Your mouth already knows it. Only its address in the sentence is new.">Oddly familiar</button>
+                <button data-response="Fair, and worth naming: «que» is doing something English does not need a word for. Think of it as a hinge - it joins the wanting to the thing wanted, and everything after the hinge belongs to the second person, not to you.">I do not know what «que» is doing there</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA REGLA DE LOS DOS SUJETOS <span class="pill-time">12 min</span></div>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; LA REGLA</div>
+            <div style="font-size:17px;color:#1a2340;line-height:1.8;"><strong>One subject → infinitive. Two subjects → <em>que</em> + subjuntivo.</strong><br><br>Ask: <em>is the person who wants also the person who acts?</em><br>&bull; <strong>Yes</strong> → <em>Quiero <span style="color:#AA1E2D">estudiar</span> más.</em><br>&bull; <strong>No</strong> → <em>Quiero <span style="color:#AA1E2D">que estudies</span> más.</em></div>
+        </div>
+        <table class="gtable">
+            <thead><tr><th>El disparador</th><th>Un solo sujeto &middot; infinitivo</th><th>Dos sujetos &middot; <em>que</em> + subjuntivo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>querer</strong></td><td>Quiero <span class="pron">llegar</span> temprano.</td><td>Quiero <span class="pron">que llegues</span> temprano.</td></tr>
+                <tr><td><strong>preferir</strong></td><td>Prefiero <span class="pron">esperar</span> aquí.</td><td>Prefiero <span class="pron">que esperemos</span> aquí.</td></tr>
+                <tr><td><strong>necesitar</strong></td><td>Necesito <span class="pron">hablar</span> con ella.</td><td>Necesito <span class="pron">que hables</span> con ella.</td></tr>
+                <tr><td><strong>pedir</strong></td><td>&mdash; <em>(pedir aims at someone by nature)</em></td><td>Te pido <span class="pron">que me escuches</span>.</td></tr>
+                <tr><td><strong>recomendar</strong></td><td>Te recomiendo <span class="pron">descansar</span>.</td><td>Te recomiendo <span class="pron">que descanses</span>.</td></tr>
+                <tr><td><strong>es necesario</strong></td><td>Es necesario <span class="pron">reservar</span> con antelación.</td><td>Es necesario <span class="pron">que reserves</span> con antelación.</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/quiero-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Quiero que estudies.</span><span class="v-en">two people, one sentence</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/es-necesario-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Es necesario que llegues temprano.</span><span class="v-en">the impersonal frame — nobody is named as the wanter</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/recomiendo-que.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">Recomiendo que lo intentes.</span><span class="v-en">advice, one step less blunt than a command</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 10px;">Look at the last two rows again. <strong><em>Recomendar</em> and <em>es necesario</em> accept either construction</strong> and the meaning barely shifts — <em>te recomiendo descansar</em> and <em>te recomiendo que descanses</em> are both good Spanish. That is genuinely useful: when you are unsure, the infinitive is often available as an escape route. But it is not always, and the next box is the reason.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; DONDE EL INFINITIVO NO SIRVE</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;"><strong><em>Querer</em> gives you no escape route.</strong> With two subjects it takes <em>que</em> + subjuntivo and nothing else. <em>«Quiero que vengas»</em> — and «quiero tú venir» or «quiero venirte» are not Spanish at all, they are English wearing Spanish words.<br><br>So there is one sentence pattern you should over-practise until it is automatic: <strong><em>quiero que</em> + subjuntivo</strong>. It is the most common way anyone expresses a wish about another person, and there is no way around it.<br><br>Two smaller notes. <em>Es necesario que</em> takes the subjunctive because it is impersonal — nobody is named as the one wanting, but somebody is still being pushed. And <em>«prefiero que esperemos»</em> counts as two subjects even though I am inside the <em>nosotros</em>: the wanter is <em>yo</em>, the actors are <em>we</em>, and those are different subjects.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; CÓMO SE FORMAN &middot; repaso <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Nothing new here — but now it has a name</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You have been building these since Módulo 3. The recipe, in case it was never said out loud: <strong>take the <em>yo</em> form of the present tense, drop the <em>-o</em>, and swap the vowel.</strong> <em>-ar</em> verbs take <em>e</em>; <em>-er</em> and <em>-ir</em> verbs take <em>a</em>.</p>
+        <table class="gtable">
+            <thead><tr><th></th><th><em>hablar</em> &middot; hablo &rarr;</th><th><em>comer</em> &middot; como &rarr;</th><th><em>vivir</em> &middot; vivo &rarr;</th></tr></thead>
+            <tbody>
+                <tr><td>que yo</td><td>hable</td><td>coma</td><td>viva</td></tr>
+                <tr><td>que tú</td><td>hables</td><td>comas</td><td>vivas</td></tr>
+                <tr><td>que él / ella / Ud.</td><td>hable</td><td>coma</td><td>viva</td></tr>
+                <tr><td>que nosotros</td><td>hablemos</td><td>comamos</td><td>vivamos</td></tr>
+                <tr><td>que ellos / Uds.</td><td>hablen</td><td>coman</td><td>vivan</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/subjuntivo-presente.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">hable, hables, hable, hablemos, hablen</span><span class="v-en">-ar verbs take «e»</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/subjuntivo-comer-vivir.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">coma, comas, comamos, coman; viva, vivas, vivamos, vivan</span><span class="v-en">-er and -ir verbs take «a»</span></li>
+            <li class="vocab-item"><button class="say" data-audio="grammar/mandatos-irregulares-ud.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">dé, esté, vaya, sea, sepa</span><span class="v-en">the same recording as Módulo 3 — the same five forms</span></li>
+        </ul>
+        <div class="box" style="background:#FBF6EC;border:1px solid #E3D2A8;border-left:5px solid #C7922C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; POR FIN, LA EXPLICACIÓN DE LOS IRREGULARES DEL MÓDULO 3</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Because the subjunctive is built from the <em>yo</em> form, <strong>every oddity in the <em>yo</em> form is inherited</strong> — and that retro-explains a list you had to take on trust in Módulo 3:<br><br><em>tener → ten<strong>go</strong> → tenga</em> &middot;&middot;&middot; <em>venir → ven<strong>go</strong> → venga</em> &middot;&middot;&middot; <em>decir → di<strong>go</strong> → diga</em><br><em>hacer → ha<strong>go</strong> → haga</em> &middot;&middot;&middot; <em>salir → sal<strong>go</strong> → salga</em> &middot;&middot;&middot; <em>conocer → cono<strong>zco</strong> → conozca</em><br><br>They are not irregular subjunctives at all. They are perfectly regular subjunctives built on an irregular <em>yo</em> form. One rule, not a list.<br><br>Which leaves genuinely just <strong>six</strong> that come from nowhere: <em>dé, esté, vaya, sea, sepa, haya</em>. You already produce five of them as Ud. commands. So the true memorisation load of &ldquo;the hardest structure in Spanish&rdquo; is one verb — <em>haber</em> — and you will not need it until Semester 2.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; cuenta los sujetos</div>
+            <div class="widget-question">&ldquo;I prefer to travel in the dry season.&rdquo; One subject or two?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="One subject - I prefer, I travel. So the infinitive: «Prefiero viajar en la temporada seca.» No «que», no subjunctive.">One — <em>Prefiero viajar&hellip;</em></button>
+                <button data-correct="false" data-fb="Only one person appears: the preferrer and the traveller are both «yo». «Prefiero que viaje» would mean you prefer that someone ELSE travel.">Two — <em>Prefiero que viaje&hellip;</em></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; el error del inglés</div>
+            <div class="widget-question">Which is &ldquo;I want you to call me tonight&rdquo;?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="This is the English structure carried across word for word, and it is the single most common error with this grammar. Spanish has no «quiero + person + infinitive» pattern.">Quiero tú llamarme esta noche.</button>
+                <button data-correct="false" data-fb="«Quiero llamarte» means I want to call YOU - one subject, and the wrong person is doing the calling.">Quiero llamarte esta noche.</button>
+                <button data-correct="true" data-fb="«Quiero que me llames esta noche.» Two subjects - I want, you call - so «que» plus the subjunctive «llames». Note the object pronoun «me» sits before the conjugated verb, exactly as it does in a negative command.">Quiero que me llames esta noche.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; la forma</div>
+            <div class="widget-question">Build it: <em>«Es necesario que tú ___ (hacer) la reserva.»</em></div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Haces» is the indicative. After «es necesario que» the verb has to shift mood - the sentence is pushing, not reporting.">haces</button>
+                <button data-correct="false" data-fb="«Hacer» is the infinitive. It would be right with one subject - «es necesario hacer la reserva» - but «tú» is named here, so the clause needs a conjugated form.">hacer</button>
+                <button data-correct="true" data-fb="«Hagas» - from «hago», the yo form, which is where the «g» comes from. And you already say this exact form every time you say «no hagas eso».">hagas</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; dos sujetos escondidos</div>
+            <div class="widget-question">&ldquo;I prefer that we wait here.&rdquo; Does this count as two subjects, given that <em>I</em> am one of <em>we</em>?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="It does count as two. Overlapping is not the same as identical - the wanter is «yo» alone, the actors are «nosotros». Different subjects, so the clause is needed.">No — I am inside <em>we</em>, so it is one</button>
+                <button data-correct="true" data-fb="Right: «Prefiero que esperemos aquí.» The wanter is «yo», the actor is «nosotros». They overlap but they are not the same subject, so «que» + subjunctive.">Yes — <em>Prefiero que esperemos aquí</em></button>
+                <button data-correct="false" data-fb="It is decidable, and Spanish decides it consistently: compare the subject of the TRIGGER with the subject of the ACTION. «Yo» is not «nosotros».">It is ambiguous either way</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: a friend is about to travel to Perú. Say <strong>three</strong> sentences aloud — one with <em>quiero que</em>, one with <em>te recomiendo que</em>, one with <em>es necesario que</em>. Then say a fourth about yourself, using an infinitive, and notice how much shorter it is.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Quiero que me escribas cuando llegues a Lima. Te recomiendo que pases dos días en Cusco antes de subir. Es necesario que compres el boleto con antelación, porque no se vende en la puerta. Yo prefiero viajar en la temporada seca.</strong><br><br>Check yours: three <em>que</em> clauses with subjunctive verbs (<em>escribas, pases, compres</em>) and one infinitive (<em>viajar</em>) where the subject does not change. Every subjunctive form there is one you have written before as a negative command — <em>no escribas, no pases, no compres</em>.<br><br>One thing to notice and leave alone for now: <em>«cuando llegues»</em> in that first sentence is also a subjunctive, and it is <strong>not</strong> one this module teaches. <em>Cuando</em> pointing at a future event takes the subjunctive in real Spanish, which is why it is written that way here — but that rule belongs to a later course. Read it, do not build with it.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>La llamada del domingo</strong><br><br>
+        &mdash;Mamá, ya compré el boleto. Salgo el martes.<br>
+        &mdash;¿El martes? Quiero <em>que me mandes</em> el número del vuelo.<br>
+        &mdash;Te lo mando ahora.<br>
+        &mdash;Y prefiero <em>que no viajes</em> de noche, hija. Ya sabes lo que pienso de eso.<br>
+        &mdash;Es el único vuelo directo.<br>
+        &mdash;Bueno. Entonces te pido <em>que me escribas</em> al aterrizar, aunque sea tarde. Dos palabras me bastan.<br>
+        &mdash;Dos palabras. Prometido.<br>
+        &mdash;Y una cosa más: es necesario <em>que lleves</em> la copia del pasaporte aparte, no en la misma mochila. Tu tío perdió todo en Arequipa por no hacer eso.<br>
+        &mdash;Lo sé, lo sé. Me lo has dicho cuatro veces.<br>
+        &mdash;Te lo digo una quinta y ya está. Quiero <em>dormir</em> tranquila esta semana.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Five <em>que</em> clauses, and one infinitive. Find the infinitive and say why it is different from the others: <em>«Quiero dormir tranquila»</em> — the mother wants, the mother sleeps. <strong>One subject.</strong> Every other wish in the conversation is about her daughter, so every other verb goes into a clause.<br><br>That last line is the whole lesson in one exchange, and it is doing something else too: she has spent the call telling her daughter what to do, and she ends by saying what she wants for herself. That is why the infinitive lands.<br><br>Two spirals to spot. <em>«Me lo has dicho cuatro veces»</em> is the present perfect with an irregular participle and a double object pronoun — Módulos 1 and 2. And <em>«por no hacer eso»</em> is <em>por</em> + infinitive marking cause, from Módulo 5: the uncle lost everything <em>because of</em> not doing it.<br><br>You will also have noticed <em>«aunque sea tarde»</em>. Same situation as <em>cuando llegues</em> above — a real subjunctive, correctly used, belonging to a rule this course teaches later. Recognise it; do not copy it yet.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; PERÚ</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Las líneas de Nazca y la mujer que las cuidó</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">In the desert south of Lima, the Nazca people scraped away the dark surface stones to expose the pale ground beneath, making figures — a hummingbird, a monkey, a spider, a great many straight lines — some of them hundreds of metres across. They are roughly two thousand years old, and they have survived because almost no rain falls there.<br><br>They are also barely visible from the ground, which is part of why they were not widely studied until aircraft began crossing the pampa in the twentieth century. <strong>Maria Reiche</strong>, a German-born mathematician who settled in Peru, spent decades surveying and measuring them, mostly alone, often on foot with a broom to sweep the lines clear. She campaigned for their protection and lived beside them; the site was inscribed as a UNESCO World Heritage Site in 1994.<br><br>What the lines were <em>for</em> is genuinely unsettled. Astronomical calendar, ritual pathways, something connected to water — these are competing hypotheses, not a mystery with a known answer being withheld from you. Be suspicious of any source that sounds certain, and especially of the ones that reach for visitors from elsewhere: the Nazca had the engineering and the reason, and the condescension in assuming otherwise is worth noticing.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA PRUDENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Maria Reiche did the least dramatic version of the work: measuring, recording, sweeping, returning. No single discovery, decades of attention — and the lines are still there partly because of it.<br><br><strong>La prudencia</strong> and the mother on the phone are the same virtue seen from two sides. Prudence is not caution about acting; it is knowing which small thing actually protects the outcome. A photocopy of a passport in a different bag is not fear. It is a person who has thought one step further than the moment requires. <em>La prudencia no adivina el futuro; solo deja una puerta abierta.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.04 &mdash; El subjuntivo en uso</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you use today's rule in longer stretches of Spanish rather than single sentences, with a short reading. Then Día 5 extends the pattern to the impersonal frame — <em>es importante que, es mejor que</em>. Graded work opens on <strong>Día 7</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say <em>«Quiero que&hellip;»</em> five times with five different verbs, out loud, without writing anything down. This is the one pattern worth making automatic, and it takes about ninety seconds.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One rule, one question, and the discovery that Módulo 3's irregular commands were never irregular — they were regular subjunctives built on an irregular <em>yo</em>. Six forms in the language come from nowhere, and you already produce five of them. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.03 &middot; La regla de los dos sujetos</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

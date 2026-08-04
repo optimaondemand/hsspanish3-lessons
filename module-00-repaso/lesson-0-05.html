@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 0.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 0</div>
+        <div style="font-size: 12px; color: #666;">Repaso</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Pretérito vs. imperfecto</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Repaso · Contar lo que pasó</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> La foto y la película — elegir el pasado correcto</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The tense you choose is not grammar. It is the meaning.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">This is the most important lesson in Module 0, and the one Spanish 2 students most often finish half-sure. You already have both tenses. Today you learn that Spanish is not asking you which form is <em>correct</em> — it is asking <strong>what you mean</strong>. Both answers are often grammatical; they simply say different things.<br><br>By the end you will be able to put one preterite into a paragraph of imperfects and watch a story appear.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use the <em>mientras&hellip; de repente</em> frame to combine a scene with an interrupting event.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how <em>saber, conocer, querer</em> and <em>poder</em> change meaning between the two tenses.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> narrate a short episode choosing each tense deliberately, and justify my choices.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Same words, two different stories</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read these two sentences and decide what changed:</p>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.8;margin:0 0 10px 0;">
+        «Cuando <strong>llegué</strong>, mi hermano <strong>comía</strong>.»<br>
+        «Cuando <strong>llegué</strong>, mi hermano <strong>comió</strong>.»</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Both are correct Spanish. But the first says he <em>was already eating</em> when you walked in; the second says he <em>started eating</em> once you arrived — perhaps because you arrived. The grammar did not change. The story did.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of those two sentences would you have produced by instinct?</div>
+            <div class="widget-options">
+                <button data-response="Most learners reach for the imperfect here, and it is usually the right instinct - a scene already underway is the commonest reading. Good instinct to have.">The first — he was already eating</button>
+                <button data-response="That reading is less common but perfectly real, and noticing it means you are already thinking about meaning rather than form. That is exactly today's skill.">The second — he started when I arrived</button>
+                <button data-response="Honest, and the most useful answer. That uncertainty is what today removes: you will finish this lesson with a test you can apply rather than a feeling you hope is right.">I genuinely could not have chosen</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; EL CONTRASTE <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">One question to ask every time</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Before you choose, ask: <strong>&ldquo;Am I moving the story forward, or holding it still?&rdquo;</strong> Moving forward is preterite. Holding still — describing, setting up, filling in — is imperfect.</p>
+        <table class="gtable">
+            <thead><tr><th></th><th>PRETÉRITO &middot; la foto</th><th>IMPERFECTO &middot; la película</th></tr></thead>
+            <tbody>
+                <tr><td><strong>What it does</strong></td><td>Advances the plot</td><td>Holds the scene</td></tr>
+                <tr><td><strong>Boundaries</strong></td><td>Beginning and/or end in view</td><td>No boundaries in view</td></tr>
+                <tr><td><strong>Question it answers</strong></td><td>¿Qué pasó?</td><td>¿Cómo era? ¿Qué estaba pasando?</td></tr>
+                <tr><td><strong>Typical signals</strong></td><td>ayer, anoche, de repente, entonces, una vez, dos veces</td><td>siempre, todos los días, mientras, generalmente, de niño</td></tr>
+                <tr><td><strong>Example</strong></td><td>Ayer <span class="pron">fui</span> al cine.</td><td>De niño <span class="pron">iba</span> al cine todos los sábados.</td></tr>
+            </tbody>
+        </table>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; EL MARCO CLAVE &middot; the frame to memorise</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">You met these two words on Day 1 for exactly this moment:<br><br><strong><em>Mientras</em> + imperfecto&hellip; <em>de repente</em> + pretérito.</strong><br><br><em>Mientras caminaba a casa, de repente empezó a llover.</em> The scene runs; the event cuts in. This single frame produces correct, natural narration more reliably than any rule you can memorise, and it works in every module for the rest of the year.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS VERBOS QUE CAMBIAN DE SIGNIFICADO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four verbs where the tense changes the word</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">This is the Honors half of the lesson. With four common verbs, switching tense does not just shift the aspect — it changes what the verb <em>means</em> in English. A state held (imperfect) versus the moment it began or was resolved (preterite).</p>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>Imperfecto = the state</th><th>Pretérito = the moment</th></tr></thead>
+            <tbody>
+                <tr><td><strong>saber</strong></td><td><em>sabía</em> — I knew (already)</td><td><em>supe</em> — I found out</td></tr>
+                <tr><td><strong>conocer</strong></td><td><em>conocía</em> — I knew (was acquainted with)</td><td><em>conocí</em> — I met (for the first time)</td></tr>
+                <tr><td><strong>querer</strong></td><td><em>quería</em> — I wanted</td><td><em>quise</em> — I tried / <em>no quise</em> — I refused</td></tr>
+                <tr><td><strong>poder</strong></td><td><em>podía</em> — I was able (in general)</td><td><em>pude</em> — I managed to / <em>no pude</em> — I failed to</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Read the difference out loud and it becomes obvious: <em>Conocía a María</em> = I knew María. <em>Conocí a María en Bogotá</em> = I met María in Bogotá. Same verb; the preterite marks the <strong>single moment the state began</strong>. <em>No quise ir</em> is the sharpest of the four — it does not mean &ldquo;I didn't want to go,&rdquo; it means <strong>I refused to go</strong>.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the frame</div>
+            <div class="widget-question">«Mientras yo ___ la cena, alguien llamó a la puerta.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«preparaba». «Mientras» sets a scene in progress, so it takes the imperfect - and «llamó» is the event that cuts in.">preparaba</button>
+                <button data-correct="false" data-fb="«preparé» would make cooking a single completed event, which fights «mientras». The scene must be running for something to interrupt it.">preparé</button>
+                <button data-correct="false" data-fb="«preparo» is present. The sentence is anchored in the past by «llamó».">preparo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; meaning change</div>
+            <div class="widget-question">You want to say &ldquo;I met my best friend in third grade.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Conocía» means «I knew / was acquainted with» - an ongoing state, not the first meeting.">Conocía a mi mejor amigo&hellip;</button>
+                <button data-correct="true" data-fb="«Conocí» - the preterite marks the single moment the acquaintance began. That is «I met».">Conocí a mi mejor amigo&hellip;</button>
+                <button data-correct="false" data-fb="«Sabía» is for knowing facts or information, not people. For people Spanish uses conocer.">Sabía a mi mejor amigo&hellip;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the sharpest one</div>
+            <div class="widget-question">«Le invité tres veces, pero no quiso venir.» What does this actually say?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="That would be «no quería venir» - an ongoing reluctance. The preterite is stronger than that.">He didn't feel like coming</button>
+                <button data-correct="true" data-fb="«No quiso» = he REFUSED. The preterite of querer reports a decision taken, not a feeling held.">He refused to come</button>
+                <button data-correct="false" data-fb="«No pudo» would mean he was unable. «No quiso» is about will, not ability.">He wasn't able to come</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; habit or event?</div>
+            <div class="widget-question">«Todos los veranos ___ a la casa de mi abuela.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«fui» reports one completed trip. «Todos los veranos» describes a repeated habit with no endpoint.">fui</button>
+                <button data-correct="true" data-fb="«iba». «Todos los veranos» is a habit signal, and habits are imperfect.">iba</button>
+                <button data-correct="false" data-fb="«fue» is él/ella and also a single event. Neither the subject nor the aspect fits.">fue</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: narrate a small mishap in <strong>four</strong> sentences. Sentences 1&ndash;2 set the scene (imperfect), sentence 3 breaks it (preterite), sentence 4 resolves it. Then reveal the model.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Era sábado por la mañana y no había nadie en casa. Yo escuchaba música y limpiaba mi cuarto sin prisa. De repente se apagó la luz y todo quedó en silencio. Al final supe que mi padre cortÓ la electricidad para arreglar un enchufe.</strong><br><br>Two imperfects setting the scene (<em>era, había, escuchaba, limpiaba</em>), two preterites breaking it (<em>se apagó, quedó</em>), and one meaning-change verb doing real work: <em>supe</em> = I found out, not «I knew».</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El autobús de las siete</strong><br><br>
+        <em>Eran</em> las siete menos cinco y la parada <em>estaba</em> llena de gente. <em>Hacía</em> frío y yo no <em>llevaba</em> chaqueta. Mientras <em>buscaba</em> mi tarjeta en la mochila, <strong>llegó</strong> el autobús. <strong>Subí</strong> corriendo, pero cuando <strong>quise</strong> pagar, no <strong>encontré</strong> la tarjeta. El conductor me <em>miraba</em> con paciencia. <strong>Supe</strong> entonces que la <strong>dejé</strong> en casa. Menos mal que una señora que <em>estaba</em> detrás de mí <strong>pagó</strong> mi pasaje. No la <em>conocía</em>, pero ese día <strong>conocí</strong> a alguien generoso.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Italic verbs are imperfect (the scene); bold verbs are preterite (the events). Read only the bold ones in order — <em>llegó, subí, quise, encontré, supe, dejé, pagó, conocí</em> — and you still have the whole plot. Now read only the italics: you have the atmosphere and no story at all. That division is the entire lesson.<br><br>Then find the last two lines: <em>no la conocía</em> (I didn't know her) followed by <em>conocí a alguien generoso</em> (I met someone generous). The same verb, twice, in two tenses, meaning two different things — on purpose.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; EL MUNDO HISPANO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Una distinción que el inglés perdió</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">English once had this distinction and lost it. Old English marked aspect more openly, and modern English still gropes for it with helpers — <em>was walking, used to walk, would walk</em> — three constructions where Spanish uses one word, <em>caminaba</em>.<br><br>This is why the contrast feels hard: you are not learning a new rule so much as re-learning a distinction your language stopped requiring you to make. Speakers of Russian, Greek or Arabic often find it straightforward. The difficulty is specifically an English-speaker's difficulty — which is worth knowing, because it means it is a habit of attention to build, not a talent you either have or lack.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA DILIGENCIA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Today diligence means asking the question — <em>¿muevo la historia o la detengo?</em> — every single time, even when guessing would probably work. Guessing correctly teaches you nothing; asking builds the habit. In three weeks the same discipline will decide whether you use the subjunctive correctly, and there guessing will not save you. <em>La pregunta correcta, repetida, se convierte en instinto.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 0.06 &mdash; Narración extendida</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you stop working sentence by sentence and narrate at <strong>paragraph</strong> length — the Honors standard for the rest of the year. Graded work opens on Day 7, so tomorrow is your last full practice day.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say one <em>mientras&hellip; de repente&hellip;</em> sentence about your own day. If you can do that without pausing, you have today's lesson.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You have a question to ask, a frame to lean on, and four verbs whose meaning you now control by choosing a tense. That last one is a genuinely advanced skill — <em>supe</em> versus <em>sabía</em> is the kind of precision that marks a speaker as careful. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.05 &middot; Pretérito vs. imperfecto</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 8.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 8</div>
+        <div style="font-size: 12px; color: #666;">Dar consejos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Los verbos de decidir</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Dar consejos · GATE</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Los verbos de decidir — lo que hace quien recibe el consejo</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Advice is half of an exchange. The other half has its own ten verbs, and nobody ever teaches them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned the nouns of advising: <em>el apoyo, la orientación, la consecuencia</em>. Every one of them belongs to the person doing the advising.<br><br>Today you get the verbs that belong to <strong>the person on the receiving end</strong> — somebody <em>proposes</em>, you <em>weigh</em>, you <em>reflect</em>, and eventually you <em>commit</em> or you do not <em>dare</em>. Those are the verbs a real conversation about a decision actually runs on, and Módulo 7 gave you none of them, because Módulo 7 was about the pushing.<br><br>Still no new grammar. Every one of today's verbs is used here with an infinitive or a noun — Spanish you have had since the first year. What they insist on instead is <strong>the right preposition</strong>, and that is Part 3.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten verbs of proposing, weighing and committing.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> attach the preposition each one demands — <em>comprometerse <u>a</u></em>, <em>atreverse <u>a</u></em>, <em>reflexionar <u>sobre</u></em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> distinguish <em>plantear</em>, <em>proponer</em> and <em>animar</em>, which do three different jobs English blurs together.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three stages, and only one of them is hard</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every decision somebody takes advice about moves through the same three stages, and Spanish has separate verbs for each:</p>
+        <p style="font-size:19px;color:#0e1c42;line-height:1.8;margin:0 0 10px 0;"><strong>1. Alguien propone</strong> &nbsp;&rarr;&nbsp; <strong>2. Tú consideras</strong> &nbsp;&rarr;&nbsp; <strong>3. Te comprometes</strong></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Most people are fine at stage 1 and stage 2. Stage 2 is even pleasant — weighing options costs nothing and feels like progress. Stage 3 is where decisions actually go to die, and Spanish is unusually honest about it: the verb for committing, <em>comprometerse</em>, is built from <em>compromiso</em>, the obligation you take on. You do not <em>decide</em> in Spanish so much as <strong>bind yourself</strong>.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of the three stages is hardest for you, honestly?</div>
+            <div class="widget-options">
+                <button data-response="Proposing is exposure - you put an idea where other people can look at it. Note that Spanish separates this into two verbs: «proponer» puts a course of action on the table, «plantear» puts a question or a problem there. The second is far less exposed, and often more useful.">Putting the idea out there</button>
+                <button data-response="Then you are in good company, and there is a trap here worth naming: weighing options can become a substitute for choosing between them. «Considerar» and «reflexionar» are real work, but they are also the most comfortable place to stall. Watch how long you stay in stage 2.">Actually weighing it properly</button>
+                <button data-response="This is the honest answer and the commonest one. Committing means accepting the consequence you read about yesterday. Notice that Spanish gives you «comprometerse» AND «atreverse» - binding yourself and daring to - because they fail for different reasons: one needs will, the other needs nerve.">Finally committing to it</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; PROPONER, PESAR, COMPROMETERSE <span class="pill-time">12 min</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud. Four of these ten are reflexive, and the audio gives you the form you will actually write.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/animar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">animar</span><span class="v-en">to encourage, to urge on</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/proponer.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">proponer</span><span class="v-en">to propose, to put forward</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/plantear.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">plantear</span><span class="v-en">to raise, to set out (a question)</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/considerar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">considerar</span><span class="v-en">to consider, to weigh</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/reflexionar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">reflexionar</span><span class="v-en">to reflect, to think over</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/valorar.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">valorar</span><span class="v-en">to value; to weigh up</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/arriesgarse.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">arriesgarse</span><span class="v-en">to take a risk</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/atreverse-a.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">atreverse a</span><span class="v-en">to dare to</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/comprometerse.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">comprometerse</span><span class="v-en">to commit oneself</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/agradecer.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">agradecer</span><span class="v-en">to thank, to be grateful for</span></li>
+        </ul>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;"><strong>Three verbs, three different jobs.</strong> English uses &ldquo;suggest&rdquo; for all of them and loses the distinction. <em>Proponer</em> puts <strong>a course of action</strong> on the table: <em>propongo esperar una semana</em>. <em>Plantear</em> puts <strong>a question or a problem</strong> there for consideration: <em>me planteó una duda que no había pensado</em>. And <em>animar</em> does neither — it supplies <strong>the nerve</strong>: <em>me animó a presentarme</em>. Notice that these are three genuinely different favours. The best advice you have ever been given was probably a <em>plantear</em>, not a <em>proponer</em>: somebody asked you the question you had been avoiding.<br><br><strong>Two irregulars you already own.</strong> <em>Proponer</em> is <em>poner</em> with a prefix, so it behaves exactly like it: <em>propongo</em> in the <em>yo</em> form, and the past participle is <strong><em>propuesto</em></strong> — <em>me ha propuesto un plan</em>. That is Módulo 2's <em>puesto</em> with four letters in front. And <em>agradecer</em> joins the <em>-zco</em> family from Módulo 3: <strong><em>agradezco</em></strong>, like <em>conozco</em>.<br><br><strong>A note on <em>valorar</em>.</strong> It swings between two meanings and context sorts them: <em>valoro tu apoyo</em> is &ldquo;I appreciate your support,&rdquo; warm and personal; <em>hay que valorar las dos alternativas</em> is &ldquo;we must assess both options,&rdquo; cool and analytical. Both are extremely common. And for thanking, keep <em>agradecer</em> attached to a <strong>noun</strong> — <em>te agradezco la orientación</em> — which is the cleanest and most useful pattern.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9999;&#65039; PART 3 &middot; LA PREPOSICIÓN MANDA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Learn the verb with its preposition attached, or you will lose it</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Spanish verbs of this kind come with a preposition welded on, and the preposition is not guessable from English. <em>«Me comprometo estudiar»</em> is not a small slip; it is the sort of thing that reads as a first-year error in an otherwise good paragraph. Read the middle column aloud as part of the verb.</p>
+        <table class="gtable">
+            <thead><tr><th>Verbo</th><th>Se construye con&hellip;</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>animar</strong></td><td>a alguien <span class="pron">+ a</span> + infinitivo</td><td>Mi vecina me <span class="pron">animó a</span> presentarme.</td></tr>
+                <tr><td><strong>proponer</strong></td><td>+ sustantivo o infinitivo</td><td><span class="pron">Propongo</span> esperar una semana.</td></tr>
+                <tr><td><strong>plantear</strong></td><td>+ sustantivo (a alguien)</td><td>Me <span class="pron">planteó</span> una pregunta incómoda.</td></tr>
+                <tr><td><strong>considerar</strong></td><td>+ sustantivo o infinitivo</td><td><span class="pron">Considera</span> cambiar de plan.</td></tr>
+                <tr><td><strong>reflexionar</strong></td><td><span class="pron">sobre</span> + sustantivo</td><td>Reflexiona <span class="pron">sobre</span> las consecuencias.</td></tr>
+                <tr><td><strong>valorar</strong></td><td>+ sustantivo</td><td><span class="pron">Valoro</span> mucho tu apoyo.</td></tr>
+                <tr><td><strong>arriesgarse</strong></td><td><span class="pron">a</span> + infinitivo</td><td>Se <span class="pron">arriesga a</span> perder el semestre.</td></tr>
+                <tr><td><strong>atreverse</strong></td><td><span class="pron">a</span> + infinitivo</td><td>No se <span class="pron">atreve a</span> decírselo.</td></tr>
+                <tr><td><strong>comprometerse</strong></td><td><span class="pron">a</span> + infinitivo</td><td>Me <span class="pron">comprometo a</span> estudiar dos horas.</td></tr>
+                <tr><td><strong>agradecer</strong></td><td>+ sustantivo (sin preposición)</td><td>Te <span class="pron">agradezco</span> la orientación.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Three of the ten take <strong><em>a</em></strong> before an infinitive — <em>arriesgarse, atreverse, comprometerse</em> — and all three are the stage-3 verbs, the ones about actually doing the thing. One takes <strong><em>sobre</em></strong>. And <em>agradecer</em> takes none at all, which is the one people over-correct.</p>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; NADA NUEVO HOY &middot; Y UN AVISO PARA MAÑANA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">Every example in that table uses a <strong>noun or an infinitive</strong>. No <em>que</em>, no subjunctive, nothing you did not already have last September.<br><br>But look at <em>proponer</em> again. It is a verb of influence — it pushes at the world — and you already know what Spanish does when a verb like that takes a whole clause with two subjects:<br><br><em>«<strong>Propongo esperar</strong> una semana.»</em> &mdash; one subject: me. Infinitive.<br><em>«<strong>Propongo que esperemos</strong> una semana.»</em> &mdash; two subjects. <em>Que</em> + subjuntivo.<br><br>That second sentence is not new grammar. It is Módulo 7 with a Módulo 8 verb, and you can build it right now. Tomorrow you start building <strong>five of them in a row</strong>, in one paragraph, which is a different skill entirely.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; proponer, plantear o animar</div>
+            <div class="widget-question">Your friend does not tell you what to do. She asks you one question that reframes the whole problem. What did she do?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Te animó» means she gave you the nerve to act. She may have done that as well, but not by asking a question - animar supplies courage, not content.">Te animó</button>
+                <button data-correct="false" data-fb="«Te propuso algo» puts a specific course of action on the table - «propongo que esperes». A question is not a course of action.">Te propuso algo</button>
+                <button data-correct="true" data-fb="«Te planteó una pregunta» - plantear is to set something out for consideration: a question, a problem, an option. English has no single verb for it, which is why it is worth owning.">Te planteó una pregunta</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; la preposición</div>
+            <div class="widget-question">&ldquo;I'm committing to studying two hours a day.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Me comprometo a estudiar dos horas al día.» The «a» is part of the verb - learn them as one unit, «comprometerse a».">Me comprometo a estudiar dos horas al día</button>
+                <button data-correct="false" data-fb="Without the «a» this reads as a first-year error. Comprometerse never takes a bare infinitive.">Me comprometo estudiar dos horas al día</button>
+                <button data-correct="false" data-fb="«De» is the wrong preposition here. Three of today's verbs take «a» before an infinitive and not one of them takes «de».">Me comprometo de estudiar dos horas al día</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; atreverse o arriesgarse</div>
+            <div class="widget-question">After three weeks of silence, he finally says the difficult thing out loud. Which verb does Spanish reach for?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Se arriesgó a decirlo» is possible, but arriesgarse foregrounds what could go WRONG - the risk being run. It says nothing about the three weeks of not saying it.">Se arriesgó a decirlo</button>
+                <button data-correct="true" data-fb="«Se atrevió a decirlo» - atreverse is about nerve. It is the verb for the exact moment the fear stops winning, which is what those three weeks were about.">Se atrevió a decirlo</button>
+                <button data-correct="false" data-fb="«Consideró decirlo» is what he had been doing for three weeks without doing it. Considerar is stage 2; this is stage 3.">Consideró decirlo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: take a decision you have actually made in the last year and narrate it in <strong>three sentences</strong>, using one verb from each stage — somebody <em>propuso</em> or <em>planteó</em>, you <em>consideraste</em> or <em>reflexionaste</em>, and you <em>te comprometiste</em> or <em>te atreviste</em>. Keep the prepositions attached. Say it aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>Mi profesora de música me propuso tocar en el concierto de diciembre. Reflexioné sobre el asunto casi un mes, porque nunca había tocado solo delante de tanta gente. Al final me atreví a decir que sí, y me comprometí a ensayar cuatro días por semana hasta el concierto.</strong><br><br>Check yours: <em>reflexionar <u>sobre</u></em> &middot; <em>atreverse <u>a</u></em> &middot; <em>comprometerse <u>a</u></em> &middot; and <em>propuso</em> spelled with that <em>-pus-</em> stem it inherits from <em>poner</em>. Notice <em>nunca había tocado</em> — Módulo 2's past perfect, doing exactly its job: a moment further back than the story's own past.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Los ciento veinte escalones</strong><br><br>
+        Vivo en el Cerro Alegre, en Valparaíso. Para llegar a mi casa hay que subir ciento veinte escalones o tomar el ascensor, que tiene más de cien años y todavía funciona.<br><br>
+        Hace un mes mi vecina me <em>planteó</em> algo. El municipio busca guías jóvenes para los recorridos de los cerros, y ella me <em>propuso</em> presentarme. Yo dije que no al tiro: mi inglés es regular y nunca he hablado delante de un grupo.<br><br>
+        Pero ella no me <em>animó</em> con discursos. Me <em>planteó</em> una sola pregunta: «¿Cuántas veces has dicho que no por costumbre?»<br><br>
+        Esa semana <em>reflexioné</em> sobre el asunto. <em>Consideré</em> las dos <em>alternativas</em>, <em>valoré</em> lo que ganaba, y acepté que me <em>arriesgaba</em> a quedar en ridículo delante de veinte turistas. Al final me <em>atreví</em> a mandar el correo. Hoy me he <em>comprometido</em> a dar dos recorridos por semana durante todo el verano.<br><br>
+        Le <em>agradecí</em> el empujón. Y ella me dijo una cosa que no he olvidado: «Yo no te di un consejo. Te quité una excusa.»</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">All ten of today's verbs are in that passage. Find them, and check the prepositions as you go: <em>reflexioné <u>sobre</u></em>, <em>me arriesgaba <u>a</u></em>, <em>me atreví <u>a</u></em>, <em>me he comprometido <u>a</u></em>, and <em>le agradecí el empujón</em> with nothing in between.<br><br>Then count the subjunctives. There are <strong>none</strong>. A whole passage about a decision, advice and a commitment, and not one <em>que</em> + subjunctive — because every verb here takes an infinitive or a noun. Worth knowing before tomorrow: the subjunctive is a tool for a specific job, not a mark of sophistication.<br><br>Two spirals to notice. <em>«¿Cuántas veces has dicho que no?»</em> is Módulo 1's present perfect with Módulo 2's irregular participle <em>dicho</em> — and it is the right tense, because the question is about a life up to now rather than a finished occasion. And <em>«una cosa que no he olvidado»</em> is Módulo 6's <em>que</em> doing ordinary relative work, with the indicative, which is a useful reminder that <em>que</em> by itself triggers nothing at all.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; CHILE</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Valparaíso: una ciudad con ascensores en la calle</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><strong>Valparaíso</strong> is built on more than forty steep hills — <em>cerros</em> — dropping straight into the Pacific. From the 1880s the city solved that with <strong>ascensores</strong>: funicular railways running up the hillsides as ordinary public transport, not as attractions. The oldest still in service dates from <strong>1883</strong>. Of roughly thirty built, only a handful run today, though several have been restored, and locals genuinely commute on them.<br><br>The port was once the most important on the Pacific coast of South America — the stop for everything rounding Cape Horn. When the <strong>Panama Canal</strong> opened in <strong>1914</strong>, that traffic went away, and Valparaíso spent most of the twentieth century as a beautiful city with a shrinking reason to exist. Its historic quarter was inscribed as a <strong>UNESCO World Heritage site in 2003</strong>, partly on the strength of exactly that: an unusually intact nineteenth-century port town that no economic boom ever knocked down.<br><br>Two writers are attached to these hills. <strong>Pablo Neruda</strong> kept a house here, <em>La Sebastiana</em>, high on Cerro Bellavista, and won the Nobel Prize in Literature in <strong>1971</strong>. He was not Chile's first: <strong>Gabriela Mistral</strong> won it in <strong>1945</strong>, the first Latin American writer of any kind to do so. Chile therefore has <strong>two</strong> Nobel laureates in literature, which for a country of under twenty million is remarkable — and you will read Mistral's own prose on <strong>Día 8</strong>.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA TEMPLANZA (MÓDULO 1)</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Módulo 1 named <strong>la templanza</strong> — temperance — and today's verbs are where it lives. Temperance is not saying no to things. It is the accurate measuring of what you can actually carry, which is why it belongs to <em>comprometerse</em> above all: a commitment you cannot keep does more damage than a refusal, because somebody has already built on it.<br><br>The narrator in the passage got this right by accident. She spent a week weighing before she agreed, and then promised <strong>two recorridos a week</strong> rather than every day — a promise sized to fit her actual life. Advising others well requires the same restraint in the other direction: do not press somebody into a commitment you would not size for yourself. <em>La templanza pesa antes de prometer.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 8.03 &mdash; El consejo en párrafo</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's grammar day, and it is not about forms. Tomorrow the single correct sentence becomes <strong>a paragraph of advice</strong>: a four-move shape, two <em>que</em> clauses running off one trigger, and the discipline of leaving most of the paragraph in the indicative. Graded work opens on <strong>Día 7</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say the five verbs that carry a preposition, out loud, <strong>with the preposition attached</strong>: <em>animar a &middot; arriesgarse a &middot; atreverse a &middot; comprometerse a &middot; reflexionar sobre</em>. Four take <em>a</em>; the fifth is the one people get wrong.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Twenty words for the whole exchange now — ten for giving advice and ten for taking it — plus the prepositions that make them sound native, and a city that put railways in its streets because the streets went straight up. Tomorrow the sentences become paragraphs. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.02 &middot; Los verbos de decidir</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

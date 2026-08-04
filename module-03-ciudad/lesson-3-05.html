@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 3.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 3</div>
+        <div style="font-size: 12px; color: #666;">La ciudad</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.05 &middot; Day 5 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Mandatos negativos</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La ciudad y las direcciones</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> No lo tome — cuando el pronombre se mueve</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">No new verb form today. Only one thing changes &mdash; and it changes completely.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">To tell somebody <em>not</em> to do something, you put <strong>no</strong> in front of the command you already built on Day 3. That is the whole form. <em>Tome &rarr; no tome.</em> Nothing else to learn.<br><br>But the moment a pronoun is involved, everything moves. Yesterday's <em>tóme<strong>lo</strong></em> becomes <em>no <strong>lo</strong> tome</em> &mdash; the pronoun comes off the end, moves in front, becomes its own word, and the tilde disappears.<br><br>This pattern is worth real attention: it is exactly what Módulo 4 does with <em>tú</em>, and the forms themselves return in Módulo 7 as the subjunctive.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the negative Ud. and Uds. command of any verb.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> move pronouns in front of a negative command, in the right order, without a tilde.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give a warning politely, and explain what softens a negative command.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Watch the pronoun jump</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.9;margin:0 0 10px 0;">
+        <strong>Tómelo</strong> &nbsp;&rarr;&nbsp; <strong>No lo tome</strong><br>
+        <strong>Sígame</strong> &nbsp;&rarr;&nbsp; <strong>No me siga</strong><br>
+        <strong>Siéntese</strong> &nbsp;&rarr;&nbsp; <strong>No se siente</strong></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Three things happened each time. The pronoun <strong>detached</strong>. It <strong>moved in front</strong>. And the <strong>tilde vanished</strong>, because the verb went back to being a short word that follows the default stress.<br><br>The verb form itself never changed. <em>Tome</em> is <em>tome</em> in both.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Predict: if <em>dígame</em> is &ldquo;tell me&rdquo;, how would you say &ldquo;don't tell me&rdquo;?</div>
+            <div class="widget-options">
+                <button data-response="Exactly - «no me diga». Pronoun in front, separate word, no tilde. You derived it from the pattern rather than being told.">No me diga</button>
+                <button data-response="Close, but the pronoun cannot stay attached in a negative command. It comes off and moves in front: no me diga.">No dígame</button>
+                <button data-response="«No digame» keeps the pronoun attached but drops the tilde - the worst of both. In the negative it detaches: no me diga.">No digame</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA FORMA <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Add <em>no</em>. That is all.</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 6px 0;">Click the <strong>&#128266;</strong>, then read across. The Ud. form is identical in both columns.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/mandatos-negativos.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">no lo tome, no me diga&hellip;</span><span class="v-en">pronoun in front, no tilde</span></li>
+        </ul>
+        <table class="gtable">
+            <thead><tr><th>Verb</th><th>Afirmativo</th><th>Negativo</th></tr></thead>
+            <tbody>
+                <tr><td>tomar</td><td>tome</td><td><span class="pron">no tome</span></td></tr>
+                <tr><td>cruzar</td><td>cruce</td><td><span class="pron">no cruce</span></td></tr>
+                <tr><td>seguir</td><td>siga</td><td><span class="pron">no siga</span></td></tr>
+                <tr><td>dejar</td><td>deje</td><td><span class="pron">no deje</span></td></tr>
+                <tr><td><strong>ir</strong></td><td>vaya</td><td><span class="pron">no vaya</span></td></tr>
+                <tr><td><strong>ser</strong></td><td>sea</td><td><span class="pron">no sea</span></td></tr>
+                <tr><td>Uds.</td><td>tomen</td><td><span class="pron">no tomen</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">This is the payoff for building the form properly on Day 3. Many languages have a separate negative imperative to learn; Spanish just puts <em>no</em> in front of the one you already have. The five irregulars behave the same way: <em>no vaya, no sea, no dé, no esté, no sepa</em>.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; LOS PRONOMBRES SE MUEVEN <span class="pill-time">11 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Attached behind, separate in front</h3>
+        <table class="gtable">
+            <thead><tr><th></th><th>Afirmativo &mdash; attached</th><th>Negativo &mdash; in front</th></tr></thead>
+            <tbody>
+                <tr><td>it</td><td><span class="pron">tómelo</span></td><td>no <span class="pron">lo</span> tome</td></tr>
+                <tr><td>me</td><td><span class="pron">sígame</span></td><td>no <span class="pron">me</span> siga</td></tr>
+                <tr><td>yourself</td><td><span class="pron">siéntese</span></td><td>no <span class="pron">se</span> siente</td></tr>
+                <tr><td>it to me</td><td><span class="pron">démelo</span></td><td>no <span class="pron">me lo</span> dé</td></tr>
+                <tr><td>them to her</td><td><span class="pron">déselos</span></td><td>no <span class="pron">se los</span> dé</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; TRES COSAS QUE CAMBIAN, UNA QUE NO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">
+            <strong>Change:</strong> the pronoun detaches &middot; it moves in front of the verb &middot; the <em>attachment</em> tilde disappears<br>
+            <strong>Does not change:</strong> the <strong>order</strong> of two pronouns &mdash; indirect still comes before direct<br><br>
+            <em>démelo</em> &rarr; <em>no <strong>me lo</strong> dé</em> &nbsp;&middot;&nbsp; never «no lo me dé»<br><br>
+            And the whole sequence is fixed: <strong><em>no</em> + pronoun(s) + verb</strong>. Four slots, one order.</div>
+        </div>
+
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9999;&#65039; CUIDADO: HAY DOS CLASES DE TILDE</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">Look carefully at that line above: <em>démelo</em> lost its tilde &mdash; but <em>no me lo <strong>dé</strong></em> still has one. Those are <strong>two different tildes doing two different jobs</strong>, and confusing them is the commonest error in this lesson.<br><br>
+            <strong>1. La tilde de posición</strong> &mdash; appears only because a pronoun was attached and the word got longer. It disappears when the pronoun leaves:<br>
+            <em>tóme<u>lo</u></em> &rarr; <em>no lo <strong>tome</strong></em> &nbsp;&middot;&nbsp; <em>síga<u>me</u></em> &rarr; <em>no me <strong>siga</strong></em><br><br>
+            <strong>2. La tilde diacrítica</strong> &mdash; belongs to the word itself, to keep it apart from a look-alike. It <strong>never</strong> disappears:<br>
+            <em><strong>dé</strong></em> (give) vs <em>de</em> (of) &nbsp;&middot;&nbsp; <em><strong>esté</strong></em> (be) vs <em>este</em> (this)<br>
+            So: <em>no <strong>dé</strong> papaya</em> &nbsp;&middot;&nbsp; <em>no <strong>esté</strong> nervioso</em> &mdash; tildes stay.<br><br>
+            <strong>The test:</strong> ask whether the tilde was there <em>before</em> any pronoun arrived. <em>Tome</em> never had one, so it has none in the negative. <em>Dé</em> always had one, so it keeps it. Same family as <em>tú/tu</em>, <em>mí/mi</em>, <em>sé/se</em> from Módulo 4.</div>
+        </div>
+        <p style="font-size:15px;color:#6b7a99;margin:10px 0 0;">You have met this shape before. In Módulo 1 the order for the perfect was <em>no</em> + pronoun + <em>haber</em> + participio — <em>no me he sentido bien</em>. Spanish is consistent about this: <strong>negation first, then pronouns, then the verb.</strong> One habit covers both.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the pronoun moves</div>
+            <div class="widget-question">Affirmative: <em>tómelo</em>. Now make it negative.</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No lo tome» - detached, in front, no tilde. Three changes, and the verb form itself is untouched.">No lo tome</button>
+                <button data-correct="false" data-fb="«No tómelo» keeps it attached. In a negative command the pronoun always comes off and goes in front.">No tómelo</button>
+                <button data-correct="false" data-fb="«No tomelo» is the worst of both - attached AND missing the tilde. It should be «no lo tome».">No tomelo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; two pronouns keep their order</div>
+            <div class="widget-question">&ldquo;Don't give it to me.&rdquo; (<em>dar</em>, usted)</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No me lo dé» - no, then indirect (me), then direct (lo), then the verb. Four slots, fixed order.">No me lo dé</button>
+                <button data-correct="false" data-fb="«No lo me dé» reverses them. Indirect always precedes direct, in front of the verb just as behind it.">No lo me dé</button>
+                <button data-correct="false" data-fb="«No démelo» keeps them attached, which only happens in the affirmative.">No démelo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; reflexive in the negative</div>
+            <div class="widget-question">A guard tells a visitor not to sit on a monument. Which is right?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No se siente ahí» - «se» detaches and moves in front, and «siente» loses the tilde it had in «siéntese».">No se siente ahí</button>
+                <button data-correct="false" data-fb="«No siéntese» keeps it attached. In the negative it moves: no se siente.">No siéntese ahí</button>
+                <button data-correct="false" data-fb="«No te sientes» is the tú form - a guard addressing a visitor uses usted.">No te sientes ahí</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which tilde stays?</div>
+            <div class="widget-question">«___ papaya» &mdash; the negative command of <em>dar</em>, usted.</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«No dé» - the tilde stays, because it is a tilde diacrítica separating «dé» (give) from «de» (of). It was never about pronoun attachment.">No dé</button>
+                <button data-correct="false" data-fb="«No de» drops a tilde that belongs to the word itself. «De» means «of» - a different word entirely.">No de</button>
+                <button data-correct="false" data-fb="«No dés» is the tú form, and adds an s the usted command does not have.">No dés</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the same order you already know</div>
+            <div class="widget-question">Which sequence does Spanish use, in both the perfect and negative commands?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«no + pronoun + verb». «No me he sentido bien» and «no me lo dé» follow the same habit.">no + pronoun + verb</button>
+                <button data-correct="false" data-fb="Pronoun-first is what Spanish avoids - «no» always opens the sequence.">pronoun + no + verb</button>
+                <button data-correct="false" data-fb="Putting the pronoun after the verb is the AFFIRMATIVE command pattern only, and there it is attached, not separate.">no + verb + pronoun</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: give a visitor to your town <strong>four</strong> warnings as negative Ud. commands, and make at least <strong>two</strong> include a pronoun.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>No cruce la avenida fuera del semáforo. No deje el bolso en el suelo del restaurante. Si le ofrecen un taxi en la calle, no lo tome; pídalo por teléfono. Y no se preocupe por preguntar &mdash; la gente aquí ayuda mucho.</strong><br><br>Check yours: <em>no</em> first, then pronouns, then the verb &middot; no tildes on the negative forms &middot; and <em>pídalo</em> keeping its tilde, because that one is affirmative.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Consejos del recepcionista, segunda parte</strong><br><br>
+        &mdash;Una última cosa antes de salir. <strong>No lleve</strong> el pasaporte encima; <strong>déjelo</strong> en la caja fuerte del cuarto. <strong>No saque</strong> el teléfono en la calle para mirar el mapa; <strong>métase</strong> en una tienda y mírelo ahí.<br>
+        &mdash;¿Es peligroso el centro?<br>
+        &mdash;No, para nada. Pero <strong>no dé</strong> papaya, como decimos aquí.<br>
+        &mdash;¿Papaya?<br>
+        &mdash;Es una expresión nuestra. Significa: <strong>no le facilite</strong> las cosas a alguien con malas intenciones. <strong>No deje</strong> el bolso en el respaldo de la silla. <strong>No cuente</strong> el dinero en la puerta del banco. Cosas de sentido común.<br>
+        &mdash;Entendido.<br>
+        &mdash;Y <strong>no se preocupe</strong> demasiado. Bogotá es una ciudad tranquila si uno pone atención. <strong>Disfrútela</strong>.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Count the negative commands &mdash; there are eight &mdash; and notice that <strong>none of them carries a tilde</strong>, while the two affirmatives (<em>déjelo</em>, <em>disfrútela</em>) both do. That contrast is the lesson, in one conversation.<br><br>Then find the two with pronouns in front: <em>no le facilite</em> and <em>no se preocupe</em>. Compare them with <em>métase</em>, where the same kind of pronoun is attached because the command is affirmative.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; COLOMBIA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>«No dé papaya»</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">This is the single most Colombian expression you will learn in this course, and it is &mdash; conveniently &mdash; a negative command. <strong><em>No dar papaya</em></strong> means roughly: do not leave yourself an easy target. Do not put temptation in front of people.<br><br>Colombians use it constantly and about far more than crime: leaving your laptop visible in a car is <em>dar papaya</em>, and so is handing your opponent an easy argument. The image is a ripe papaya left out where anyone can take it.<br><br>Note what it is <em>not</em>. It is not a warning that Colombia is dangerous, and Colombians can be sharp about that assumption. It is closer to a shared piece of practical common sense &mdash; and it puts the responsibility on your own attention rather than on other people's character. Which is why the receptionist says it in the same breath as <em>«no, para nada»</em> and <em>«disfrútela»</em>.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA CORTESÍA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A negative command is the least courteous thing in a grammar book &mdash; and notice how the receptionist makes eight of them land warmly. He explains the reason, admits the place is safe, teaches an expression rather than lecturing, and finishes with <em>disfrútela</em>. <em>La cortesía</em> is rarely about avoiding the direct thing; it is about what you put around it. <em>No es el mandato lo que ofende, sino el mandato solo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 3.06 &mdash; Instrucciones completas</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you put affirmative and negative together across a paragraph &mdash; the Honors standard &mdash; and read about Cartagena. Last full practice day: graded work opens on Day 7.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then take yesterday's five words &mdash; <em>tómelo, sígame, dígame, escríbalo, démelo</em> &mdash; and write each one's negative.<br><br>Four of them lose the tilde entirely: <em>no lo tome, no me siga, no me diga, no lo escriba</em>. The fifth is the test: <em>démelo</em> becomes <em>no me lo <strong>dé</strong></em> &mdash; because that tilde was never about the pronoun.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One word added, three things moved, one order preserved. You can now tell somebody what not to do without sounding harsh &mdash; and you know the most useful Colombian expression there is. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.05 &middot; Mandatos negativos</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 1.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Módulo 1</div>
+        <div style="font-size: 12px; color: #666;">La salud</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.02 &middot; Day 2 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">En el consultorio</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">La salud y el cuerpo</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> En el consultorio — el guion de una consulta</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+        <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A medical appointment follows a script. Learn the script and you can hold your side of it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday you learned to name what hurts. Today you learn the words around it — <em>la fiebre, la tos, la receta</em> — and something more useful than vocabulary: the <strong>predictable shape</strong> of a medical appointment in Spanish. Four moves, in the same order, nearly every time.<br><br>No new grammar today. Tomorrow brings the present perfect, which is the tense a doctor's questions are actually asked in.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use ten health expressions, including <em>la receta</em> and <em>enfermarse</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> describe the four stages of a medical appointment in Spanish.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> distinguish <em>tener fiebre</em>, <em>estar resfriado</em> and <em>enfermarse</em> and use each correctly.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three ways to be unwell, and Spanish keeps them apart</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">English blurs these; Spanish does not, and picking the wrong one is immediately noticeable:</p>
+        <ul style="font-size:17px;color:#1a2340;line-height:1.75;margin:0 0 10px 1.4rem;">
+            <li><strong>tener</strong> + a symptom you possess — <em>tengo fiebre, tengo tos, tengo dolor de cabeza</em></li>
+            <li><strong>estar</strong> + a condition you are in right now — <em>estoy resfriado, estoy enfermo, estoy mareado</em></li>
+            <li><strong>enfermarse</strong> — the <em>moment</em> of becoming ill — <em>me enfermé el jueves</em></li>
+        </ul>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of the three feels least natural to you as an English speaker?</div>
+            <div class="widget-options">
+                <button data-response="Very common. English says «I have a cold» but Spanish prefers «estoy resfriado» - a state you are in. Watch for it in Part 2.">tener vs. estar</button>
+                <button data-response="Understandable - English has no single verb for «to become ill». «Enfermarse» names the moment it started, which is why it usually shows up in the preterite: me enfermé.">enfermarse</button>
+                <button data-response="Then you are ahead. Use Part 4 to check that the instinct holds under pressure - it is the distinction the Vocabulary Check tests.">None of them, they feel clear</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; LA SALUD <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Diez palabras de la consulta</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Click the <strong>&#128266;</strong> and repeat aloud, with the article where there is one.</p>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-salud.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la salud</span><span class="v-en">health</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-fiebre.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la fiebre</span><span class="v-en">fever</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-tos.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la tos</span><span class="v-en">cough</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-dolor.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el dolor</span><span class="v-en">pain, ache</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-resfriado.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el resfriado</span><span class="v-en">a cold</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-receta.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la receta</span><span class="v-en">prescription</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/la-cita.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">la cita</span><span class="v-en">appointment</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/el-consultorio.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el consultorio</span><span class="v-en">doctor's office</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/sano.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">sano / sana</span><span class="v-en">healthy</span></li>
+            <li class="vocab-item"><button class="say" data-audio="vocab/enfermarse.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">enfermarse</span><span class="v-en">to get sick</span></li>
+        </ul>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +5 min</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">Two false-friend traps. <strong><em>La receta</em></strong> means both <em>prescription</em> and <em>recipe</em> — context decides, and a Spanish speaker finds nothing odd about that. And <strong><em>sano</em></strong> means <em>healthy</em> as a lasting quality (<em>una dieta sana</em>, <em>un niño sano</em>), whereas <em>estar bien</em> is how you say you feel fine today. Do not use <em>sano</em> to mean &ldquo;I'm feeling better.&rdquo;</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; EL GUION DE UNA CONSULTA <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four moves, nearly always in this order</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">This is not grammar — it is the shape of a real interaction, and knowing it means you are never guessing what comes next.</p>
+        <table class="gtable">
+            <thead><tr><th>Move</th><th>The doctor says</th><th>You say</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. La apertura</strong></td><td>¿Qué le pasa? / ¿En qué puedo ayudarle?</td><td>Me duele&hellip; / Tengo&hellip;</td></tr>
+                <tr><td><strong>2. Los síntomas</strong></td><td>¿Desde cuándo? ¿Tiene fiebre?</td><td>Desde el lunes. Sí, tengo tos también.</td></tr>
+                <tr><td><strong>3. El diagnóstico</strong></td><td>Es un resfriado. No es grave.</td><td>¿Es contagioso? ¿Cuánto dura?</td></tr>
+                <tr><td><strong>4. El tratamiento</strong></td><td>Le doy una receta. Descanse y beba agua.</td><td>¿Cada cuántas horas? Gracias, doctora.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Notice the doctor addresses you as <strong>usted</strong> — <em>¿qué le pasa?</em>, <em>¿tiene fiebre?</em> — which is standard in a professional setting throughout the Spanish-speaking world regardless of your age. Note also move 4: <em>descanse</em>, <em>beba</em>. Those are commands, and you will own them in Module 3. Recognise them today; you are not asked to produce them yet.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">8 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; tener or estar?</div>
+            <div class="widget-question">«No puedo ir a clase porque ___ resfriada.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«tengo resfriada» does not work - «resfriado/a» is an adjective describing a state, so it needs estar.">tengo</button>
+                <button data-correct="true" data-fb="«estoy resfriada» - a condition you are in. Note the -a: the adjective agrees with a female speaker.">estoy</button>
+                <button data-correct="false" data-fb="«soy resfriada» would make it a permanent trait of your character. Illness is a temporary state: estar.">soy</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the false friend</div>
+            <div class="widget-question">Your doctor hands you <em>una receta</em>. In this context, what is it?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="A prescription. The same word also means «recipe» - context does all the work, and Spanish speakers find that unremarkable.">A prescription for medicine</button>
+                <button data-correct="false" data-fb="«Receta» does mean recipe in a kitchen - but a doctor handing you one means a prescription.">A recipe for soup</button>
+                <button data-correct="false" data-fb="A receipt is «un recibo». Close in sound, unrelated in meaning.">A receipt to pay</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; which move is this?</div>
+            <div class="widget-question">The doctor says: «¿Desde cuándo le duele la garganta?» Which stage of the appointment?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="The opening is the first, broad question - «¿qué le pasa?». This one is already narrowing in.">1 · la apertura</button>
+                <button data-correct="true" data-fb="Move 2 - gathering symptoms. «¿Desde cuándo?» is the single most predictable question in the whole script.">2 · los síntomas</button>
+                <button data-correct="false" data-fb="A diagnosis tells you what you have. This is still a question, so information is being collected.">3 · el diagnóstico</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: play the patient. Answer these three aloud in Spanish — <em>¿Qué le pasa? ¿Desde cuándo? ¿Tiene fiebre?</em></p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>&mdash;Buenos días, doctora. Me duele mucho la garganta y tengo tos.<br>&mdash;Desde el domingo, más o menos. Tres días.<br>&mdash;Sí, un poco de fiebre anoche, y estoy muy cansado.</strong><br><br>Notice what the model does not do: it does not answer in single words. Even at move 2, a patient gives a small amount of extra information — <em>tres días</em>, <em>y estoy muy cansado</em>. That habit is what the Honors <em>Tarea oral</em> rewards.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>La cita del lunes</strong><br><br>
+        &mdash;Buenos días. ¿Qué le pasa?<br>
+        &mdash;Buenos días, doctora. Me duele la garganta y tengo tos desde el domingo.<br>
+        &mdash;¿Tiene fiebre?<br>
+        &mdash;Anoche sí, treinta y ocho. Hoy estoy mejor, pero muy cansado.<br>
+        &mdash;¿Y el estómago? ¿Come normal?<br>
+        &mdash;Casi nada. No tengo hambre.<br>
+        &mdash;Bien. Es un resfriado fuerte, no es grave. Le doy una receta para la tos. Descanse tres días y beba mucha agua. Si sigue con fiebre el jueves, vuelva al consultorio.<br>
+        &mdash;Muchas gracias, doctora.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Find all four moves from Part 3 in this dialogue and mark where each begins. Then count how many of the ten new words appear — there are six. Finally notice the doctor's last three verbs: <em>descanse, beba, vuelva</em>. Commands, in the <em>usted</em> form. You will build those in Module 3, and when you do, you will already have heard them working.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; MÉXICO</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>La farmacia de la esquina</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">In Mexico, and across much of Latin America, the pharmacist is a more central figure in everyday health than in the United States. Many pharmacies have a <em>consultorio</em> attached — a small doctor's office, often charging a very low fee — so that a minor complaint can be seen and prescribed for in one visit without an appointment. Chains like <em>Farmacias Similares</em> built their model on precisely this.<br><br>Two consequences worth knowing. A Mexican friend may say <em>«voy a la farmacia»</em> and mean <em>I'm going to see a doctor</em>. And the word <em>consultorio</em> you learned today is more likely to name a small storefront office than a hospital wing — which is why it is the word this module teaches rather than <em>hospital</em>.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA TEMPLANZA</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The patient in today's dialogue does something temperate and easy to miss: they answer honestly. Not <em>estoy bien</em> out of politeness, and not a dramatised account either — just what is true, including <em>hoy estoy mejor</em>. Temperance is as much about not exaggerating as about not indulging. <em>Decir lo que hay, sin adornarlo ni esconderlo.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 1.03 &mdash; El presente perfecto</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's new grammar, and it belongs to exactly this conversation: <em>¿Ha tenido fiebre? ¿Ha tomado algo?</em> — <strong>what has happened so far</strong>. A third way to talk about the past, and the one a doctor's questions actually use.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then say the four moves of the appointment aloud in order, in Spanish, without looking at the table.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Twenty words of health vocabulary and the script of a real appointment. You could now walk into a <em>consultorio</em>, describe a problem, and follow the answer. Tomorrow you add the tense that conversation is actually conducted in. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.02 &middot; En el consultorio</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

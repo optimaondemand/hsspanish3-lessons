@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.06</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.06 &middot; Day 6 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Por y para en prosa extendida</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.06</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Por y para en un párrafo — el compromiso, explicado</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Nobody chooses between <em>por</em> and <em>para</em> one blank at a time. You choose while you are making an argument.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last full practice day. Days 3, 4 and 5 gave you the two prepositions and the minimal pairs; today they stop being an exercise and become <strong>prose</strong>.<br><br>That matters more here than in most modules, because a paragraph about the environment is almost entirely made of causes and purposes. Say what you did, and you need <em>por</em>. Say what it was for, and you need <em>para</em>. A whole paragraph without either is a paragraph that never explains itself.<br><br>What you write today is what tomorrow's <em>Lengua en acción</em> (20 pts) asks for. Keep it.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write a 6&ndash;8 sentence paragraph in which every <em>por</em> and every <em>para</em> is doing a job I can name.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spot a preposition that breaks somebody else's argument, inside running prose rather than in a blank.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what Ecuador's 2008 constitution did that no constitution had done before.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Dos preguntas, y nada de listas</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">The whole module reduces to two questions, and you ask them of the <em>sentence</em>, never of the word:</p>
+        <table class="gtable">
+            <thead><tr><th>Pregunta</th><th>Si la respuesta es sí&hellip;</th><th>Preposición</th></tr></thead>
+            <tbody>
+                <tr><td>¿Apunta hacia <strong>adelante</strong> &mdash; a un destino, un propósito, una fecha o alguien que recibe?</td><td>Es una flecha hacia un punto final</td><td><span class="pron">para</span></td></tr>
+                <tr><td>¿Explica el <strong>terreno de atrás</strong> &mdash; la causa, el motivo, el intercambio, la duración, el recorrido, el medio, en lugar de quién?</td><td>Cubre el suelo por donde pasó la acción</td><td><span class="pron">por</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Notice that neither question mentions English. &ldquo;For&rdquo; is not the test and never was &mdash; it is the reason this contrast is hard for English speakers in the first place.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">After three days on this, which half is still shakier?</div>
+            <div class="widget-options">
+                <button data-response="Very common, because por does the most jobs: causa, motivo, duración, recorrido, intercambio, medio, en lugar de alguien. Reopen 5.03 and read only the job names — six labels are easier to hold than sixty examples.">Por, because it does too many things</button>
+                <button data-response="Usually this means you are translating «for» rather than asking about direction. Reopen 5.04: every para in it points forward at something. If nothing is being pointed at, it is not para.">Para, because it keeps feeling like «for»</button>
+                <button data-response="That is the honest answer for most students on Day 6, and it is exactly what the minimal pairs in 5.05 exist for. Both are grammatical there; only the meaning differs, so you have to decide what you mean before you decide what to write.">The pairs where both would work</button>
+                <button data-response="Then today is the right kind of hard. Not new forms — just holding the distinction steady across eight sentences while you are also thinking about content.">Both feel solid separately</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LA ARQUITECTURA DEL PÁRRAFO <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Una forma para un compromiso</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Every module gives you a shape rather than a list of sentences to imitate. This one is a <strong>compromiso</strong>: how you used to be, what changed you, what you do now, and why. Read the third column &mdash; the prepositions are not decoration. Each slot in the argument <em>invites</em> one of them.</p>
+        <table class="gtable">
+            <thead><tr><th>Oración</th><th>Su trabajo</th><th>Qué preposición pide el sentido</th><th>Cómo empezar</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Cómo eras antes</td><td><span class="pron">por</span> &mdash; recorrido, el terreno que atravesabas</td><td>Durante años pasé por&hellip;</td></tr>
+                <tr><td>2</td><td>El día que algo cambió</td><td><span class="pron">por</span> &mdash; motivo</td><td>El año pasado&hellip; / me apunté por&hellip;</td></tr>
+                <tr><td>3</td><td>Lo que te costó</td><td><span class="pron">por</span> &mdash; duración</td><td>Trabajamos por&hellip;</td></tr>
+                <tr><td>4</td><td><strong>Lo que significó para ti</strong></td><td><span class="pron">para</span> &mdash; opinión</td><td>Para mí, ese día&hellip;</td></tr>
+                <tr><td>5</td><td>Lo que has cambiado desde entonces</td><td><span class="pron">para</span> + infinitivo &mdash; propósito</td><td>Desde entonces he&hellip; para&hellip;</td></tr>
+                <tr><td>6</td><td><strong>La razón verdadera</strong></td><td><span class="pron">por</span> &mdash; causa, negada y corregida</td><td>No lo hago por&hellip; sino por&hellip;</td></tr>
+                <tr><td>7</td><td>Tu plazo y tu meta</td><td><span class="pron">para</span> &mdash; plazo <em>y</em> propósito</td><td>Para diciembre&hellip; / para lograrlo&hellip;</td></tr>
+                <tr><td>8</td><td>Un mandato directo al lector</td><td><span class="pron">por</span> &mdash; en lugar de alguien, a favor de</td><td>Cambia&hellip; y hazlo por&hellip;</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;"><strong>Sentence 6 is the one that marks an Honors writer here.</strong> Anybody can list what they do. Saying what you are <em>not</em> doing it for, and then naming the real cause, is an argument &mdash; and it is built out of three <em>por</em> phrases in a row. It is also the sentence most students leave out, so write it on purpose.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; LA REGLA DE LOS CONECTORES &middot; still in force</div>
+            <div style="font-size: 16px; color: #1a2340; line-height: 1.6;">No connector twice. For a <em>compromiso</em> you have: <em>durante años &middot; el año pasado &middot; desde entonces &middot; además &middot; sin embargo &middot; por eso &middot; en cambio &middot; al final &middot; a partir de ahora</em>. Nine, and eight sentences need at most five.<br><br>Watch <em>por eso</em>: it is a connector <strong>and</strong> a <em>por</em> of cause. It counts as both, which makes it the most efficient word in the paragraph.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; MODELO ANOTADO <span class="pill-time">9 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Mi compromiso, y por qué</strong><br><br>
+        <sup>1</sup> Durante años pasé <strong>por</strong> el mismo parque todos los días sin fijarme en la basura de las aceras. <sup>2</sup> El año pasado mi escuela organizó una limpieza del río y me apunté <strong>por</strong> curiosidad, no <strong>por</strong> convicción. <sup>3</sup> Trabajamos <strong>por</strong> tres horas bajo el sol y llenamos veintidós bolsas. <sup>4</sup> <strong>Para</strong> mí, ese sábado cambió algo: el problema no estaba en las noticias, sino a cien metros de mi casa. <sup>5</sup> Desde entonces he cambiado tres costumbres <strong>para</strong> reducir mi huella: llevo una botella reutilizable, cambié las bolsas de plástico <strong>por</strong> una de tela y camino <strong>para</strong> ir a la escuela. <sup>6</sup> No lo hago <strong>por</strong> la nota ni <strong>por</strong> obligación, sino <strong>por</strong> respeto a un lugar que no es solo mío. <sup>7</sup> <strong>Para</strong> diciembre quiero convencer a diez compañeros; <strong>para</strong> lograrlo voy a hablar en la asamblea. <sup>8</sup> Cambia una costumbre esta semana &mdash; y hazlo <strong>por</strong> ti, no <strong>por</strong> mí.</p>
+        <p style="font-size:15px;color:#6b7a99;margin:8px 0 0;">Fourteen prepositions in eight sentences, and not one of them is there to fill a blank. Here is what each is actually doing.</p>
+        <table class="gtable">
+            <thead><tr><th>&#8470;</th><th>La expresión</th><th>El trabajo</th><th>¿Adelante o atrás?</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>pasé <strong>por</strong> el mismo parque</td><td>recorrido &mdash; el terreno que atravesé</td><td>alrededor</td></tr>
+                <tr><td>2</td><td><strong>por</strong> curiosidad, no <strong>por</strong> convicción</td><td>motivo &mdash; lo que me empujó</td><td>atrás</td></tr>
+                <tr><td>3</td><td><strong>por</strong> tres horas</td><td>duración &mdash; el tiempo recorrido</td><td>atrás</td></tr>
+                <tr><td>4</td><td><strong>Para</strong> mí</td><td>opinión &mdash; el destinatario de la idea</td><td>adelante</td></tr>
+                <tr><td>5</td><td><strong>para</strong> reducir &middot; <strong>para</strong> ir</td><td>propósito &mdash; siempre con infinitivo</td><td>adelante</td></tr>
+                <tr><td>5</td><td>las bolsas <strong>por</strong> una de tela</td><td>intercambio &mdash; esto a cambio de aquello</td><td>atrás</td></tr>
+                <tr><td>6</td><td><strong>por</strong> la nota &middot; <strong>por</strong> obligación &middot; <strong>por</strong> respeto</td><td>causa &mdash; dos descartadas, una verdadera</td><td>atrás</td></tr>
+                <tr><td>7</td><td><strong>Para</strong> diciembre</td><td>el plazo plazo &mdash; el plazomdash; la fecha en que algo debe estar hecho</td><td>adelante</td></tr>
+                <tr><td>7</td><td><strong>para</strong> lograrlo</td><td>propósito, con pronombre pegado al infinitivo</td><td>adelante</td></tr>
+                <tr><td>8</td><td><strong>por</strong> ti, no <strong>por</strong> mí</td><td>en lugar de alguien &mdash; a favor de quién</td><td>atrás</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;">Two details worth stealing. Sentence 5 puts an <em>intercambio</em> and a <em>propósito</em> side by side in one sentence, which is the clearest way to show a reader you know the difference. And sentence 8 uses <em>hazlo</em> &mdash; an affirmative <em>tú</em> command with the pronoun attached, from Módulo 4 &mdash; so the paragraph ends by asking something of somebody instead of trailing off.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">11 min</span></div>
+        <p style="font-size:16px;color:#6b7a99;margin:0 0 12px;">Three items, none of them a blank in isolation. In each one both prepositions are possible Spanish &mdash; what decides is the argument the sentence is inside.</p>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; two grammatical options, one meaning</div>
+            <div class="widget-question">Your paragraph says: «Separo el reciclaje ___ mi hermana pequeña.» You mean that <strong>she is the reason</strong> &mdash; you are thinking about the world she will grow up in. Which one says that?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Para mi hermana» makes her the destination: the recycling is aimed at her, the way a present is. Perfectly grammatical, and not what you meant.">para mi hermana pequeña</button>
+                <button data-correct="true" data-fb="«Por mi hermana» names the motive &mdash; she is the ground behind the habit, the cause standing behind you as you do it.">por mi hermana pequeña</button>
+                <button data-correct="false" data-fb="They do not mean the same thing. One makes her the endpoint of the action, the other its cause &mdash; this is exactly the minimal pair from 5.05, now inside a paragraph.">both say the same thing here</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; find the drift</div>
+            <div class="widget-question">«Camino a la escuela por reducir mi huella.» What has gone wrong?</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="Right. A purpose in front of an infinitive is always para: «para reducir mi huella». Por + infinitive does exist, but it means «because of having done something» — «lo multaron por tirar basura» — which is a cause, not a goal.">The sentence gives a purpose, so it needs <em>para</em>, not <em>por</em></button>
+                <button data-correct="false" data-fb="«Camino a la escuela» is fine — a is the ordinary preposition of destination after a verb of movement. The error is later in the sentence.">«Camino a la escuela» should be «camino para la escuela»</button>
+                <button data-correct="false" data-fb="Something is wrong: the walking is aimed at an outcome, and por puts that outcome behind the action instead of in front of it. Reread 5.03 on por + infinitive.">Nothing &mdash; both prepositions work here</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; give each one its own room</div>
+            <div class="widget-question">A classmate writes «Trabajamos tres horas para la limpieza del parque.» She means the work <strong>lasted</strong> three hours and that a clean park was <strong>the point</strong>. Which version says both?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="This leaves the three hours unmarked and makes «la limpieza» sound like a separate event the work was aimed at, rather than the work itself.">Trabajamos tres horas para la limpieza del parque.</button>
+                <button data-correct="false" data-fb="Each por is defensible on its own — duration, then cause — but two of them back to back doing different jobs is where a reader loses the thread. Separate them.">Trabajamos por tres horas por la limpieza del parque.</button>
+                <button data-correct="true" data-fb="Exactly: «por tres horas» carries the duration, «en la limpieza» carries the activity, and «para dejarlo limpio» carries the purpose. Each preposition has one job and its own space — that is prose rather than a gap-fill.">Trabajamos por tres horas en la limpieza del parque, y lo hicimos para dejarlo limpio antes del lunes.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;"><strong>Ahora tú &mdash; tomorrow's graded task, rehearsed.</strong> Write a <strong>6&ndash;8 sentence</strong> <em>compromiso</em> following Part 2's shape: a habit you have changed, or are going to change, for the environment. Produce it first, then open the checklist.</p>
+            <button class="reveal-btn">Reveal a checklist</button>
+            <div class="reveal-body"><strong>Before you call it finished:</strong><br>&bull; Read every <em>por</em> and <em>para</em> and <strong>name its job out loud</strong> &mdash; recorrido, motivo, duración, intercambio, en lugar de alguien, propósito, plazo, opinión. If you cannot name it, that is the sentence to fix.<br>&bull; At least <strong>three different jobs of <em>por</em></strong>, not the same one three times.<br>&bull; At least one <strong><em>para</em> + infinitivo</strong> of purpose. Purpose in this course is always <em>para</em> + infinitive: <em>para reducir la basura</em>.<br>&bull; <strong>Sentence 6 exists</strong> &mdash; the real reason, with a discarded one in front of it. Do not skip it.<br>&bull; One place where you <em>could</em> have written the other preposition, and you chose deliberately.<br>&bull; Four or more different connectors, none repeated.<br>&bull; At least four words from this module's twenty, spelled with their accents: <em>la contaminación, el cambio climático, dañar, la huella</em>.<br>&bull; A direct <em>tú</em> command to your reader in the last sentence.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>El archipiélago y sus visitantes</strong><br><br>
+        Las Galápagos están a unos mil kilómetros de la costa de Ecuador. Ese aislamiento explica casi todo: <em>por</em> la distancia, muchas especies llegaron una sola vez y después evolucionaron solas. Hoy alrededor del ochenta <em>por</em> ciento de las aves terrestres del archipiélago no vive en ningún otro lugar del planeta.<br><br>
+        El problema moderno no es la distancia, sino el éxito. En 1990 llegaban unos 40 000 visitantes al año; hoy llegan más de 250 000. Cada avión trae dinero <em>para</em> la conservación y también semillas, insectos y basura. <em>Por</em> eso el parque limita el número de barcos, cierra algunos sitios <em>por</em> temporadas y cobra una entrada alta <em>para</em> financiar el control de especies invasoras.<br><br>
+        La Estación Científica Charles Darwin, en Puerto Ayora, trabaja en las islas desde 1964. Sus biólogos han criado tortugas en cautiverio <em>para</em> devolverlas después a las islas de donde vienen: un esfuerzo colectivo de sesenta años que ha salvado <em>por</em> lo menos a dos especies del borde de la extinción.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Nine prepositions, and the paragraph's whole argument sits in them. Every <em>por</em> looks backwards at a cause or a stretch of something &mdash; <em>por la distancia</em> (causa), <em>por ciento</em> (proporción, a fixed phrase), <em>por eso</em> (causa), <em>por temporadas</em> (duración), <em>por lo menos</em> (fixed). Every <em>para</em> looks forwards at what the money and the tortoises are <em>for</em>.<br><br>Try the deletion test: cross out all nine and read it again. You are left with facts and no argument &mdash; which is precisely why this module sits inside the environment theme rather than anywhere else.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Los derechos de la naturaleza &mdash; 2008</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">In September 2008 Ecuador approved a new constitution by referendum, and with it did something no country had done before: it wrote <strong>rights of nature</strong> into its founding law. Articles 71 to 74 name <em>la naturaleza</em> &mdash; also called <em>Pacha Mama</em>, using the Kichwa term &mdash; as a holder of rights: to exist, to persist, and to have its cycles restored.<br><br>The grammatical consequence is this module's grammar. Because nature cannot go to court itself, the constitution lets <strong>any person act <em>por</em> an ecosystem</strong> &mdash; on its behalf. That is the <em>por</em> of sentence 8 in Part 3, written into law.<br><br>Two honest complications, since this module's virtue is responsibility. For over a decade the articles were more quoted abroad than applied at home, and Ecuador remains an oil exporter whose economy pulls against them. Then in December 2021 the Constitutional Court ruled in the <strong>Los Cedros</strong> cloud-forest case that mining concessions there violated the rights of nature &mdash; the first ruling to give the articles real teeth.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Sentence 6 is a small exercise in responsibility, which is why it is in the shape. Naming what you are <em>not</em> doing something for &mdash; not the grade, not the requirement &mdash; forces you to find out whether there is a real reason underneath. Sometimes there is not yet, and that is worth knowing too. A habit without a reason is a habit somebody else can talk you out of. <em>La responsabilidad no está en la costumbre, sino en la razón que la sostiene.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 5.07 &mdash; Integración &middot; graded work opens</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow the <strong>Vocabulary Check</strong> (15 pts, listening, one attempt) and <strong>Lengua en acción</strong> (20 pts) open. The <em>compromiso</em> you just wrote is what <em>Lengua</em> asks for &mdash; bring it and revise it rather than starting again.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Keep your paragraph, and check specifically that <strong>sentence 6 is in it</strong> &mdash; the real reason, with a discarded one in front. It is the one most people leave out.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE!</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Fourteen prepositions across eight sentences, each one nameable &mdash; and a paragraph that explains itself instead of just listing habits. That is the difference between knowing the rule and using it. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.06 &middot; Por y para en prosa extendida</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1047 @@
+{
+    "comprometerse":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/comprometerse.mp3",
+                          "text":  "comprometerse"
+                      },
+    "pronombres-mandatos":  {
+                                "voice":  "Microsoft Sabina",
+                                "file":  "audio/grammar/pronombres-mandatos.mp3",
+                                "text":  "tómelo, sígame, démelo"
+                            },
+    "el-oido":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/el-oido.mp3",
+                    "text":  "el oído"
+                },
+    "plantear":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/plantear.mp3",
+                     "text":  "plantear"
+                 },
+    "quedar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/quedar.mp3",
+                   "text":  "quedar"
+               },
+    "la-exposicion":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/la-exposicion.mp3",
+                          "text":  "la exposición"
+                      },
+    "subjuntivo-comer-vivir":  {
+                                   "voice":  "Microsoft Sabina",
+                                   "file":  "audio/grammar/subjuntivo-comer-vivir.mp3",
+                                   "text":  "coma, comas, comamos, coman; viva, vivas, vivamos, vivan"
+                               },
+    "el-esfuerzo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/el-esfuerzo.mp3",
+                        "text":  "el esfuerzo"
+                    },
+    "retratar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/retratar.mp3",
+                     "text":  "retratar"
+                 },
+    "preferir":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/preferir.mp3",
+                     "text":  "preferir"
+                 },
+    "hablo-hablo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/grammar/hablo-hablo.mp3",
+                        "text":  "hablo, habló"
+                    },
+    "proponer":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/proponer.mp3",
+                     "text":  "proponer"
+                 },
+    "alcanzar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/alcanzar.mp3",
+                     "text":  "alcanzar"
+                 },
+    "la-consecuencia":  {
+                            "voice":  "Microsoft Sabina",
+                            "file":  "audio/vocab/la-consecuencia.mp3",
+                            "text":  "la consecuencia"
+                        },
+    "la-experiencia":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-experiencia.mp3",
+                           "text":  "la experiencia"
+                       },
+    "el-problema":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/el-problema.mp3",
+                        "text":  "el problema"
+                    },
+    "la-luz":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/la-luz.mp3",
+                   "text":  "la luz"
+               },
+    "darse-cuenta-de":  {
+                            "voice":  "Microsoft Sabina",
+                            "file":  "audio/vocab/darse-cuenta-de.mp3",
+                            "text":  "darse cuenta de"
+                        },
+    "haber-presente":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/grammar/haber-presente.mp3",
+                           "text":  "he, has, ha, hemos, han"
+                       },
+    "exigir":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/exigir.mp3",
+                   "text":  "exigir"
+               },
+    "el-verano-pasado":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/vocab/el-verano-pasado.mp3",
+                             "text":  "el verano pasado"
+                         },
+    "lograr":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/lograr.mp3",
+                   "text":  "lograr"
+               },
+    "danar":  {
+                  "voice":  "Microsoft Sabina",
+                  "file":  "audio/vocab/danar.mp3",
+                  "text":  "dañar"
+              },
+    "la-piel":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-piel.mp3",
+                    "text":  "la piel"
+                },
+    "la-semana-pasada":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/vocab/la-semana-pasada.mp3",
+                             "text":  "la semana pasada"
+                         },
+    "enfermarse":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/enfermarse.mp3",
+                       "text":  "enfermarse"
+                   },
+    "prohibir":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/prohibir.mp3",
+                     "text":  "prohibir"
+                 },
+    "valer-la-pena":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/valer-la-pena.mp3",
+                          "text":  "valer la pena"
+                      },
+    "la-sombra":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-sombra.mp3",
+                      "text":  "la sombra"
+                  },
+    "ayudar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/ayudar.mp3",
+                   "text":  "ayudar"
+               },
+    "la-escultura":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/la-escultura.mp3",
+                         "text":  "la escultura"
+                     },
+    "girar":  {
+                  "voice":  "Microsoft Sabina",
+                  "file":  "audio/vocab/girar.mp3",
+                  "text":  "girar"
+              },
+    "permitir":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/permitir.mp3",
+                     "text":  "permitir"
+                 },
+    "el-compromiso":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/el-compromiso.mp3",
+                          "text":  "el compromiso"
+                      },
+    "hacer-las-paces":  {
+                            "voice":  "Microsoft Sabina",
+                            "file":  "audio/vocab/hacer-las-paces.mp3",
+                            "text":  "hacer las paces"
+                        },
+    "resulta-que":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/resulta-que.mp3",
+                        "text":  "resulta que"
+                    },
+    "el-marco":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-marco.mp3",
+                     "text":  "el marco"
+                 },
+    "el-reciclaje":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/el-reciclaje.mp3",
+                         "text":  "el reciclaje"
+                     },
+    "el-esfuerzo-colectivo":  {
+                                  "voice":  "Microsoft Sabina",
+                                  "file":  "audio/vocab/el-esfuerzo-colectivo.mp3",
+                                  "text":  "el esfuerzo colectivo"
+                              },
+    "el-lienzo":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-lienzo.mp3",
+                      "text":  "el lienzo"
+                  },
+    "la-epoca":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/la-epoca.mp3",
+                     "text":  "la época"
+                 },
+    "la-acera":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/la-acera.mp3",
+                     "text":  "la acera"
+                 },
+    "la-avenida":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-avenida.mp3",
+                       "text":  "la avenida"
+                   },
+    "el-exito":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-exito.mp3",
+                     "text":  "el éxito"
+                 },
+    "reutilizar":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/reutilizar.mp3",
+                       "text":  "reutilizar"
+                   },
+    "el-riesgo":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-riesgo.mp3",
+                      "text":  "el riesgo"
+                  },
+    "reducir":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/reducir.mp3",
+                    "text":  "reducir"
+                },
+    "el-deseo":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-deseo.mp3",
+                     "text":  "el deseo"
+                 },
+    "pedir":  {
+                  "voice":  "Microsoft Sabina",
+                  "file":  "audio/vocab/pedir.mp3",
+                  "text":  "pedir"
+              },
+    "valorar":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/valorar.mp3",
+                    "text":  "valorar"
+                },
+    "el-pecho":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-pecho.mp3",
+                     "text":  "el pecho"
+                 },
+    "considerar":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/considerar.mp3",
+                       "text":  "considerar"
+                   },
+    "seguir-derecho":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/seguir-derecho.mp3",
+                           "text":  "seguir derecho"
+                       },
+    "el-medio-ambiente":  {
+                              "voice":  "Microsoft Sabina",
+                              "file":  "audio/vocab/el-medio-ambiente.mp3",
+                              "text":  "el medio ambiente"
+                          },
+    "representar":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/representar.mp3",
+                        "text":  "representar"
+                    },
+    "menos-mal-que":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/menos-mal-que.mp3",
+                          "text":  "menos mal que"
+                      },
+    "el-cruce":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-cruce.mp3",
+                     "text":  "el cruce"
+                 },
+    "relativos-que-quien":  {
+                                "voice":  "Microsoft Sabina",
+                                "file":  "audio/grammar/relativos-que-quien.mp3",
+                                "text":  "el cuadro que vi; el pintor con quien estudió"
+                            },
+    "pronombres-mandatos-tu":  {
+                                   "voice":  "Microsoft Sabina",
+                                   "file":  "audio/grammar/pronombres-mandatos-tu.mp3",
+                                   "text":  "dímelo, ayúdame, levántate"
+                               },
+    "la-meta":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-meta.mp3",
+                    "text":  "la meta"
+                },
+    "el-retrato":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-retrato.mp3",
+                       "text":  "el retrato"
+                   },
+    "el-favor":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-favor.mp3",
+                     "text":  "el favor"
+                 },
+    "la-tos":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/la-tos.mp3",
+                   "text":  "la tos"
+               },
+    "de-repente":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/de-repente.mp3",
+                       "text":  "de repente"
+                   },
+    "conseguir":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/conseguir.mp3",
+                      "text":  "conseguir"
+                  },
+    "el-estilo":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-estilo.mp3",
+                      "text":  "el estilo"
+                  },
+    "supe-sabia":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/grammar/supe-sabia.mp3",
+                       "text":  "supe, sabía"
+                   },
+    "te-aconsejo-que":  {
+                            "voice":  "Microsoft Sabina",
+                            "file":  "audio/grammar/te-aconsejo-que.mp3",
+                            "text":  "Te aconsejo que hables con ella."
+                        },
+    "el-malentendido":  {
+                            "voice":  "Microsoft Sabina",
+                            "file":  "audio/vocab/el-malentendido.mp3",
+                            "text":  "el malentendido"
+                        },
+    "despues-de":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/despues-de.mp3",
+                       "text":  "después de"
+                   },
+    "la-receta":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-receta.mp3",
+                      "text":  "la receta"
+                  },
+    "la-oportunidad":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-oportunidad.mp3",
+                           "text":  "la oportunidad"
+                       },
+    "insistir-en":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/insistir-en.mp3",
+                        "text":  "insistir en"
+                    },
+    "para-usos":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/grammar/para-usos.mp3",
+                      "text":  "para Quito, para el viernes, para ti, para proteger"
+                  },
+    "es-necesario-que":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/grammar/es-necesario-que.mp3",
+                             "text":  "Es necesario que llegues temprano."
+                         },
+    "la-beca":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-beca.mp3",
+                    "text":  "la beca"
+                },
+    "orgulloso":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/orgulloso.mp3",
+                      "text":  "orgulloso"
+                  },
+    "esperar":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/esperar.mp3",
+                    "text":  "esperar"
+                },
+    "advertir":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/advertir.mp3",
+                     "text":  "advertir"
+                 },
+    "enfrente-de":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/enfrente-de.mp3",
+                        "text":  "enfrente de"
+                    },
+    "el-puente":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-puente.mp3",
+                      "text":  "el puente"
+                  },
+    "atreverse-a":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/atreverse-a.mp3",
+                        "text":  "atreverse a"
+                    },
+    "recomiendo-que":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/grammar/recomiendo-que.mp3",
+                           "text":  "Recomiendo que lo intentes."
+                       },
+    "imprescindible":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/imprescindible.mp3",
+                           "text":  "imprescindible"
+                       },
+    "el-fracaso":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-fracaso.mp3",
+                       "text":  "el fracaso"
+                   },
+    "sincero":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/sincero.mp3",
+                    "text":  "sincero"
+                },
+    "la-ventaja":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-ventaja.mp3",
+                       "text":  "la ventaja"
+                   },
+    "la-cabeza":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-cabeza.mp3",
+                      "text":  "la cabeza"
+                  },
+    "la-decision":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/la-decision.mp3",
+                        "text":  "la decisión"
+                    },
+    "el-logro":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-logro.mp3",
+                     "text":  "el logro"
+                 },
+    "la-orientacion":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-orientacion.mp3",
+                           "text":  "la orientación"
+                       },
+    "sano":  {
+                 "voice":  "Microsoft Sabina",
+                 "file":  "audio/vocab/sano.mp3",
+                 "text":  "sano"
+             },
+    "la-mirada":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-mirada.mp3",
+                      "text":  "la mirada"
+                  },
+    "luego":  {
+                  "voice":  "Microsoft Sabina",
+                  "file":  "audio/vocab/luego.mp3",
+                  "text":  "luego"
+              },
+    "subjuntivo-presente":  {
+                                "voice":  "Microsoft Sabina",
+                                "file":  "audio/grammar/subjuntivo-presente.mp3",
+                                "text":  "hable, hables, hable, hablemos, hablen"
+                            },
+    "el-consejo":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-consejo.mp3",
+                       "text":  "el consejo"
+                   },
+    "la-garganta":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/la-garganta.mp3",
+                        "text":  "la garganta"
+                    },
+    "mandatos-formales":  {
+                              "voice":  "Microsoft Sabina",
+                              "file":  "audio/grammar/mandatos-formales.mp3",
+                              "text":  "tome, coma, escriba, no tome, no coma, no escriba"
+                          },
+    "la-advertencia":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-advertencia.mp3",
+                           "text":  "la advertencia"
+                       },
+    "el-dolor":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-dolor.mp3",
+                     "text":  "el dolor"
+                 },
+    "disculparse":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/disculparse.mp3",
+                        "text":  "disculparse"
+                    },
+    "arriesgarse":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/arriesgarse.mp3",
+                        "text":  "arriesgarse"
+                    },
+    "apoyar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/apoyar.mp3",
+                   "text":  "apoyar"
+               },
+    "al-principio":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/al-principio.mp3",
+                         "text":  "al principio"
+                     },
+    "dedicarse-a":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/dedicarse-a.mp3",
+                        "text":  "dedicarse a"
+                    },
+    "amenazado":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/amenazado.mp3",
+                      "text":  "amenazado"
+                  },
+    "superar":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/superar.mp3",
+                    "text":  "superar"
+                },
+    "habia-participio":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/grammar/habia-participio.mp3",
+                             "text":  "había hablado, habías comido, habíamos vivido"
+                         },
+    "discutir":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/discutir.mp3",
+                     "text":  "discutir"
+                 },
+    "sin-embargo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/sin-embargo.mp3",
+                        "text":  "sin embargo"
+                    },
+    "leido-oido-caido":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/grammar/leido-oido-caido.mp3",
+                             "text":  "leído, oído, caído"
+                         },
+    "la-desventaja":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/la-desventaja.mp3",
+                          "text":  "la desventaja"
+                      },
+    "el-recuerdo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/el-recuerdo.mp3",
+                        "text":  "el recuerdo"
+                    },
+    "aconsejar":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/aconsejar.mp3",
+                      "text":  "aconsejar"
+                  },
+    "lo-que-paso":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/lo-que-paso.mp3",
+                        "text":  "lo que pasó"
+                    },
+    "estar-de-acuerdo":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/vocab/estar-de-acuerdo.mp3",
+                             "text":  "estar de acuerdo"
+                         },
+    "la-salud":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/la-salud.mp3",
+                     "text":  "la salud"
+                 },
+    "participios-irregulares":  {
+                                    "voice":  "Microsoft Sabina",
+                                    "file":  "audio/grammar/participios-irregulares.mp3",
+                                    "text":  "hecho, dicho, visto, escrito, puesto, abierto, vuelto, muerto"
+                                },
+    "sugerir":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/sugerir.mp3",
+                    "text":  "sugerir"
+                },
+    "el-apoyo":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/el-apoyo.mp3",
+                     "text":  "el apoyo"
+                 },
+    "lo-que-cuyo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/grammar/lo-que-cuyo.mp3",
+                        "text":  "Lo que más me impresiona es la luz. El pintor cuyas obras vimos."
+                    },
+    "te-pido-que":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/grammar/te-pido-que.mp3",
+                        "text":  "Te pido que me escuches."
+                    },
+    "la-fiebre":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-fiebre.mp3",
+                      "text":  "la fiebre"
+                  },
+    "el-recurso":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-recurso.mp3",
+                       "text":  "el recurso"
+                   },
+    "la-esquina":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-esquina.mp3",
+                       "text":  "la esquina"
+                   },
+    "al-lado-de":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/al-lado-de.mp3",
+                       "text":  "al lado de"
+                   },
+    "mandatos-irregulares-ud":  {
+                                    "voice":  "Microsoft Sabina",
+                                    "file":  "audio/grammar/mandatos-irregulares-ud.mp3",
+                                    "text":  "dé, esté, vaya, sea, sepa"
+                                },
+    "escuchar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/escuchar.mp3",
+                     "text":  "escuchar"
+                 },
+    "por-vs-para":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/grammar/por-vs-para.mp3",
+                        "text":  "Lo hice por ti. Lo hice para ti."
+                    },
+    "la-anecdota":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/la-anecdota.mp3",
+                        "text":  "la anécdota"
+                    },
+    "el-resfriado":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/el-resfriado.mp3",
+                         "text":  "el resfriado"
+                     },
+    "la-alternativa":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-alternativa.mp3",
+                           "text":  "la alternativa"
+                       },
+    "la-cuadra":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-cuadra.mp3",
+                      "text":  "la cuadra"
+                  },
+    "animar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/animar.mp3",
+                   "text":  "animar"
+               },
+    "acabar-de":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/acabar-de.mp3",
+                      "text":  "acabar de"
+                  },
+    "la-senal":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/la-senal.mp3",
+                     "text":  "la señal"
+                 },
+    "la-duda":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-duda.mp3",
+                    "text":  "la duda"
+                },
+    "la-contaminacion":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/vocab/la-contaminacion.mp3",
+                             "text":  "la contaminación"
+                         },
+    "el-punto-de-vista":  {
+                              "voice":  "Microsoft Sabina",
+                              "file":  "audio/vocab/el-punto-de-vista.mp3",
+                              "text":  "el punto de vista"
+                          },
+    "quiero-que":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/grammar/quiero-que.mp3",
+                       "text":  "Quiero que estudies."
+                   },
+    "mandatos-irregulares-tu":  {
+                                    "voice":  "Microsoft Sabina",
+                                    "file":  "audio/grammar/mandatos-irregulares-tu.mp3",
+                                    "text":  "di, haz, ve, pon, sal, sé, ten, ven"
+                                },
+    "el-semaforo":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/el-semaforo.mp3",
+                        "text":  "el semáforo"
+                    },
+    "la-solucion":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/la-solucion.mp3",
+                        "text":  "la solución"
+                    },
+    "el-estomago":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/el-estomago.mp3",
+                        "text":  "el estómago"
+                    },
+    "recomendar":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/recomendar.mp3",
+                       "text":  "recomendar"
+                   },
+    "no-me-he-sentido":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/grammar/no-me-he-sentido.mp3",
+                             "text":  "No me he sentido bien."
+                         },
+    "al-final":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/al-final.mp3",
+                     "text":  "al final"
+                 },
+    "la-huella":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-huella.mp3",
+                      "text":  "la huella"
+                  },
+    "hace-dos-meses":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/hace-dos-meses.mp3",
+                           "text":  "hace dos meses"
+                       },
+    "la-rodilla":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-rodilla.mp3",
+                       "text":  "la rodilla"
+                   },
+    "tener-razon":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/tener-razon.mp3",
+                        "text":  "tener razón"
+                    },
+    "el-significado":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/el-significado.mp3",
+                           "text":  "el significado"
+                       },
+    "el-barrio":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-barrio.mp3",
+                      "text":  "el barrio"
+                  },
+    "el-consultorio":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/el-consultorio.mp3",
+                           "text":  "el consultorio"
+                       },
+    "la-precaucion":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/la-precaucion.mp3",
+                          "text":  "la precaución"
+                      },
+    "sostenible":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/sostenible.mp3",
+                       "text":  "sostenible"
+                   },
+    "intentar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/intentar.mp3",
+                     "text":  "intentar"
+                 },
+    "la-especie":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-especie.mp3",
+                       "text":  "la especie"
+                   },
+    "el-hombro":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-hombro.mp3",
+                      "text":  "el hombro"
+                  },
+    "ahorrar":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/ahorrar.mp3",
+                    "text":  "ahorrar"
+                },
+    "el-consejero":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/el-consejero.mp3",
+                         "text":  "el consejero"
+                     },
+    "la-naturaleza":  {
+                          "voice":  "Microsoft Sabina",
+                          "file":  "audio/vocab/la-naturaleza.mp3",
+                          "text":  "la naturaleza"
+                      },
+    "exponer":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/exponer.mp3",
+                    "text":  "exponer"
+                },
+    "apreciar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/apreciar.mp3",
+                     "text":  "apreciar"
+                 },
+    "desperdiciar":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/desperdiciar.mp3",
+                         "text":  "desperdiciar"
+                     },
+    "reflexionar":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/vocab/reflexionar.mp3",
+                        "text":  "reflexionar"
+                    },
+    "resolver":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/resolver.mp3",
+                     "text":  "resolver"
+                 },
+    "la-espalda":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/la-espalda.mp3",
+                       "text":  "la espalda"
+                   },
+    "la-obra":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-obra.mp3",
+                    "text":  "la obra"
+                },
+    "el-cambio-climatico":  {
+                                "voice":  "Microsoft Sabina",
+                                "file":  "audio/vocab/el-cambio-climatico.mp3",
+                                "text":  "el cambio climático"
+                            },
+    "ocurrir":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/ocurrir.mp3",
+                    "text":  "ocurrir"
+                },
+    "prudente":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/prudente.mp3",
+                     "text":  "prudente"
+                 },
+    "la-parada":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-parada.mp3",
+                      "text":  "la parada"
+                  },
+    "hasta":  {
+                  "voice":  "Microsoft Sabina",
+                  "file":  "audio/vocab/hasta.mp3",
+                  "text":  "hasta"
+              },
+    "primero":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/primero.mp3",
+                    "text":  "primero"
+                },
+    "contaminar":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/contaminar.mp3",
+                       "text":  "contaminar"
+                   },
+    "comi-comia":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/grammar/comi-comia.mp3",
+                       "text":  "comí, comía"
+                   },
+    "el-detalle":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-detalle.mp3",
+                       "text":  "el detalle"
+                   },
+    "el-tobillo":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-tobillo.mp3",
+                       "text":  "el tobillo"
+                   },
+    "doblar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/doblar.mp3",
+                   "text":  "doblar"
+               },
+    "la-basura":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/la-basura.mp3",
+                      "text":  "la basura"
+                  },
+    "mientras":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/mientras.mp3",
+                     "text":  "mientras"
+                 },
+    "llegue-llegaba":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/grammar/llegue-llegaba.mp3",
+                           "text":  "llegué, llegaba"
+                       },
+    "perdonar":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/perdonar.mp3",
+                     "text":  "perdonar"
+                 },
+    "el-acuerdo":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-acuerdo.mp3",
+                       "text":  "el acuerdo"
+                   },
+    "el-reto":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/el-reto.mp3",
+                    "text":  "el reto"
+                },
+    "la-confianza":  {
+                         "voice":  "Microsoft Sabina",
+                         "file":  "audio/vocab/la-confianza.mp3",
+                         "text":  "la confianza"
+                     },
+    "el-cuadro":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-cuadro.mp3",
+                      "text":  "el cuadro"
+                  },
+    "mandatos-negativos-tu":  {
+                                  "voice":  "Microsoft Sabina",
+                                  "file":  "audio/grammar/mandatos-negativos-tu.mp3",
+                                  "text":  "no hables, no comas, no vayas, no te preocupes"
+                              },
+    "desear":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/desear.mp3",
+                   "text":  "desear"
+               },
+    "el-pintor":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-pintor.mp3",
+                      "text":  "el pintor"
+                  },
+    "anoche":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/anoche.mp3",
+                   "text":  "anoche"
+               },
+    "mandatos-negativos":  {
+                               "voice":  "Microsoft Sabina",
+                               "file":  "audio/grammar/mandatos-negativos.mp3",
+                               "text":  "no lo tome, no me diga, no se preocupe"
+                           },
+    "relativos-en-contexto":  {
+                                  "voice":  "Microsoft Sabina",
+                                  "file":  "audio/grammar/relativos-en-contexto.mp3",
+                                  "text":  "La obra que ves aquí es del pintor cuyo taller estaba en el palacio."
+                              },
+    "por-usos":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/grammar/por-usos.mp3",
+                     "text":  "por la mañana, por teléfono, por tres horas, por el bosque"
+                 },
+    "proteger":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/proteger.mp3",
+                     "text":  "proteger"
+                 },
+    "el-paisaje":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/el-paisaje.mp3",
+                       "text":  "el paisaje"
+                   },
+    "el-bosque":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-bosque.mp3",
+                      "text":  "el bosque"
+                  },
+    "perderse":  {
+                     "voice":  "Microsoft Sabina",
+                     "file":  "audio/vocab/perderse.mp3",
+                     "text":  "perderse"
+                 },
+    "el-premio":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/el-premio.mp3",
+                      "text":  "el premio"
+                  },
+    "agradecer":  {
+                      "voice":  "Microsoft Sabina",
+                      "file":  "audio/vocab/agradecer.mp3",
+                      "text":  "agradecer"
+                  },
+    "la-recomendacion":  {
+                             "voice":  "Microsoft Sabina",
+                             "file":  "audio/vocab/la-recomendacion.mp3",
+                             "text":  "la recomendación"
+                         },
+    "confiar-en":  {
+                       "voice":  "Microsoft Sabina",
+                       "file":  "audio/vocab/confiar-en.mp3",
+                       "text":  "confiar en"
+                   },
+    "la-cita":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/la-cita.mp3",
+                    "text":  "la cita"
+                },
+    "sugiero-que":  {
+                        "voice":  "Microsoft Sabina",
+                        "file":  "audio/grammar/sugiero-que.mp3",
+                        "text":  "Sugiero que lo pienses bien."
+                    },
+    "mejorar":  {
+                    "voice":  "Microsoft Sabina",
+                    "file":  "audio/vocab/mejorar.mp3",
+                    "text":  "mejorar"
+                },
+    "cruzar":  {
+                   "voice":  "Microsoft Sabina",
+                   "file":  "audio/vocab/cruzar.mp3",
+                   "text":  "cruzar"
+               },
+    "darse-por-vencido":  {
+                              "voice":  "Microsoft Sabina",
+                              "file":  "audio/vocab/darse-por-vencido.mp3",
+                              "text":  "darse por vencido"
+                          },
+    "la-perspectiva":  {
+                           "voice":  "Microsoft Sabina",
+                           "file":  "audio/vocab/la-perspectiva.mp3",
+                           "text":  "la perspectiva"
+                       }
+}

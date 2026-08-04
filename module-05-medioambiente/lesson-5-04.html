@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 5.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 5</div>
+        <div style="font-size: 12px; color: #666;">Medio ambiente</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.04 &middot; Day 4 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">El uso de «para»</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">El medio ambiente</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Para — una flecha hacia un destino</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Draw an arrow. Whatever the arrow points at, that is what <em>para</em> marks.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Yesterday's word described the surroundings of an action. Today's word does one thing only: <strong>it points forward at an endpoint</strong>. A place you are headed. A purpose you are aiming at. A deadline you must reach. A person the thing is going to.<br><br>Textbooks list seven or eight uses of <em>para</em>. They are all the same use. Once you see the arrow, the list stops being a list.<br><br>One structural rule matters more than any of them and you will meet it in Part 3: <strong>for purpose, Spanish uses <em>para</em> + INFINITIVE</strong>. <em>Para proteger</em>, <em>para reducir</em>, <em>para ahorrar</em>. That construction covers everything this course asks of you, and it is the form to write.</div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain the arrow idea and use it to identify a <em>para</em> in an unfamiliar sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> express purpose with <em>para</em> + infinitive, in a full sentence, every time.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>para</em> for a deadline, a recipient and an opinion, and explain why all three are the same idea.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Four sentences, one arrow each</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.9;margin:0 0 10px 0;">
+        <strong>Salimos para las islas el lunes.</strong> &nbsp;&rarr;&nbsp; a place<br>
+        <strong>Crearon el parque para proteger las especies.</strong> &nbsp;&rarr;&nbsp; a purpose<br>
+        <strong>El informe es para el viernes.</strong> &nbsp;&rarr;&nbsp; a deadline<br>
+        <strong>Este folleto es para los visitantes.</strong> &nbsp;&rarr;&nbsp; a recipient</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">A place, a purpose, a date, a person. Four different kinds of thing &mdash; and in every case the sentence <strong>ends up somewhere</strong>. That is why one word covers all four. Spanish is not being vague here; it is being consistent about direction.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which of the four arrows above feels least obvious to you as a use of <em>para</em>?</div>
+            <div class="widget-options">
+                <button data-response="Reasonable - a deadline does not look like a destination until you notice that a date is a point you are heading toward. «Para el viernes» = by Friday, arriving at Friday. Part 2 job 3.">The deadline</button>
+                <button data-response="This is the one English hides from you. English says «we left FOR the islands», with the same preposition it uses for a gift. Spanish uses «para» for both because both are arrows - and reserves «por» for the route you take on the way.">The place</button>
+                <button data-response="Then you are in good shape, because purpose is the use that appears most often in this module. Watch Part 3 carefully anyway: the form after «para» matters, and it is always the infinitive.">None - they all look like «for» to me</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; LOS SIETE TRABAJOS DE «PARA» <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Seven jobs, one direction</h3>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#128161; LA IDEA CENTRAL</div>
+            <div style="font-size:17px;color:#1a2340;line-height:1.8;"><strong><em>Para</em> is an arrow, and what it points at is an endpoint</strong> &mdash; a destination, a goal, a limit, a beneficiary, a standard of judgement.<br><br>Test: can you say &ldquo;<em>headed for</em>&rdquo;, &ldquo;<em>with the aim of</em>&rdquo;, &ldquo;<em>by</em> (this date)&rdquo;, &ldquo;<em>destined for</em>&rdquo;, or &ldquo;<em>in the view of</em>&rdquo;? Then it is <em>para</em>.</div>
+        </div>
+        <table class="gtable">
+            <thead><tr><th>El trabajo</th><th>En inglés se siente como&hellip;</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. El destino</strong></td><td>headed for, off to</td><td>Salimos <span class="pron">para</span> las islas el lunes por la mañana.</td></tr>
+                <tr><td><strong>2. El propósito</strong> &middot; + infinitivo</td><td>in order to</td><td>Crearon el parque <span class="pron">para proteger</span> las especies endémicas.</td></tr>
+                <tr><td><strong>3. El plazo</strong></td><td>by, for (a date)</td><td>El informe sobre la basura es <span class="pron">para</span> el viernes.</td></tr>
+                <tr><td><strong>4. El destinatario</strong></td><td>for (someone)</td><td>Este folleto es <span class="pron">para</span> los visitantes del parque.</td></tr>
+                <tr><td><strong>5. El empleador</strong></td><td>to work for</td><td>Mi tía trabaja <span class="pron">para</span> la estación científica.</td></tr>
+                <tr><td><strong>6. La opinión</strong></td><td>in the view of</td><td><span class="pron">Para</span> mí, el reciclaje es el mínimo, no la solución.</td></tr>
+                <tr><td><strong>7. La comparación</strong></td><td>for, considering</td><td><span class="pron">Para</span> una isla tan pequeña, Fernandina tiene una actividad volcánica enorme.</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/para-usos.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">para Quito, para el viernes, para ti, para proteger</span><span class="v-en">a place, a date, a person, a purpose — four arrows, one word</span></li>
+        </ul>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 0;"><strong>Jobs 6 and 7 look like exceptions and are not.</strong> <em>Para mí</em> means the opinion is aimed at a particular judge &mdash; me. <em>Para una isla tan pequeña</em> means the judgement is measured against a particular standard &mdash; the size of the island. Both point the sentence at the thing it is being measured against. Same arrow, pointed at a criterion instead of a place.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PARA + INFINITIVO <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The single most useful frame in this module</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">Job 2 &mdash; purpose &mdash; is the one you will use most, in your <em>Lengua en acción</em> paragraph, in your <em>Tarea oral</em>, and in almost every sentence of Day 8's UNESCO text. Its form never varies:</p>
+        <p style="font-size:20px;color:#0e1c42;line-height:1.6;margin:0 0 12px 0;text-align:center;"><strong>acción &nbsp;+&nbsp; para &nbsp;+&nbsp; INFINITIVO</strong></p>
+        <table class="gtable">
+            <thead><tr><th>La acción</th><th>&hellip;para + infinitivo</th></tr></thead>
+            <tbody>
+                <tr><td>Ecuador creó un parque nacional</td><td><span class="pron">para proteger</span> el archipiélago.</td></tr>
+                <tr><td>Hay inspección de equipaje</td><td><span class="pron">para evitar</span> la entrada de semillas e insectos.</td></tr>
+                <tr><td>Cerramos el grifo</td><td><span class="pron">para ahorrar</span> agua.</td></tr>
+                <tr><td>Guardamos las botellas</td><td><span class="pron">para reutilizarlas</span> la próxima semana.</td></tr>
+                <tr><td>Hay que reducir el número de barcos</td><td><span class="pron">para no dañar</span> tanto los arrecifes.</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:15px;color:#6b7a99;margin:4px 0 10px;">Notice the fourth row: <em>para reutilizar<u>las</u></em>. An object pronoun attaches to the end of an infinitive, exactly as it attached to affirmative commands in Módulo 3 &mdash; <em>para protegerlas</em>, <em>para verlo</em>, <em>para hacerlo</em>. No new rule; the same rule in a new place.</p>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; UNA ADVERTENCIA HONESTA</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.7;">You may have seen the two-word form <strong>«para que»</strong> somewhere. It exists, and it is used when the purpose belongs to <em>a different person</em> than the one acting. It also requires a verb mood you do not meet until <strong>Módulo 7</strong>, so it is not yours yet.<br><br><strong>Use <em>para</em> + infinitive.</strong> This is not a workaround or a simplification &mdash; it is what a Spanish speaker writes whenever the two halves of the sentence share a subject, which in conservation writing is nearly always: <em>creamos el parque para protegerlo</em>. Reach for <em>para que</em> before Módulo 7 and you will produce a verb form you have not learned, in a construction you cannot check. In this module, if a sentence pushes you toward it, rewrite the sentence.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; purpose</div>
+            <div class="widget-question">«Crearon el parque nacional ___ proteger las especies endémicas.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«A proteger» is not the frame Spanish uses after a noun like «el parque». Purpose takes «para» + infinitivo.">a</button>
+                <button data-correct="false" data-fb="«Por proteger» would give the REASON the park was created - as if the park were a reward for protecting. Here protection is the aim, not the cause.">por</button>
+                <button data-correct="true" data-fb="«Para proteger» - the arrow points at the aim, and the aim is expressed as a bare infinitive. This is the module's most-used frame.">para</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; a date you must reach</div>
+            <div class="widget-question">«El informe sobre la basura es ___ el viernes.»</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«Para el viernes» - by Friday. A deadline is a point you are heading toward, so it takes the arrow.">para</button>
+                <button data-correct="false" data-fb="«Por el viernes» would mean around Friday, or during it - vague time rather than a limit. A deadline is exactly not vague.">por</button>
+                <button data-correct="false" data-fb="«En el viernes» is not how Spanish marks a day at all; days take «el viernes» with no preposition. And the sentence needs a deadline, so «para».">en</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; who pays her?</div>
+            <div class="widget-question">«Mi tía trabaja para la estación científica.» ¿Qué significa?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="Working in someone's place is «trabajar POR alguien» - covering their shift. That is yesterday's job 6, and it is a completely different sentence.">Trabaja en lugar de otra persona.</button>
+                <button data-correct="true" data-fb="La estación es su empleadora - job 5. The arrow points at where her work goes and who it belongs to.">La estación científica es su empleadora.</button>
+                <button data-correct="false" data-fb="«Trabaja a favor de la estación sin cobrar» would be «trabaja por la estación» - out of support for it. «Para» names an employer.">Trabaja a favor de la estación, sin cobrar.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; measured against a standard</div>
+            <div class="widget-question">«___ una isla tan pequeña, Fernandina tiene una actividad volcánica enorme.»</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«Por una isla tan pequeña» would make the island the CAUSE or the price of something. Here it is the yardstick the sentence measures against.">Por</button>
+                <button data-correct="false" data-fb="«Con una isla tan pequeña» means «with», which leaves the comparison unmade. Spanish marks a standard of comparison with «para».">Con</button>
+                <button data-correct="true" data-fb="«Para una isla tan pequeña» - job 7. The arrow points at the criterion: judged against small islands generally, this one is extraordinary.">Para</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: write <strong>four</strong> sentences using <em>para</em> for four <strong>different</strong> jobs, and make at least two of them <em>para</em> + infinitive. Say them aloud before revealing.</p>
+            <button class="reveal-btn">Reveal a model</button>
+            <div class="reveal-body"><strong>El lunes salimos para Baltra, la isla del aeropuerto. <span style="color:#6b7a99;">(1 destino)</span><br>Los guías revisan el equipaje para evitar la entrada de semillas. <span style="color:#6b7a99;">(2 propósito)</span><br>La propuesta sobre el plástico es para el próximo consejo municipal. <span style="color:#6b7a99;">(3 plazo)</span><br>Para mí, reducir el consumo es más útil que reciclar. <span style="color:#6b7a99;">(6 opinión)</span></strong><br><br>Check yours: every purpose sentence uses an <strong>infinitive</strong> after <em>para</em>, never a conjugated verb &middot; no <em>para que</em> anywhere &middot; and in each sentence you can point at what the arrow hits.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Reglas escritas para un lugar frágil</strong><br><br>
+        Antes de subir al avión hacia Galápagos, un inspector abre tu maleta <em>para</em> buscar frutas, semillas y plantas. La inspección está en el continente, no en las islas: el objetivo es detener el problema antes del vuelo.<br><br>
+        Al llegar, pagas la entrada al parque y recibes un folleto <em>para</em> visitantes con las reglas. Son sencillas y todas tienen una razón detrás. Mantén dos metros de distancia con los animales, <em>para</em> no cambiar su comportamiento. No lleves comida a los sitios de visita, <em>para</em> no acostumbrar a las aves. Camina siempre por el sendero marcado, <em>para</em> no pisar nidos: muchas aves marinas anidan en el suelo, sin miedo, porque nunca tuvieron depredadores terrestres.<br><br>
+        Y hay una regla que sorprende a los visitantes: no puedes recorrer los sitios sin un guía autorizado. <em>Para</em> algunos parece una restricción excesiva. <em>Para</em> el parque es lo contrario: un guía por cada grupo pequeño es la manera más barata de proteger un lugar enorme.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Seven uses of <em>para</em>. Four are purpose (<em>para buscar, para no cambiar, para no acostumbrar, para no pisar</em>), one is a recipient (<em>un folleto para visitantes</em>), and two are opinion (<em>para algunos</em>, <em>para el parque</em>). Assign each one its job number from Part 2.<br><br>Notice the negative purposes: <em><strong>para no</strong> pisar nidos</em>. The <em>no</em> goes between <em>para</em> and the infinitive, and this is how you say &ldquo;so as not to&rdquo; without needing anything new.<br><br>And notice the one <em>por</em> in the passage &mdash; <em>camina por el sendero marcado</em>. Route, yesterday's job 4. Tomorrow you will explain why that sentence contains one of each, and why they cannot be swapped.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ECUADOR</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>Un país que le dio derechos a la naturaleza</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">In <strong>2008</strong> Ecuador rewrote its constitution and did something no country had done before: it granted <strong>legal rights to nature itself</strong>. Chapter 7, articles 71 to 74, states that <em>la naturaleza o Pacha Mama</em> has the right to exist, to persist, and to have its cycles restored &mdash; and, crucially, that <strong>any person or community may go to court on nature's behalf</strong>. You do not have to prove personal injury.<br><br>The Kichwa name in the constitutional text is not decoration; it signals where the idea came from. <em>Pacha Mama</em> belongs to Andean Indigenous thought, and its appearance in a national constitution was the result of long political organising by Indigenous movements in Ecuador.<br><br>Two honest observations. First, the article has real teeth: in <strong>2021</strong> Ecuador's Constitutional Court blocked mining concessions in the <em>bosque protector Los Cedros</em>, ruling that the forest's own rights had been violated &mdash; a decision cited internationally ever since. Second, Ecuador remains a significant oil producer and much of that oil lies under the Amazon, so the constitution and the national budget are in genuine tension. In <strong>2023</strong> Ecuadorians voted in a national referendum to halt oil extraction in Yasuní's Block 43, and implementation has been slow and contested.<br><br>This is the culture note for the <em>para</em> lesson deliberately. A constitutional right is an arrow: a purpose written down, aimed at a future, and then argued over for years.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA RESPONSABILIDAD</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Every rule in today's reading has a <em>para</em> attached to it, and that is not a coincidence of grammar &mdash; it is the difference between a rule and an order. «Camina por el sendero» can be resented. «Camina por el sendero para no pisar nidos» can be understood, and a rule that is understood survives without anyone watching. A steward who cannot say what a rule is <em>for</em> has not finished thinking. <em>Sin un propósito, el esfuerzo se dispersa.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 5.05 &mdash; Por o para: el contraste</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module's hardest and most important lesson. Minimal pairs where both versions are correct Spanish and only the meaning changes &mdash; <em>lo hice por ti</em> against <em>lo hice para ti</em> &mdash; plus one decision question you can actually run at speaking speed.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then write three purposes for things you actually did today, each as <em>para</em> + infinitive. Check that no conjugated verb follows <em>para</em> in any of them &mdash; that is the single error this lesson exists to prevent.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Seven jobs that turned out to be one arrow, a frame you will use in every paragraph from here on, and a country that wrote a purpose for nature into its constitution. Tomorrow the two words meet. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.04 &middot; El uso de «para»</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>

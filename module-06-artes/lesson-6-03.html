@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spanish 3 Honors &mdash; Lesson 6.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .vocab-list { list-style: none; margin: 14px 0 0 0; padding: 0; }
+    .vocab-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #F4F9FC; border: 1px solid #D0D9E8; border-radius: 6px; margin-bottom: 8px; }
+    .say { background: #0E1C42; color: #fff; border: none; border-radius: 6px; min-width: 40px; height: 34px; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .say:hover { background: #1B3A6B; }
+    .say.playing { background: #C7922C; }
+    .say.err { background: #C0392B; }
+    .v-es { font-weight: 600; color: #0E1C42; min-width: 190px; font-size: 17px; }
+    .v-en { color: #6b7a99; font-size: 15px; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .pron { color:#C7922C; font-weight:700; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .virtue-box { background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .lectura-box { background:#F2F6FB; border:1px solid #C5D4E8; border-left:5px solid #1F5C8B; border-radius:8px; padding:18px 22px; margin:18px 0; }
+    .lectura-box .src { font-size:13px; color:#6b7a99; margin-top:10px; font-style:italic; }
+    .gualda { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .gualda i { display:block; }
+    .gualda .r { flex:1; background:#AA1E2D; }
+    .gualda .g { flex:2; background:#C79A1E; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- ===== HEADER ===== -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">SPANISH 3 HONORS <span style="font-size:22px;">&#127758;</span></div>
+</div>
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+
+<!-- ===== METADATA STRIP ===== -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Módulo 6</div>
+        <div style="font-size: 12px; color: #666;">Las artes</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.03 &middot; Day 3 of 10</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Que y quien</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">Las artes y la cultura</div>
+    </div>
+</div>
+
+<!-- ===== BODY ===== -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Que y quien — dos oraciones en una</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">This is the lesson that turns a list of short sentences into a paragraph.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Up to now your Spanish writing has probably been made of complete, correct, separate sentences. That is exactly what Spanish 2 asked for. It is also why Honors writing sounds young: a paragraph of short sentences reads like a list, no matter how accurate each one is.<br><br>A <strong>relative pronoun</strong> is the repair. It lets you say <strong>two things about one noun inside a single sentence</strong> — and that is the whole idea. Everything today follows from it.<br><br>One warning up front, because it is the error English speakers make most: <strong>English can drop the word &ldquo;that&rdquo;. Spanish can never drop <em>que</em>.</strong></div>
+    </div>
+
+    <!-- Objectives -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> join two sentences about the same noun into one using <em>que</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>que</em> can never be left out, even where English leaves out &ldquo;that&rdquo;.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use <em>quien</em> and <em>quienes</em> after a preposition, with the preposition in front.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; PARA EMPEZAR <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two sentences, one noun</h3>
+        <p style="font-size:18px;color:#0e1c42;line-height:1.9;margin:0 0 10px 0;">
+        <em>Vi un cuadro en el Prado. El cuadro es de Velázquez.</em><br>
+        &darr;<br>
+        <strong>El cuadro <span style="color:#C7922C;">que</span> vi en el Prado es de Velázquez.</strong></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0;">Look at what happened. The noun <em>el cuadro</em> appeared twice; the second mention was replaced by <strong><em>que</em></strong>; and the two sentences became one, with one main statement (<em>es de Velázquez</em>) and one piece of extra information tucked inside it.<br><br>That is the entire mechanism. The rest of today is which word goes in the slot, and the rest of the module is doing it well.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Which version would you be more likely to write, right now, without thinking about it?</div>
+            <div class="widget-options">
+                <button data-response="Most students write the two-sentence version, and it is not an error - it is grammatical, clear Spanish. It is simply the version that keeps Honors writing sounding like Spanish 2. Today gives you the other option.">The two separate sentences</button>
+                <button data-response="Then you already do this in English and are about to find out that Spanish does it with one word covering four English ones. The work today is accuracy, not concept.">The joined version</button>
+                <button data-response="A fair answer, and worth naming: joining sentences feels risky because there is more to get wrong. Part 2 gives you a procedure so that it is not a guess.">I would try to join them and lose my nerve</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; QUE &middot; EL RELATIVO POR DEFECTO <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">One word where English has four</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;">English distributes this job across <em>that</em>, <em>which</em>, <em>who</em> and <em>whom</em>, and then makes you choose. Spanish uses <strong><em>que</em></strong> for all four. It does not change for gender, it does not change for number, and it works for people and for things alike.</p>
+        <table class="gtable">
+            <thead><tr><th>Dos oraciones</th><th>Una sola</th></tr></thead>
+            <tbody>
+                <tr><td>Vi un cuadro. El cuadro es de Velázquez.</td><td>El cuadro <span class="pron">que</span> vi es de Velázquez.</td></tr>
+                <tr><td>El pintor era sevillano. El pintor trabajó en Madrid.</td><td>El pintor <span class="pron">que</span> trabajó en Madrid era sevillano.</td></tr>
+                <tr><td>La luz entra por la izquierda. La luz ilumina a la niña.</td><td>La luz <span class="pron">que</span> entra por la izquierda ilumina a la niña.</td></tr>
+                <tr><td>Compré un libro. El libro habla del Prado.</td><td>El libro <span class="pron">que</span> compré habla del Prado.</td></tr>
+                <tr><td>Las meninas acompañan a la infanta. Son dos.</td><td>Las dos meninas <span class="pron">que</span> acompañan a la infanta&hellip;</td></tr>
+            </tbody>
+        </table>
+        <ul class="vocab-list">
+            <li class="vocab-item"><button class="say" data-audio="grammar/relativos-que-quien.mp3" aria-label="Escuchar">&#128266;</button><span class="v-es">el cuadro que vi; el pintor con quien estudió</span><span class="v-en">notice there is no pause before «que» — it glues, it does not separate</span></li>
+        </ul>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:12px 0 6px;">And <em>que</em> does not care which grammatical job the noun does inside its own clause. Four combinations, one word:</p>
+        <table class="gtable">
+            <thead><tr><th></th><th>The noun is the <em>subject</em> of its clause</th><th>The noun is the <em>object</em> of its clause</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Cosas</strong></td><td>el cuadro <span class="pron">que</span> está en el Prado</td><td>el cuadro <span class="pron">que</span> vi ayer</td></tr>
+                <tr><td><strong>Personas</strong></td><td>el pintor <span class="pron">que</span> trabajó allí</td><td>el pintor <span class="pron">que</span> conocí ayer</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:14px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; LA REGLA MÁS IMPORTANTE DEL MÓDULO</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">
+            English lets you throw the word away:<br>
+            &nbsp;&nbsp;the painting <u>that</u> I saw &nbsp;&middot;&nbsp; the painting I saw &mdash; <em>both correct</em><br><br>
+            Spanish does not:<br>
+            &nbsp;&nbsp;el cuadro <strong>que</strong> vi &nbsp;&middot;&nbsp; <s>el cuadro vi</s> &mdash; <em>the second is not Spanish at all</em><br><br>
+            <strong>The test, and it is quick:</strong> if you can slip &ldquo;that&rdquo; into your English sentence and it still works, Spanish <em>requires</em> <em>que</em>.<br><br>
+            &ldquo;The book I bought&rdquo; &rarr; &ldquo;the book <u>that</u> I bought&rdquo; works &rarr; <em>el libro <strong>que</strong> compré</em><br>
+            &ldquo;The painter he admired&rdquo; &rarr; &ldquo;the painter <u>whom</u> he admired&rdquo; works &rarr; <em>el pintor <strong>que</strong> admiraba</em><br><br>
+            This single habit removes more errors from Honors writing than anything else in the module.</div>
+        </div>
+        <p style="font-size:15px;color:#6b7a99;margin:10px 0 0;">One further note, small but worth having now: <em>que</em> as a relative pronoun <strong>never carries an accent</strong>. <em>Qué</em> with a tilde is the question word — <em>¿Qué cuadro?</em> — and it is a different word doing a different job. Same <em>tilde diacrítica</em> family as <em>dé/de</em> and <em>tú/tu</em> from Módulo 3.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; QUIEN Y QUIENES <span class="pill-time">9 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Only people, and mostly after a preposition</h3>
+        <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px 0;"><strong><em>Quien</em></strong> (plural <strong><em>quienes</em></strong>) refers <strong>only to people</strong>. It has two ordinary homes, and outside them <em>que</em> is the better choice.</p>
+        <table class="gtable">
+            <thead><tr><th>Where <em>quien</em> belongs</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td><strong>1. After a preposition</strong> &mdash; the main use</td><td>el rey <span class="pron">para quien</span> Velázquez trabajó</td></tr>
+                <tr><td></td><td>la infanta <span class="pron">de quien</span> hablamos ayer</td></tr>
+                <tr><td></td><td>los maestros <span class="pron">con quienes</span> estudió en Sevilla</td></tr>
+                <tr><td><strong>2. Inside commas</strong>, adding information</td><td>Velázquez, <span class="pron">quien</span> llegó a Madrid en 1623, tenía 24 años.</td></tr>
+            </tbody>
+        </table>
+        <div class="box" style="background:#F2F6FB;border:1px solid #C5D4E8;border-left:5px solid #1F5C8B;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#1F5C8B;letter-spacing:.4px;margin-bottom:6px;">&#128161; LA PREPOSICIÓN VA DELANTE, SIEMPRE</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.75;">English parks its prepositions at the end of the clause. Spanish never does.<br><br>
+            &ldquo;the king he worked <u>for</u>&rdquo; &rarr; <em>el rey <strong>para</strong> quien trabajó</em><br>
+            &ldquo;the girl we were talking <u>about</u>&rdquo; &rarr; <em>la niña <strong>de</strong> quien hablábamos</em><br>
+            &ldquo;the friend he went <u>with</u>&rdquo; &rarr; <em>el amigo <strong>con</strong> quien fue</em><br><br>
+            If your English has a stranded preposition, move it to the front before you translate. This is the second half of today's lesson and it is worth as much as the first.</div>
+        </div>
+        <div class="box" style="background:#FDF7E9;border:1px dashed #C7922C;border-radius:8px;padding:14px 18px;margin-top:12px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#9888;&#65039; DÓNDE NO VA <em>QUIEN</em></div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.8;">
+            <s>el pintor <strong>quien</strong> trabajó para el rey</s> &rarr; <em>el pintor <strong>que</strong> trabajó para el rey</em><br><br>
+            This is the trap. English &ldquo;the painter <u>who</u> worked&hellip;&rdquo; tempts you into <em>quien</em>, but in a clause with no commas and no preposition, Spanish wants <em>que</em> — even for a person.<br><br>
+            <strong>The reassuring version of the rule:</strong> if you default to <em>que</em> for people, you will almost never be wrong. <em>Quien</em> is the specialist; <em>que</em> is the workhorse. Learn <em>quien</em> properly for the two places it belongs, and let <em>que</em> handle everything else.</div>
+        </div>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; PARA IR MÁS LEJOS &middot; optional &middot; +4 min &middot; <em>el que / la que</em></div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">After a preposition, <em>quien</em> handles people. For <strong>things</strong> in the same position, Spanish uses <strong><em>el que / la que / los que / las que</em></strong>, which agree with the noun:<br><br><em>la sala <strong>en la que</strong> está el cuadro</em> &middot; <em>el museo <strong>del que</strong> hablamos</em> &middot; <em>los años <strong>en los que</strong> vivió en Italia</em><br><br>Two easier alternatives exist and you may prefer them for now: <em>la sala <strong>donde</strong> está el cuadro</em> for places, and simply <em>en que</em> for time (<em>la época <strong>en que</strong> pintó</em>). Recognise <em>en la que</em> when you read it; produce it only if it feels comfortable. It is not tested in this module.</div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; PRACTÍCALO <span class="pill-time">9 min</span></div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; join the two sentences</div>
+            <div class="widget-question">«La exposición termina en marzo. La exposición está en el Prado.» Which single sentence says both?</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«La exposición está en el Prado termina en marzo» drops the joining word. Spanish cannot run two clauses together with nothing between them.">La exposición está en el Prado termina en marzo</button>
+                <button data-correct="true" data-fb="«La exposición que está en el Prado termina en marzo.» The repeated noun becomes «que», and the main statement - it ends in March - stays outside the clause.">La exposición que está en el Prado termina en marzo</button>
+                <button data-correct="false" data-fb="«La exposición quien está en el Prado&hellip;» - quien is only ever for people. An exhibition takes que.">La exposición quien está en el Prado termina en marzo</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the word English throws away</div>
+            <div class="widget-question">&ldquo;The portrait she painted in 1656 is in Madrid.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="true" data-fb="«El retrato que pintó en 1656 está en Madrid.» English can leave out «that»; Spanish cannot leave out «que». Test it: «the portrait THAT she painted» works, so que is required.">El retrato que pintó en 1656 está en Madrid</button>
+                <button data-correct="false" data-fb="«El retrato pintó en 1656&hellip;» copies the English gap, and without «que» the sentence now says the portrait did the painting.">El retrato pintó en 1656 está en Madrid</button>
+                <button data-correct="false" data-fb="«El retrato cual pintó&hellip;» - «cual» does not stand alone like this. The everyday relative pronoun is que.">El retrato cual pintó en 1656 está en Madrid</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the preposition moves to the front</div>
+            <div class="widget-question">&ldquo;Felipe IV is the king Velázquez worked for.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«el rey que Velázquez trabajó para» leaves the preposition stranded at the end, which is English word order. Spanish puts it in front of the relative.">Felipe IV es el rey que Velázquez trabajó para</button>
+                <button data-correct="false" data-fb="«el rey para que Velázquez trabajó» has the preposition in the right place but the wrong relative: after a preposition, a person takes quien.">Felipe IV es el rey para que Velázquez trabajó</button>
+                <button data-correct="true" data-fb="«el rey para quien Velázquez trabajó» - preposition first, then quien for a person. Both halves of Part 3 in one phrase.">Felipe IV es el rey para quien Velázquez trabajó</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; que or quien for a person?</div>
+            <div class="widget-question">«El pintor ___ retrató a la infanta se llamaba Velázquez.» No commas, no preposition.</div>
+            <div class="widget-options">
+                <button data-correct="false" data-fb="«quien» is what English «who» suggests, but in a clause with no commas and no preposition Spanish uses que, even for a person.">quien</button>
+                <button data-correct="true" data-fb="«que» - the workhorse. It covers people as well as things when the clause has no preposition and no commas.">que</button>
+                <button data-correct="false" data-fb="«quienes» is plural, and «el pintor» is one person - so it fails twice over.">quienes</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Ahora tú: join each pair into <strong>one</strong> sentence. Write all three before revealing.<br>
+            <em>1. Compré un libro en el museo. El libro habla de Velázquez.</em><br>
+            <em>2. Conocí a una guía. La guía estudió en Madrid.</em><br>
+            <em>3. Velázquez pintó para un rey. Ese rey se llamaba Felipe IV.</em></p>
+            <button class="reveal-btn">Reveal the models</button>
+            <div class="reveal-body"><strong>1. El libro que compré en el museo habla de Velázquez.</strong><br><strong>2. La guía que conocí estudió en Madrid.</strong><br><strong>3. El rey para quien Velázquez pintó se llamaba Felipe IV.</strong><br><br>Check yours: <em>que</em> present in 1 and 2, never dropped · <em>que</em> and not <em>quien</em> in 2, because there are no commas and no preposition · and in 3 the preposition <em>para</em> in front of <em>quien</em>, not stranded at the end.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 5 &middot; A LEER <span class="pill-time">5 min</span></div>
+        <p style="font-size:17px;color:#1a2340;line-height:1.75;">
+        <strong>Ficha de sala</strong><br><br>
+        <em>Diego Velázquez (Sevilla, 1599 &mdash; Madrid, 1660)</em><br>
+        <em><strong>La familia de Felipe IV</strong>, conocido como <strong>Las meninas</strong>, 1656</em><br>
+        <em>Óleo sobre lienzo, 320,5 &times; 281,5 cm</em><br><br>
+        La niña <strong>que</strong> ocupa el centro del cuadro es la infanta Margarita, hija de Felipe IV y de Mariana de Austria. Las dos jóvenes <strong>que</strong> la acompañan son sus meninas, es decir, las damas jóvenes <strong>que</strong> servían a las infantas. De ellas viene el título, pero solo desde el siglo XIX: antes esta obra se llamaba simplemente <em>La familia</em>.<br><br>El hombre <strong>que</strong> aparece a la izquierda, con el pincel en la mano, es el propio pintor. Felipe IV, <strong>para quien</strong> Velázquez trabajó casi cuarenta años, aparece en el espejo del fondo junto a la reina.<br><br>Velázquez lleva en el pecho la cruz roja de la Orden de Santiago, un honor <strong>que</strong> recibió en 1659 &mdash; tres años después de terminar el cuadro. Cómo llegó esa cruz al lienzo es una de las preguntas <strong>que</strong> los especialistas todavía discuten.</p>
+        <div class="opt-strip">
+            <div class="lbl">&#11088; COMPRUEBA &middot; optional</div>
+            <div style="font-size:16px;color:#1a2340;line-height:1.6;">Six relative <em>que</em> and one <em>para quien</em> in four short paragraphs. That density is normal in writing about art, and it is why this module pairs the two.<br><br>Two things to test yourself on. First, find the one where <strong>English would drop the word</strong>: <em>«un honor que recibió en 1659»</em> — &ldquo;an honour he received in 1659&rdquo;. In English the word vanishes; in Spanish it cannot. Second, notice that <em>para quien</em> is set inside commas <em>and</em> follows a preposition — both of <em>quien</em>'s homes at once, which is why it is the natural choice there.</div>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="culture-box">
+        <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127758; CULTURA &middot; ESPAÑA</div>
+        <div style="font-size:18px;color:#0e1c42;margin-bottom:6px;"><strong>La niña del centro, y por qué hay tantos retratos de ella</strong></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The child at the centre of <em>Las meninas</em> is <strong>Margarita Teresa</strong> (<strong>1651&ndash;1673</strong>), daughter of Felipe IV and Mariana de Austria. In 1656 she was about five.<br><br>There is a very practical reason so many portraits of her exist. From early childhood she was intended for her mother's brother, <strong>Leopoldo I</strong>, Holy Roman Emperor in Vienna — a marriage between uncle and niece, ordinary in the Habsburg family and eventually ruinous for it. Portraits of Margarita were sent to Vienna at intervals so the Austrian court could follow her growing up. That is why several Velázquez portraits of her hang today in the <strong>Kunsthistorisches Museum</strong> in Vienna rather than in Madrid: they left Spain as diplomatic documents, long before anyone thought of them as museum pieces.<br><br>She married Leopoldo in <strong>1666</strong> and left Spain that same year. She died in Vienna in <strong>1673</strong>, aged twenty-one. She had four children; one survived infancy.<br><br>Knowing that changes what you are looking at. The painting is a court scene, and it is also a picture of a five-year-old whose future had already been arranged by other people. None of that is visible on the canvas — which is a fair reminder that attention to a painting and knowing something about it are two different skills, and you need both.</p>
+    </div>
+
+    <!-- Virtue -->
+    <div class="virtue-box">
+        <div style="font-size:11px;color:#AA1E2D;letter-spacing:.4px;margin-bottom:6px;">&#9733; LA VIRTUD &middot; LA ATENCIÓN</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Joining two sentences forces a decision most writers never make consciously: <strong>which of these two facts is the main one?</strong> The one that survives as the main clause is the point; the one that goes inside <em>que</em> is the support.<br><br>Two separate sentences let you avoid choosing. A relative clause does not. That is why this grammar makes writing better and not merely longer — it requires you to have understood your own thought. <em>Unir dos ideas exige entender las dos.</em></p>
+    </div>
+
+    <!-- What's next -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 6.04 &mdash; Combinar oraciones</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you do this at paragraph scale: a three-step procedure for combining, the four places it usually breaks, and a reading on Velázquez's career that is built almost entirely out of relative clauses.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mark as Done -->
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas so your progress is recorded. Then find something you wrote earlier in this course — a Lengua en acción paragraph from Módulo 4 or 5 — and look for two short sentences in a row that mention the same noun. Join them with <em>que</em>. That is the whole skill, and it is worth doing once on your own prose today.</div>
+    </div>
+
+    <!-- Wrap-up -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ¡LO LOGRASTE&#33;</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One word covering four English ones, one rule that English speakers break constantly, and one preposition that has to move to the front. Your paragraphs are about to get noticeably better. <em>¡Hasta mañana!</em></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="gualda" aria-hidden="true"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; SPANISH 3 HONORS &#127758; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.03 &middot; Que y quien</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company &middot; v1</div>
+</div>
+
+</div>
+
+<!-- WIDGET RUNTIME -->
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      // data-fb carries per-item feedback; the generic line is the fallback.
+      var custom = eBtn.dataset.fb;
+      if (custom) {
+        efb.textContent = (correct ? '¡Correcto! ' : 'Not quite — ') + custom;
+      } else {
+        efb.textContent = correct
+          ? '¡Correcto! ' + eBtn.textContent + ' — that’s right.'
+          : 'Not quite — try again. Re-read the table above and check the form against its subject.';
+      }
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+<!-- VOCAB AUDIO RUNTIME -->
+<script>
+(function () {
+  var AUDIO_BASE = '../audio/';
+  var player = new Audio();
+  var active = null;
+  function clearActive() { if (active) { active.classList.remove('playing'); active = null; } }
+  player.addEventListener('ended', clearActive);
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-audio]');
+    if (!el) return;
+    e.preventDefault();
+    if (active === el && !player.paused) { player.pause(); clearActive(); return; }
+    clearActive();
+    el.classList.remove('err');
+    player.src = AUDIO_BASE + el.getAttribute('data-audio');
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) {
+      p.then(function () { el.classList.add('playing'); active = el; })
+       .catch(function () { el.classList.add('err'); el.setAttribute('title', 'Audio generated in the build phase'); });
+    } else { el.classList.add('playing'); active = el; }
+  });
+})();
+</script>
+
+</body>
+</html>
