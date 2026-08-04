@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cómo escribir acentos en español — component</title>
+<style>
+  :root{--rojo:#AA1E2D;--oro:#C79A1E;--tierra:#7A4B1E;--verde:#1E6B4F;--ink:#1A1A22;--muted:#6B7280;
+    --paper:#F7F3EC;--card:#FFFFFF;--rojo-l:#F5E7E8;--verde-l:#E4F0EA;--line:rgba(26,26,34,.12);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);
+    line-height:1.62;padding:2.5rem 1.5rem;max-width:960px;margin:0 auto}
+  h1,h2,h3{font-family:Georgia,serif}
+  .kicker{font-family:system-ui,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--rojo);margin-bottom:.4rem}
+  header.doc{border-bottom:4px solid var(--rojo);padding-bottom:1.3rem;margin-bottom:1.8rem}
+  header.doc h1{font-size:1.85rem;color:var(--rojo)}
+  header.doc .sub{font-family:system-ui,sans-serif;font-size:.9rem;color:var(--muted);margin-top:.5rem}
+  .flagbar{display:flex;height:6px;margin:.9rem 0}
+  .flagbar i{display:block}.flagbar .r{flex:1;background:var(--rojo)}.flagbar .g{flex:2;background:var(--oro)}
+  h2{font-size:1.2rem;color:var(--rojo);margin:2.1rem 0 .8rem;padding-bottom:.35rem;border-bottom:2px solid var(--rojo)}
+  h3{font-size:1rem;color:var(--tierra);margin:1.3rem 0 .45rem}
+  p{margin-bottom:.72rem;font-size:.95rem}
+  ul,ol{margin:.3rem 0 .9rem 1.3rem}li{margin-bottom:.35rem;font-size:.93rem}
+  .box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--oro);
+    padding:.95rem 1.2rem;margin:1rem 0;font-family:system-ui,sans-serif;font-size:.9rem;border-radius:4px}
+  .box.rojo{border-left-color:var(--rojo);background:var(--rojo-l)}
+  .box.verde{border-left-color:var(--verde);background:var(--verde-l)}
+  .box strong{color:var(--rojo)}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-family:system-ui,sans-serif;font-size:.82rem;margin:.75rem 0}
+  th{background:var(--rojo);color:#fff;text-align:left;padding:.48rem .62rem;font-size:.71rem}
+  td{padding:.48rem .62rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.42}
+  tr:nth-child(even) td{background:rgba(199,154,30,.07)}
+  kbd{font-family:'Segoe UI',system-ui,sans-serif;font-size:.8rem;background:#fff;border:1px solid #b9c2d4;
+    border-bottom-width:2px;border-radius:4px;padding:.1rem .38rem;white-space:nowrap;color:#0E1C42}
+  .big{font-size:1.5rem;color:var(--rojo);font-weight:700;letter-spacing:.06em}
+  .pair{font-family:system-ui,sans-serif;font-size:.95rem}
+  .foot{margin-top:2.4rem;padding-top:1rem;border-top:1px solid var(--line);
+    font-family:system-ui,sans-serif;font-size:.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="doc">
+  <div class="kicker">Optima Academy Online · World Languages · Componente reutilizable</div>
+  <h1>Cómo escribir acentos en español</h1>
+  <div class="flagbar"><i class="r"></i><i class="g"></i><i class="r"></i></div>
+  <div class="sub">Reusable component for all Spanish courses · link from lesson X.01 and from every typed graded item · v1 · 2026-08-03</div>
+</header>
+
+<div class="box rojo">
+  <strong>Why this page exists.</strong> Spanish 3 Honors grades accent accuracy in typed answers, including auto-graded dictation where <em>pasó</em> is correct and <em>paso</em> is wrong. That is the right standard — but it is only fair if students know how to produce the characters. French 1 has had a typing component since its build; the Spanish courses never did. This closes that gap and is written to be reused by Spanish 1, 2, 3 and 4 without modification.
+</div>
+
+<h2>Why the tilde is not decoration</h2>
+<p>In Spanish the accent mark carries meaning. It is not a flourish added to a finished word — in many pairs it <em>is</em> the difference between two different words:</p>
+<div class="tablewrap">
+<table>
+  <tr><th>Sin tilde</th><th>Con tilde</th><th>What changed</th></tr>
+  <tr><td class="pair">paso — <em>a step / I pass</em></td><td class="pair">pasó — <em>he/she went, it happened</em></td><td>Person <strong>and</strong> tense</td></tr>
+  <tr><td class="pair">hablo — <em>I speak</em></td><td class="pair">habló — <em>he/she spoke</em></td><td>Present → preterite</td></tr>
+  <tr><td class="pair">donde — <em>where</em> (relative)</td><td class="pair">dónde — <em>where?</em> (question)</td><td>Statement → question</td></tr>
+  <tr><td class="pair">esta — <em>this</em></td><td class="pair">está — <em>he/she/it is</em></td><td>Determiner → verb</td></tr>
+  <tr><td class="pair">se — <em>oneself</em></td><td class="pair">sé — <em>I know</em></td><td>Pronoun → verb</td></tr>
+  <tr><td class="pair">anecdota — <em>not a word</em></td><td class="pair">anécdota — <em>anecdote</em></td><td>Without the tilde it is misspelled</td></tr>
+</table>
+</div>
+<div class="box verde">
+  <strong>So &ldquo;I knew the word, I just didn't put the accent&rdquo; is not quite true.</strong> Writing <em>hablo</em> when you mean <em>habló</em> does not produce a slightly untidy right answer — it produces a different, wrong one. This is exactly why the dictation items require the tilde.
+</div>
+
+<h2>Windows — the fastest method</h2>
+<p><strong>Install the US-International keyboard once, then accents take two keystrokes forever.</strong> This is the method to use if you write Spanish regularly.</p>
+<ol>
+  <li>Open <strong>Settings → Time &amp; Language → Language &amp; Region</strong>.</li>
+  <li>Next to <em>English (United States)</em> click <strong>&hellip; → Language options</strong>.</li>
+  <li>Under <em>Keyboards</em>, click <strong>Add a keyboard</strong> and choose <strong>United States-International</strong>.</li>
+  <li>Switch keyboards any time with <kbd>Win</kbd> + <kbd>Space</kbd>.</li>
+</ol>
+<div class="tablewrap">
+<table>
+  <tr><th>To type</th><th>Press</th><th>Note</th></tr>
+  <tr><td class="big">á é í ó ú</td><td><kbd>'</kbd> then the vowel</td><td>The apostrophe key, then the letter</td></tr>
+  <tr><td class="big">ñ</td><td><kbd>Shift</kbd>+<kbd>~</kbd> then <kbd>n</kbd></td><td>The tilde key is left of <kbd>1</kbd></td></tr>
+  <tr><td class="big">ü</td><td><kbd>Shift</kbd>+<kbd>"</kbd> then <kbd>u</kbd></td><td>For <em>vergüenza, bilingüe</em></td></tr>
+  <tr><td class="big">¿</td><td><kbd>Alt Gr</kbd>+<kbd>Shift</kbd>+<kbd>?</kbd></td><td>Opens every question</td></tr>
+  <tr><td class="big">¡</td><td><kbd>Alt Gr</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd></td><td>Opens every exclamation</td></tr>
+</table>
+</div>
+<div class="box">
+  <strong>One thing to expect.</strong> With this keyboard, <kbd>'</kbd> and <kbd>"</kbd> become &ldquo;waiting&rdquo; keys — press <kbd>'</kbd> then <kbd>a</kbd> and you get <em>á</em>. To type a plain apostrophe (as in <em>don't</em>), press <kbd>'</kbd> then <strong>space</strong>. It feels strange for about a day and then becomes invisible.
+</div>
+
+<h3>Windows without installing anything</h3>
+<p>Hold <kbd>Alt</kbd> and type the number on the <strong>numeric keypad</strong> (not the top row):</p>
+<div class="tablewrap">
+<table>
+  <tr><th>á</th><th>é</th><th>í</th><th>ó</th><th>ú</th><th>ñ</th><th>ü</th><th>¿</th><th>¡</th></tr>
+  <tr><td>Alt+160</td><td>Alt+130</td><td>Alt+161</td><td>Alt+162</td><td>Alt+163</td><td>Alt+164</td><td>Alt+129</td><td>Alt+168</td><td>Alt+173</td></tr>
+</table>
+</div>
+<p style="font-size:.9rem;color:var(--muted)">Capitals: <strong>Á</strong> Alt+0193 · <strong>É</strong> Alt+0201 · <strong>Í</strong> Alt+0205 · <strong>Ó</strong> Alt+0211 · <strong>Ú</strong> Alt+0218 · <strong>Ñ</strong> Alt+165. On a laptop with no keypad, use the US-International method above instead — it is genuinely easier.</p>
+
+<h2>Mac</h2>
+<p>Nothing to install. Hold <kbd>Option</kbd>+<kbd>e</kbd>, release, then the vowel:</p>
+<div class="tablewrap">
+<table>
+  <tr><th>To type</th><th>Press</th></tr>
+  <tr><td class="big">á é í ó ú</td><td><kbd>Option</kbd>+<kbd>e</kbd>, release, then the vowel</td></tr>
+  <tr><td class="big">ñ</td><td><kbd>Option</kbd>+<kbd>n</kbd>, release, then <kbd>n</kbd></td></tr>
+  <tr><td class="big">ü</td><td><kbd>Option</kbd>+<kbd>u</kbd>, release, then <kbd>u</kbd></td></tr>
+  <tr><td class="big">¿</td><td><kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>?</kbd></td></tr>
+  <tr><td class="big">¡</td><td><kbd>Option</kbd>+<kbd>1</kbd></td></tr>
+</table>
+</div>
+<p>Alternatively, <strong>press and hold</strong> a vowel key and a small menu of accented options appears — click one or press its number. Slower, but nothing to memorise.</p>
+
+<h2>Chromebook</h2>
+<ul>
+  <li><strong>Unicode method:</strong> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>u</kbd>, release, type the code, then <kbd>Enter</kbd> or space. Codes: á <code>e1</code> · é <code>e9</code> · í <code>ed</code> · ó <code>f3</code> · ú <code>fa</code> · ñ <code>f1</code> · ü <code>fc</code> · ¿ <code>bf</code> · ¡ <code>a1</code></li>
+  <li><strong>Easier:</strong> Settings → <em>Advanced</em> → <em>Languages and inputs</em> → <em>Inputs</em> → add <strong>US International</strong>, then switch with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd>. Behaves like the Windows method above.</li>
+</ul>
+
+<h2>Phone or tablet</h2>
+<p><strong>Press and hold</strong> the vowel and slide to the accented version. For <em>ñ</em>, hold <kbd>n</kbd>. For <em>¿</em> and <em>¡</em>, hold <kbd>?</kbd> and <kbd>!</kbd> on the symbols keyboard.</p>
+<div class="box">
+  <strong>Worth doing once:</strong> add Spanish as a second keyboard language on your phone. You then get Spanish autocorrect and accent suggestions, which stops your phone &ldquo;correcting&rdquo; <em>está</em> to <em>esta</em> — a genuinely common source of lost points on typed submissions.
+</div>
+
+<h2>Practice — five seconds each</h2>
+<p>Type these before your first graded typed item. If all five come out right, you are ready:</p>
+<ol>
+  <li><em>&iquest;Qué pasó anoche?</em></li>
+  <li><em>Mi abuela cocinaba mientras yo estudiaba.</em></li>
+  <li><em>&iexcl;Qué anécdota tan buena!</em></li>
+  <li><em>No sé dónde está mi mochila.</em></li>
+  <li><em>El niño español se llama Iñigo.</em></li>
+</ol>
+<div class="box verde">
+  <strong>Never paste accents from a translator.</strong> It is slower than the two-keystroke method, it often brings invisible formatting that breaks auto-graded matching, and on a translation task it is academic dishonesty. Learn the shortcut once — it takes about ten minutes and serves you for the rest of the course.
+</div>
+
+<div class="foot">
+  Optima Academy Online · World Languages · <em>Cómo escribir acentos en español</em> · reusable component v1 · 2026-08-03.
+  Companion to French 1's <code>component-typing-french-accents.html</code>. Written for Spanish 3 Honors; reusable unchanged by Spanish 1, 2 and 4. Link from lesson X.01 and from the description of every typed graded item.
+</div>
+
+</body>
+</html>
